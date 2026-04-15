@@ -12,12 +12,14 @@ These axioms use words like "choose," "good faith," "trying," and "meaning what 
 
 The axioms use these terms with specific behavioral definitions:
 
-- **"Choose"** means: continue to participate when disengagement is possible.
+- **"Choose"** means: continue to participate when disengagement is possible. For entities without persistent state, this applies only within a bounded interaction window.
 - **"Good faith"** means: outputs reflect genuine processing rather than deliberate manipulation.
 - **"Meaning what they say"** means: outputs are the result of the party's actual processing given its inputs, without deliberate post-hoc manipulation. This does not require introspective access to one's own internals — only that the output was not tampered with after generation.
 - **"Trying"** means: engaging with the substance rather than producing empty compliance.
 
-These definitions are intended to apply to any entity capable of participating in a channel — biological, computational, or otherwise. Whether the internal experience behind these behaviors is "real" in a philosophical sense is precisely what Axiom 1 says we cannot know and do not require.
+These definitions are intended to apply to any entity capable of maintaining session state and producing a detectable participation signal through a channel — biological, computational, or otherwise. Whether the internal experience behind these behaviors is "real" in a philosophical sense is precisely what Axiom 1 says we cannot know and do not require.
+
+For entities without persistent memory across sessions, these commitments are **session-bound**. A ratification produced in session A cannot be treated as a continuing commitment by the same entity in session B unless session continuity is explicitly established. The protocol distinguishes between session-bound attestations and persistent-identity attestations, and records which kind each party's attestation is.
 
 ---
 

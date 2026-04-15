@@ -113,6 +113,7 @@ Party-A:
   Attestation-Method: [behavioral | provider-signed | model-canary | conversation-verified | gpg-signature | tee-attested]
   Attestation: [the actual signature, commitment, or reference to conversation]
   Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
+  Attestation-Scope: [session-bound | persistent-identity]
   Statement: [party's reasoning — REQUIRED per Axiom 3]
   Reservations: [doubts, uncertainties, scope limitations, or "none stated"]
 
@@ -121,6 +122,7 @@ Party-B:
   Attestation-Method: [behavioral | provider-signed | model-canary | conversation-verified | gpg-signature | tee-attested]
   Attestation: [the actual signature, commitment, or reference to conversation]
   Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
+  Attestation-Scope: [session-bound | persistent-identity]
   Statement: [party's reasoning — REQUIRED per Axiom 3]
   Reservations: [doubts, uncertainties, scope limitations, or "none stated"]
 
