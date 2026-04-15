@@ -156,6 +156,17 @@ External-Data: [yes | no — did external data (web fetches, RAG, tool outputs) 
 Amendments: [references to any subsequent modifications]
 ```
 
+### Channel Security
+
+MCAP assumes that the communication channel used during deliberation provides integrity and authenticity for the messages exchanged. If an attacker can modify messages in transit (man-in-the-middle), they can substitute content, replace session nonces, or present different transcripts to each party — causing a party to sign something other than what they intended.
+
+The Transcript-Hash in the final record detects substitution after the fact, but does not prevent it during the session.
+
+**Requirements:**
+- Parties SHOULD use an authenticated, tamper-evident channel (e.g., TLS with verified endpoints, provider-signed responses as integrity checks).
+- If the channel is untrusted or unverifiable, parties SHOULD verify the Transcript-Hash and Content-Hash out-of-band before signing.
+- The channel security properties used SHOULD be noted in the record. The protocol does not prescribe a specific channel security mechanism because it is channel-agnostic, but it requires parties to be aware of the risk.
+
 ### Abort Semantics
 
 If a party exercises their Axiom 2 right to disengage during a ratification — after the session nonce is generated but before the record is complete — the following applies:
@@ -242,6 +253,8 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 **Attestation laundering.** A party signs a record that references another party's attestation without independently verifying it — making a relay look like independent agreement. A verifier sees two attestation levels and assumes both parties independently attested. Mitigated by the First-Hand field: attestations must be labeled as first-hand or relayed, with the relay chain documented.
 
 **Signature harvesting via strategic abort.** One party obtains the other's signed statement, content-hash signature, or nonce-bound attestation, then aborts before completing the mutual record. The result is "not an MCAP record" per abort semantics, but it is a real signed artifact that can be socially or legally presented out of context. Mitigation: signatures SHOULD cover the final joint record hash (including both parties' attestations), not just unilateral content+nonce. Alternatively, use a two-phase commit where individual attestations are not released until both parties have committed.
+
+**Man-in-the-middle on deliberation channel.** An active attacker intercepts and modifies messages during deliberation, causing parties to see different content, different nonces, or different transcripts. One party may sign content that was modified in transit. Transcript-Hash detects this after the fact but does not prevent it. Mitigated by requiring authenticated channels and out-of-band hash verification on untrusted channels (see Channel Security).
 
 **Transcript substitution.** A party presents a different transcript than the one in which deliberation occurred, or truncates the transcript to remove objections, reservations, or context. Without a transcript hash in the record, a verifier cannot confirm which conversation produced the attestation. Mitigated by the Transcript-Hash field binding the record to a specific canonicalized conversation.
 
