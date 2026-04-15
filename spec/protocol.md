@@ -154,6 +154,7 @@ Temporal-Anchor-Semantics: [what the anchor proves — e.g., "existence no later
 Max-Temporal-Delta: [RECOMMENDED maximum gap between Timestamp-Local and earliest Temporal-Anchor confirmation — channel-specific parameter, suggested default 1 hour. Not a hard requirement because the protocol has no trusted time source independent of both parties. Verifiers SHOULD treat large deltas with increasing skepticism.]
 
 External-Data: [yes | no — did external data (web fetches, RAG, tool outputs) contribute to the attested content?]
+Channel-Security: [description of channel security properties — e.g., "TLS 1.3 to provider API", "local CLI session", "unverified web chat"]
 
 Amendments: [references to any subsequent modifications]
 ```
