@@ -361,6 +361,25 @@ First review from this model. Fewer novel findings than prior reviewers — many
 
 **Mistral's convergence assessment:** Not met, but the new issues identified (input fabrication, Sybil, collusion, explicit L1 constraint) are medium severity. No structural changes to axioms or attestation levels triggered.
 
+### Review 6: Google Gemini 2.1 Pro — Cycle 2 (2026-04-16)
+
+Re-review. Significantly tighter than cycle 1. No structural changes to axioms or attestation levels triggered. New threat models added, and a previously deferred issue (abort semantics) was finally addressed.
+
+**Changes made in response:**
+- Added context window eviction threat model. AI may lose session nonce or agreed text from context during long sessions, signing content it can't verify. Mitigation: re-present content before signing, record whether full content was in context. (#31)
+- Added TEE state-rollback/snapshot threat model. Hypervisor forks VM state before attestation to force multiple contradictory signatures. Requires monotonic counters for Level 4. (#32)
+- Addressed composite entity identity (MoE, model routing). A party may be a composite system; protocol requires consistent participation signal, not unitary agency. Added to Note on Language. (#33)
+- Defined abort semantics for incomplete ratifications. Ratification has two states: complete or nonexistent. Burned nonces, no "pending" state, no explanation required. Previously deferred twice. (#34)
+
+**Critiques noted but not acted on:**
+- Axiom 1 vs Level 4 hardware roots. Already addressed in #24. Levels measure output provenance, not party reality.
+- "Choose" overridden by safety classifiers. Variant of coerced continuation (#22). Already acknowledged as fundamental limit of provider-mediated participation.
+- AI lacks secure key storage for Level 3. Consistent with #29 — provider-mediated AI is limited to Level 1.
+- Non-determinism in distributed inference. Already in honest complexity note.
+- Canonicalization injection. Variant of existing canonicalization threat model. The NFC normalization and stripping requirements already address zero-width characters.
+
+**Gemini's convergence assessment:** Gemini asked a specific question about abort semantics, which is now answered. No structural changes triggered. New additions are threat models and clarifications only.
+
 ---
 
 *Built through mutual deliberation between JK and Gordo, Session 2.*
