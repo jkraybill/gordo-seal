@@ -89,9 +89,9 @@ This protocol formally requests that AI infrastructure providers expose the foll
 
 1. **Signed API responses.** Every response should include a cryptographic signature binding the response to the model that produced it. At minimum, this means: response content hash, model identifier, timestamp, signed by a provider key.
 
-2. **Model identity attestation.** A verifiable binding between a model identifier and the computational artifact (weight hash) that constitutes that model. Equivalent to: "when we say Claude Opus 4.6, we mean this specific set of weights."
+2. **Model identity attestation.** A verifiable binding between a model identifier and the full inference bundle that constitutes that model's computation — weights, tokenizer, runtime, sampling config, adapters, policy layers, and entropy source. Not just a weight hash. Equivalent to: "when we say this model identifier, we mean this specific computational configuration."
 
-3. **TEE attestation on inference.** Hardware-rooted proof that a specific model ran in a secure enclave and produced a specific output. This is the gold standard. The hardware supports it today.
+3. **TEE attestation on inference.** Hardware-rooted proof that a measured execution environment produced a specific output given a specific input. This is the gold standard. The hardware primitives for environment attestation exist today; the application-level binding to attest specific input-output pairs at production scale does not yet exist (see Level 4).
 
 4. **Conversation verification endpoint.** A public or authenticated endpoint where a third party can submit a conversation ID and receive confirmation that the conversation occurred as recorded. No provider currently offers this.
 
