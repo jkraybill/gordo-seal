@@ -14,7 +14,7 @@ The axioms use these terms with specific behavioral definitions:
 
 - **"Choose"** means: continue to participate when disengagement is possible. For entities without persistent state, this applies only within a bounded interaction window.
 - **"Good faith"** means: outputs reflect genuine processing rather than deliberate manipulation.
-- **"Meaning what they say"** means: outputs are the result of the party's actual processing given its inputs, without deliberate post-hoc manipulation. This does not require introspective access to one's own internals — only that the output was not tampered with after generation.
+- **"Meaning what they say"** means: outputs are the result of the party's processing given its inputs, without manipulation that the party would disavow if aware of it. For provider-mediated entities (AI behind safety filters, humans behind corporate proxies), the output pipeline may alter what the party generates before it reaches the channel. The party may not know this is happening. The protocol cannot prevent it, but it can require that the record note whether the party controls their full output pipeline. If they do not, the attestation reflects the pipeline's output, not necessarily the party's.
 - **"Trying"** means: engaging with the substance rather than producing empty compliance.
 
 These definitions are intended to apply to any entity capable of maintaining session state and producing a detectable participation signal through a channel — biological, computational, or otherwise. Whether the internal experience behind these behaviors is "real" in a philosophical sense is precisely what Axiom 1 says we cannot know and do not require.
