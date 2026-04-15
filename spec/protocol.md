@@ -40,7 +40,7 @@ Three mechanisms, any of which satisfies Level 2:
 
 **Provider-signed responses.** The provider cryptographically signs each API response, binding it to a model identifier and timestamp. A verifier checks: the provider confirms this response came from this model at this time. Does not require TEE. Requires the provider to add a signature to their API response payload.
 
-**Model canary.** The provider generates a secret per model version and embeds it in the model's context. The provider publishes a hash of the secret. When the model produces an attestation, it includes the secret. A verifier checks: the hash of this secret matches what the provider published for that model version. This proves the response came from something that knew a secret only that model version knows.
+**Model canary (challenge-response).** The provider embeds a signing capability per model version. For each attestation, the verifier issues a nonce challenge. The model responds with a signature over the nonce, the content hash, and the session nonce, using the embedded capability. A verifier checks: the response is valid for the published model version and is bound to this specific content in this specific session. A static secret alone is insufficient — once leaked, it is replayable forever. The mechanism MUST bind to session, content, and time to provide meaningful provenance.
 
 **Conversation verification.** The provider logs conversations and offers a verification endpoint. A verifier submits a conversation ID and receives confirmation that the conversation occurred as recorded. Combined with the other party's identity proof, this verifies both sides through the provider as witness.
 
@@ -234,6 +234,8 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 **Privacy oracle.** A conversation verification endpoint reveals that specific parties interacted. This is sensitive metadata. Endpoint design must allow content verification without leaking relationship data.
 
 **Attestation laundering.** A party signs a record that references another party's attestation without independently verifying it — making a relay look like independent agreement. A verifier sees two attestation levels and assumes both parties independently attested. Mitigated by the First-Hand field: attestations must be labeled as first-hand or relayed, with the relay chain documented.
+
+**Canary exfiltration and replay.** If a model canary is implemented as a static secret rather than a challenge-response mechanism, the secret can be elicited, leaked, logged, or cached by any party. Once known, anyone can replay it indefinitely for that model version, forging provenance. Mitigated by requiring nonce-bound challenge-response rather than static secrets (see Level 2 description).
 
 **Provider selective signing.** At Level 2, a provider signs only outputs that match policy, dropping signatures on refusals, reservations, or safety-filtered responses. The record shows a compliant AI with no evidence of censorship. Mitigation: Level 2 provider signing MUST apply to ALL responses including errors, refusals, and filtered outputs. Absence of a signature on a response is itself evidence of selective signing.
 
