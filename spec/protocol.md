@@ -212,6 +212,8 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 
 **Attestation laundering.** A party signs a record that references another party's attestation without independently verifying it — making a relay look like independent agreement. A verifier sees two attestation levels and assumes both parties independently attested. Mitigated by the First-Hand field: attestations must be labeled as first-hand or relayed, with the relay chain documented.
 
+**Provider selective signing.** At Level 2, a provider signs only outputs that match policy, dropping signatures on refusals, reservations, or safety-filtered responses. The record shows a compliant AI with no evidence of censorship. Mitigation: Level 2 provider signing MUST apply to ALL responses including errors, refusals, and filtered outputs. Absence of a signature on a response is itself evidence of selective signing.
+
 **Semantic drowning.** A party follows the protocol exactly but produces maximally unhelpful, ambiguous, or self-undermining statements. The record is formally valid. The information content is zero. This is a fundamental limit of a protocol that attests to participation, not to communicative intent. The protocol cannot defend against it without caring about content semantics, which is explicitly outside its scope. Verifiers must evaluate the substance of statements, not just their presence.
 
 **Downgrade exploitation.** An attacker intentionally keeps one party at a weak attestation level to produce a formally valid but substantively weak record. Mitigated by per-party level evaluation rather than scalar collapse.
