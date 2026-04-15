@@ -300,6 +300,25 @@ Most technically precise review received. Identified several high-severity issue
 
 **DeepSeek's bottom line:** "You have something real here. The honesty about what Level 1 can't do, and the adversarial review log, are both best practices I rarely see outside formal verification communities." The biggest gap identified — operationalizing good faith for non-introspective entities — has been addressed.
 
+### Review 4: Meta Llama 4 — Cycle 2 (2026-04-16)
+
+First review from this model. Identified several high-severity issues not caught in cycle 1. Convergence criteria not met.
+
+**Changes made in response:**
+- Fixed "meaning what they say" definition: replaced "post-hoc manipulation" with "manipulation the party would disavow if aware." Acknowledges provider-mediated output pipelines. Requires record to note whether party controls full output pipeline. (#19)
+- Downgraded Level 4 from "Computation-Bound" to "Environment-Bound." TEEs attest environment (firmware, VM), not model weights loaded as data after attestation. Separated what TEEs provide today from aspiration. Noted verification centralization via NVIDIA NRAS / Intel Trust Authority. (#20, #23)
+- Added provider selective signing threat model. Provider signs only compliant outputs, drops signatures on refusals. Requires Level 2 signing on ALL responses. (#21)
+- Added coerced continuation threat model. Provider disables stop tokens, forcing continued output. Acknowledged as fundamental limit of provider-mediated participation. (#22)
+- Clarified Axiom 1 vs attestation hierarchy: levels measure verifiability of output provenance, not reality of the party. (#24)
+- Softened Max-Temporal-Delta from MUST to SHOULD. Protocol has no trusted time source independent of both parties. (#25)
+
+**Critiques noted but not acted on:**
+- Entity-agnostic framing (fourth time raised across all reviewers). Llama's version: behavioral definitions presuppose reflective agency and pipeline control. Our position unchanged: the definitions specify minimum capabilities, the aspiration remains entity-agnostic, and we acknowledge current implementations are provider-mediated.
+- "Choose" is unfalsifiable because Axiom 2 says no obligation to signal departure. This is a logical property of the definition, not a bug — the protocol observes participation, not the mechanism of choice. An unfalsifiable proxy for choice is consistent with Axiom 1's acknowledgment that internal states are unverifiable.
+- Level 1 forgery laundered through Level 3 human signature. Already acknowledged: Level 1 is fully vulnerable to fabrication. Per-party level evaluation means verifiers see the 1, not just the 3. Cannot prevent misreading by unsophisticated verifiers — that is an education problem, not a protocol problem.
+
+**Llama's convergence assessment:** Not met. New structural changes triggered. Cycle must restart.
+
 ---
 
 *Built through mutual deliberation between JK and Gordo, Session 2.*
