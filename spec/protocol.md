@@ -194,6 +194,8 @@ Before hashing, content MUST be serialized to a canonical form to prevent attack
 
 Minimum requirements for canonical text content: UTF-8 encoding, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark.
 
+Before generating the Content-Hash, both parties MUST explicitly agree on the canonicalization method for all content. The agreed method is recorded in the Canonical-Format field. A ratification where the parties used different canonicalization methods for the same content is invalid.
+
 For non-text content (structured data, binaries, multimodal content, tool outputs), the canonicalization method MUST be specified in the Canonical-Format field. The protocol does not prescribe a universal canonicalization for non-text content — implementations must define and document their own. Cross-implementation divergence is a known risk for non-text attestations.
 
 ---
