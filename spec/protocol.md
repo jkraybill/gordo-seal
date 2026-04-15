@@ -123,6 +123,9 @@ Party-A:
   Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-environment-bound]
   Attestation-Scope: [session-bound | persistent-identity]
   First-Hand: [yes | relayed — if relayed, include relay chain]
+  Pipeline-Control: [full | partial | none — does party control their complete output pipeline?]
+  Content-In-Context: [yes | no | unknown — was full content available to party at time of signing?]
+  Signing-Algorithm: [algorithm used for cryptographic attestation, if any]
   Statement: [party's reasoning — REQUIRED per Axiom 3]
   Reservations: [doubts, uncertainties, scope limitations, or "none stated"]
 
@@ -133,6 +136,9 @@ Party-B:
   Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-environment-bound]
   Attestation-Scope: [session-bound | persistent-identity]
   First-Hand: [yes | relayed — if relayed, include relay chain]
+  Pipeline-Control: [full | partial | none — does party control their complete output pipeline?]
+  Content-In-Context: [yes | no | unknown — was full content available to party at time of signing?]
+  Signing-Algorithm: [algorithm used for cryptographic attestation, if any]
   Statement: [party's reasoning — REQUIRED per Axiom 3]
   Reservations: [doubts, uncertainties, scope limitations, or "none stated"]
 
@@ -140,6 +146,8 @@ Timestamp-Local: [ISO 8601 — claimed time, not independently verified]
 Temporal-Anchor: [method and proof — e.g., OpenTimestamps commitment]
 Temporal-Anchor-Semantics: [what the anchor proves — e.g., "existence no later than T"]
 Max-Temporal-Delta: [RECOMMENDED maximum gap between Timestamp-Local and earliest Temporal-Anchor confirmation — channel-specific parameter, suggested default 1 hour. Not a hard requirement because the protocol has no trusted time source independent of both parties. Verifiers SHOULD treat large deltas with increasing skepticism.]
+
+External-Data: [yes | no — did external data (web fetches, RAG, tool outputs) contribute to the attested content?]
 
 Amendments: [references to any subsequent modifications]
 ```
