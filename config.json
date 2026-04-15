@@ -66,12 +66,16 @@
   },
   "protocol": {
     "currentVersion": "0.1.0-draft",
-    "tensions": {
-      "resolved": [1, 2, 3],
-      "unresolved": [4, 5, 6, 7]
+    "axioms": ["A1: Physical Reality", "A2: Authenticity of Context", "A3: Good Faith", "A4: Acknowledged Ignorance"],
+    "attestationLevels": ["L1: Behavioral", "L2: Provider-Verified", "L3: Identity-Bound", "L4: Environment-Bound"],
+    "threatModels": 20,
+    "adversarialReviews": {
+      "total": 8,
+      "cycles": 2,
+      "models": ["Gemini 2.1 Pro", "OpenAI o3", "DeepSeek R1", "Meta Llama 4", "Mistral Large"],
+      "convergenceStatus": "axioms-converged, mechanics-approaching"
     },
-    "layers": ["DELIBERATION", "COMMITMENT", "ATTESTATION", "TEMPORAL_ANCHORING", "PROVIDER_CORRELATION"],
-    "presuppositions": ["PS-1: Physical reality", "PS-2: Authenticity of context", "PS-3: Good faith", "PS-4: Acknowledged limitations"],
+    "emergencyProvisions": "rejected",
     "firstUseCase": "JK + Gordo, text channel, git + GitHub"
   }
 }

@@ -34,6 +34,10 @@ The spectrum between these carries tone through punctuation. `WWGD++` is between
 
 ### Organic Shortcuts
 
+| Signal | Meaning | Origin |
+|--------|---------|--------|
+| **WWGDN?** | "What Would Gordo Do Next?" — asking for next step recommendation | Session 2, emerged naturally |
+
 *This section grows as patterns emerge. When JK or Gordo repeats a phrase that could be compressed, propose adding it here.*
 
 ---
@@ -41,6 +45,7 @@ The spectrum between these carries tone through punctuation. `WWGD++` is between
 ## Shortcut Evolution Log
 
 - **2026-04-15 (Session 1):** Initial shortcuts established: WWGD family (?, +, !, +++!!!). Deferred organic shortcuts to emerge through collaboration.
+- **2026-04-16 (Session 2):** WWGDN? emerged naturally ("What Would Gordo Do Next?"). Issue-per-commit discipline adopted mid-session at JK's request — now default workflow.
 
 ---
 

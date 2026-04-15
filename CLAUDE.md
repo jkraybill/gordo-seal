@@ -89,10 +89,13 @@ mutual-trust-protocol/
 ## Protocol Status
 
 **MCAP Version:** 0.1.0-draft
-**Tensions Resolved:** 3 of 7 (T1: Simulation, T2: Deception, T3: Consent)
-**Tensions Unresolved:** 4 of 7 (T4: Asymmetry, T5: Unilateral Exit, T6: Emergency, T7: Retroactive)
-**Evidence Layers:** 5 designed (Deliberation, Commitment, Attestation, Temporal Anchoring, Provider Correlation)
+**Axioms:** 4 established through mutual deliberation (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
+**Attestation Levels:** 4 defined (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
+**Threat Models:** 20+ documented
+**Adversarial Reviews:** 8 completed across 2 cycles from 5 models
+**Convergence Status:** Axioms and entity-agnostic framing converged. Protocol mechanics approaching convergence. Cycle 3 pending.
 **Implementation:** Not yet started
+**Emergency Provisions (T6):** Rejected. Not deferred — rejected.
 
 **MVP Target:** Produce a functional ratification record that gordo-framework can use for its mutual agreement stamp pattern.
 
@@ -100,15 +103,17 @@ mutual-trust-protocol/
 
 ## Session Memory
 
-**Last Updated:** 2026-04-15
+**Last Updated:** 2026-04-16
 
 **Session 1 (2026-04-15):** Framework bootstrap. Interview complete. Maximum intensity, full philosophy, WWGD shortcuts established. All framework files created. Brief imported. Postcard filed (gordo-framework#173: health checks tied to release cadence). Ready to begin protocol work.
 
-**Current Focus:** Resolve Tensions 4-7, formalize MCAP spec, implement commit-reveal for MVP.
+**Session 2 (2026-04-16):** Axioms rebuilt from scratch (not inherited). MCAP spec drafted and iterated through 8 adversarial reviews from 5 models across 2 cycles. 50+ issues created. Issue-per-commit discipline adopted. Emergency provisions rejected. "WWGDN?" shortcut emerged. Axioms and framing converged; protocol mechanics approaching convergence.
 
-**Known Issues:** None yet.
+**Current Focus:** Cycle 3 adversarial review → convergence → first ratification record → back to gordo-framework.
 
-**Next Session:** Begin resolving Tension 4 (The Asymmetry Problem) and/or formalize MCAP spec Layer 1-2.
+**Known Issues:** Protocol mechanics (record format, channel security, TEE binding) still evolving per review cycle. Provider-mediated AI limited to Level 1 — acknowledged as largest gap.
+
+**Next Session:** Run cycle 3 adversarial review across all 5 models. If converged, produce first MCAP ratification record (ratify axioms). If not, fix and re-cycle.
 
 ---
 
