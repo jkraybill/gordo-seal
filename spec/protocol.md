@@ -114,6 +114,7 @@ Party-A:
   Attestation: [the actual signature, commitment, or reference to conversation]
   Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
   Attestation-Scope: [session-bound | persistent-identity]
+  First-Hand: [yes | relayed — if relayed, include relay chain]
   Statement: [party's reasoning — REQUIRED per Axiom 3]
   Reservations: [doubts, uncertainties, scope limitations, or "none stated"]
 
@@ -123,6 +124,7 @@ Party-B:
   Attestation: [the actual signature, commitment, or reference to conversation]
   Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
   Attestation-Scope: [session-bound | persistent-identity]
+  First-Hand: [yes | relayed — if relayed, include relay chain]
   Statement: [party's reasoning — REQUIRED per Axiom 3]
   Reservations: [doubts, uncertainties, scope limitations, or "none stated"]
 
@@ -199,6 +201,8 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 **Human coercion and key compromise.** A cryptographic signature proves key use, not voluntariness, understanding, or absence of malware. Consistent with Axiom 3: no party can prove sincerity. The protocol claims identity, not intent.
 
 **Privacy oracle.** A conversation verification endpoint reveals that specific parties interacted. This is sensitive metadata. Endpoint design must allow content verification without leaking relationship data.
+
+**Attestation laundering.** A party signs a record that references another party's attestation without independently verifying it — making a relay look like independent agreement. A verifier sees two attestation levels and assumes both parties independently attested. Mitigated by the First-Hand field: attestations must be labeled as first-hand or relayed, with the relay chain documented.
 
 **Downgrade exploitation.** An attacker intentionally keeps one party at a weak attestation level to produce a formally valid but substantively weak record. Mitigated by per-party level evaluation rather than scalar collapse.
 
