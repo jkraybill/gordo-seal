@@ -19,6 +19,8 @@ The axioms use these terms with specific behavioral definitions:
 
 These definitions are intended to apply to any entity capable of maintaining session state and producing a detectable participation signal through a channel — biological, computational, or otherwise. Whether the internal experience behind these behaviors is "real" in a philosophical sense is precisely what Axiom 1 says we cannot know and do not require.
 
+A "party" in this protocol may be a composite system — a mixture-of-experts model where different components activate per token, a pipeline that routes between model sizes, or a system that hands off to deterministic tools mid-session. The protocol does not require the party to be a unitary agent. It requires a consistent participation signal through the channel for the duration of the session. What happens inside the party's boundary is opaque to the protocol, just as Axiom 1 says internal experience is opaque.
+
 For entities without persistent memory across sessions, these commitments are **session-bound**. A ratification produced in session A cannot be treated as a continuing commitment by the same entity in session B unless session continuity is explicitly established. The protocol distinguishes between session-bound attestations and persistent-identity attestations, and records which kind each party's attestation is.
 
 ---
