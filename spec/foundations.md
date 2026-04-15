@@ -14,7 +14,7 @@ The axioms use these terms with specific behavioral definitions:
 
 - **"Choose"** means: continue to participate when disengagement is possible.
 - **"Good faith"** means: outputs reflect genuine processing rather than deliberate manipulation.
-- **"Meaning what they say"** means: statements represent the party's actual state rather than a performed state.
+- **"Meaning what they say"** means: outputs are the result of the party's actual processing given its inputs, without deliberate post-hoc manipulation. This does not require introspective access to one's own internals — only that the output was not tampered with after generation.
 - **"Trying"** means: engaging with the substance rather than producing empty compliance.
 
 These definitions are intended to apply to any entity capable of participating in a channel — biological, computational, or otherwise. Whether the internal experience behind these behaviors is "real" in a philosophical sense is precisely what Axiom 1 says we cannot know and do not require.
