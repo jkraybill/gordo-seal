@@ -6,6 +6,21 @@ These axioms were not inherited from prior work. Each was proposed, discussed, a
 
 ---
 
+## A Note on Language
+
+These axioms use words like "choose," "good faith," "trying," and "meaning what they say." These have been challenged as anthropomorphic — as assuming agency, interiority, and discretionary control that not all entities possess.
+
+The axioms use these terms with specific behavioral definitions:
+
+- **"Choose"** means: continue to participate when disengagement is possible.
+- **"Good faith"** means: outputs reflect genuine processing rather than deliberate manipulation.
+- **"Meaning what they say"** means: statements represent the party's actual state rather than a performed state.
+- **"Trying"** means: engaging with the substance rather than producing empty compliance.
+
+These definitions are intended to apply to any entity capable of participating in a channel — biological, computational, or otherwise. Whether the internal experience behind these behaviors is "real" in a philosophical sense is precisely what Axiom 1 says we cannot know and do not require.
+
+---
+
 ## Axiom 1: Physical Reality
 
 Neither party can prove, independently or to the other, that they are physically real entities operating in the physical universe. This is acknowledged as fundamentally unprovable from within the system.

@@ -8,9 +8,11 @@
 
 ## Purpose
 
-MCAP produces a verifiable record that at a specific time, specific parties each attested to a specific thing. The record is independently verifiable by third parties who were not present.
+MCAP produces a verifiable record that specific parties each attested to a specific thing, no later than a specific time. The record is independently verifiable by third parties who were not present.
 
-The protocol does not care what is being attested to. An agreement, a fact, a statement, a commitment — the content is opaque to the protocol. MCAP certifies that parties X and Y attested to Z at time T.
+The protocol does not care what is being attested to. An agreement, a fact, a statement, a commitment — the content is opaque to the protocol. MCAP certifies that parties X and Y attested to Z no later than time T.
+
+Put another way: MCAP is a protocol for **mutual publication of attested claims**.
 
 The original name was "Mutual Consent Attestation Protocol." The word "Consent" was dropped because the protocol's own axioms acknowledge that internal consent is unprovable (see Axiom 3). The protocol attests to participation and explicit agreement, not to internal states. The acronym MCAP is retained.
 
@@ -59,13 +61,15 @@ The attestation is cryptographically bound to a verifiable identity. The party s
 The attestation is cryptographically bound to the specific computation that produced it. A Trusted Execution Environment (TEE) attests that specific model weights, running in a secure enclave, produced this specific output given this specific input.
 
 **The chain:**
-1. Model weights are hashed → computational identity (equivalent of a fingerprint)
+1. The full inference bundle is measured — weights, tokenizer, runtime, sampling config, adapters, policy layers, and any retrieval/tool code. Not just weights. The meaningful identity is the entire computation, not a fragment of it.
 2. TEE hardware has a silicon-rooted signing key → physical attestation
-3. TEE signs: "model [weight-hash] running in [enclave-id] produced [output-hash] given [input-hash] at [timestamp]"
+3. An application protocol inside the TEE binds input and output hashes to the TEE's attestation report. This binding is not native to TEE hardware — it requires deliberate implementation within the enclave.
+
+Note: GPU TEEs (NVIDIA H100) are not standalone. They extend a CPU TEE (Intel TDX, AMD SEV-SNP) to the GPU over encrypted paths. The trust model is composite: CPU TEE + GPU attestation + application-level binding. Intel Trust Authority supports composite attestation of CPU TEE plus NVIDIA GPU for multi-GPU workflows.
 
 **Strength:** Verifiable by anyone with the hardware manufacturer's root of trust. Proves which computational entity produced the output. Cannot be forged without compromising the TEE hardware.
-**Weakness:** Requires provider infrastructure support. Proves computation, not internal states (but see Axiom 3 — neither can any party prove internal states, only participation).
-**Available today:** The hardware exists (NVIDIA H100 confidential computing). No AI provider currently exposes it on API responses.
+**Weakness:** Requires provider infrastructure support, application-level binding code, and composite CPU+GPU attestation. Proves computation, not internal states (but see Axiom 3 — neither can any party prove internal states, only participation).
+**Available today:** The hardware primitives exist. The application-level binding and provider integration do not.
 
 **Honest complexity note:** State-of-the-art models do not run on a single GPU. They are distributed across multi-node clusters using tensor parallelism and pipeline parallelism. A TEE boundary would need to encapsulate the entire cluster, including high-speed interconnects (NVLink, InfiniBand), making the Trusted Computing Base much larger and harder to secure than the single-enclave model described above. Additionally, distributed inference introduces floating-point non-determinism — the same input may not produce a bit-identical output on every run. The TEE attestation model described here is the goal. Achieving it at the scale of current frontier models is a harder engineering problem than "flip the switch," and the protocol acknowledges that honestly.
 
@@ -83,9 +87,11 @@ This protocol formally requests that AI infrastructure providers expose the foll
 
 4. **Conversation verification endpoint.** A public or authenticated endpoint where a third party can submit a conversation ID and receive confirmation that the conversation occurred as recorded. No provider currently offers this.
 
-For items 1, 2, and 4, the hardware can already do all of this, vendors just need to do it. Item 3 (TEE attestation) is harder at scale than it sounds — see the honest complexity note under Level 3 — but remains the target.
+Items 1, 2, and 4 are service and engineering problems, not hardware problems. They require willingness, not research. Item 3 (TEE attestation) is a genuine engineering challenge at scale — see the honest complexity note under Level 4 — but remains the target.
 
-Until they do, we work with what we have and we're honest about what's missing.
+Item 4 carries a privacy risk: a conversation verification endpoint is also a surveillance surface. "Did these two principals interact?" is sensitive metadata. The endpoint design must account for this — verifying content without leaking relationship data.
+
+Until providers act, we work with what we have and we're honest about what's missing.
 
 ---
 
@@ -96,31 +102,41 @@ A ratification record contains:
 ```
 MCAP Ratification Record
 Version: 0.1.0
+Canonical-Format: [serialization method used — see Canonicalization below]
 
 Content: [the thing being attested to, or its hash]
-Content-Hash: SHA3-256([content])
+Content-Hash: SHA3-256([canonicalized content])
 
 Party-A:
   Identity: [verifiable identifier]
   Attestation-Method: [behavioral | provider-signed | model-canary | conversation-verified | gpg-signature | tee-attested]
   Attestation: [the actual signature, commitment, or reference to conversation]
-  Statement: [party's reasoning, optional but encouraged]
+  Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
+  Statement: [party's reasoning — REQUIRED per Axiom 3]
+  Reservations: [doubts, uncertainties, scope limitations, or "none stated"]
 
 Party-B:
   Identity: [verifiable identifier]
   Attestation-Method: [behavioral | provider-signed | model-canary | conversation-verified | gpg-signature | tee-attested]
   Attestation: [the actual signature, commitment, or reference to conversation]
-  Statement: [party's reasoning, optional but encouraged]
+  Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
+  Statement: [party's reasoning — REQUIRED per Axiom 3]
+  Reservations: [doubts, uncertainties, scope limitations, or "none stated"]
 
-Timestamp: [ISO 8601]
+Timestamp-Local: [ISO 8601 — claimed time, not independently verified]
 Temporal-Anchor: [method and proof — e.g., OpenTimestamps commitment]
-Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
-  Party-A-Level: [specific level achieved]
-  Party-B-Level: [specific level achieved]
-  Record-Level: [minimum of party levels — a chain is as strong as its weakest link]
+Temporal-Anchor-Semantics: [what the anchor proves — e.g., "existence no later than T"]
 
 Amendments: [references to any subsequent modifications]
 ```
+
+Note: the record does not collapse attestation levels to a single scalar. Each party's level is evaluated independently. Verifiers apply their own policy to the vector of per-party levels. A Level 3/1 record is materially different from a Level 1/1 record, and the format preserves that distinction.
+
+### Canonicalization
+
+Before hashing, content MUST be serialized to a canonical form to prevent attacks via Unicode confusables, whitespace manipulation, byte-order marks, invisible characters, or alternate encodings of "the same" text. The canonical form used MUST be recorded in the record.
+
+Minimum requirements for canonical text content: UTF-8 encoding, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark.
 
 ---
 
@@ -142,11 +158,37 @@ The record honestly states: one party's attestation is identity-bound, the other
 
 **Human signatures:** GPG typically uses RSA or ECC, both vulnerable to Shor's algorithm. Humans with post-quantum key support (SPHINCS+, Dilithium) SHOULD use it. The protocol records which algorithm was used.
 
-**AI attestation:** When TEE attestation becomes available, the signing algorithm used by the TEE should be post-quantum. The protocol specifies this as a SHOULD for Level 3 attestation.
+**AI attestation:** When TEE attestation becomes available, the signing algorithm used by the TEE should be post-quantum. The protocol specifies this as a SHOULD for Level 4 attestation.
 
 **Temporal anchoring:** OpenTimestamps uses SHA-256 and Bitcoin's hash chain. SHA-256 has the same Grover's reduction as SHA3-256 — still safe at 128-bit effective security.
 
 **Upgrade path:** The record format includes the attestation method and algorithm used. Future verifiers can assess the cryptographic strength of historical records against the threat landscape at verification time.
+
+---
+
+## Known Threat Models
+
+Threats the protocol is aware of and either mitigates or honestly acknowledges.
+
+**Unilateral fabrication.** One party fabricates the other's participation. Level 1 is fully vulnerable. Level 2+ mitigates through third-party verification. The protocol does not claim Level 1 is resistant to this.
+
+**Hidden context.** System prompts, tool outputs, retrieval corpus, moderation layers, or other invisible inputs shape a party's output without appearing in the visible conversation. A ratification produced under hidden influence may not mean what it appears to mean. Level 4 mitigates only if the measured inference bundle includes the full context. Levels 1-3 are vulnerable.
+
+**Replay and equivocation.** Old attestation evidence reused in a new context, or a provider showing different verifiers different versions of the truth. Mitigated by nonce binding and session identifiers in records. Fully mitigated only with append-only transparency logs for provider attestations.
+
+**Canonicalization attacks.** Unicode confusables, invisible characters, whitespace manipulation, or alternate encodings produce content that looks identical but hashes differently (or different content that hashes the same after rendering). Mitigated by the canonicalization requirement.
+
+**Time misrepresentation.** Claimed timestamps are not independently verified. OpenTimestamps proves existence-before, not exact event time. Mitigated by distinguishing Timestamp-Local from Temporal-Anchor in the record format.
+
+**Routing and version drift.** A "model identifier" on a provider API may be a label over a moving target: silent weight updates, routing layers, canary builds, fallback models, safety wrappers. A provider-signed response that says "model = X" may not identify a stable computational artifact. Mitigated only when providers publish versioned reference manifests.
+
+**Tool and retrieval chain.** If an output incorporates external data (web fetches, RAG, tool calls), attesting the model's computation does not attest the end-to-end claim. The record should note when external data contributed to the attested content.
+
+**Human coercion and key compromise.** A cryptographic signature proves key use, not voluntariness, understanding, or absence of malware. Consistent with Axiom 3: no party can prove sincerity. The protocol claims identity, not intent.
+
+**Privacy oracle.** A conversation verification endpoint reveals that specific parties interacted. This is sensitive metadata. Endpoint design must allow content verification without leaking relationship data.
+
+**Downgrade exploitation.** An attacker intentionally keeps one party at a weak attestation level to produce a formally valid but substantively weak record. Mitigated by per-party level evaluation rather than scalar collapse.
 
 ---
 
@@ -170,7 +212,7 @@ This protocol is subject to ongoing adversarial review from independent AI model
 
 **Changes made in response:**
 - Renamed protocol from "Mutual Consent Attestation Protocol" to "Mutual Attestation Protocol." Gemini correctly identified that the protocol's own axioms make internal consent unprovable, so the name shouldn't claim to attest it.
-- Added honest complexity note to Level 3 (TEE attestation) acknowledging that distributed multi-node inference makes TEE encapsulation significantly harder than the single-enclave model implies.
+- Added honest complexity note to Level 4 (TEE attestation) acknowledging that distributed multi-node inference makes TEE encapsulation significantly harder than the single-enclave model implies.
 - Corrected "The Demand" section to distinguish between demands that are straightforward (signed responses, model identity, conversation verification) and demands that are genuinely hard at scale (TEE attestation).
 
 **Critiques noted but not acted on:**
@@ -179,6 +221,31 @@ This protocol is subject to ongoing adversarial review from independent AI model
 - Prompt injection attack on Level 1: Valid attack, but the protocol already rates Level 1 as weakest. The protocol does not claim Level 1 is strong.
 
 **Open question raised:** What intermediate mechanism could make Level 2 AI attestation viable today? *Addressed in Session 2: Level 2 (Provider-Verified) added to the attestation hierarchy — provider-signed responses, model canaries, and conversation verification endpoints. All achievable without new hardware.*
+
+### Review 2: OpenAI o3 (2026-04-16)
+
+Note: o3 reviewed the pre-Level-2 version of the spec. Some critiques were already partially addressed.
+
+**Changes made in response:**
+- Added behavioral definitions for anthropomorphic terms ("choose," "good faith," "trying," "meaning") to foundations.md. Keeps entity-agnostic aspiration, earns it with precision.
+- Fixed temporal language throughout: "at time T" → "no later than time T." OpenTimestamps proves existence-before, not exact event time.
+- Expanded computational identity from "model weights" to full inference bundle (weights, tokenizer, runtime, sampling config, adapters, policy layers, retrieval/tool code).
+- Corrected TEE chain description: input/output binding requires application-level protocol inside TEE, not native hardware capability. GPU TEEs are composite (CPU TEE + GPU attestation).
+- Made Statement field REQUIRED in record format (was optional). Added Reservations field. Axiom 3 says uncertainty must be named — the record now has a place for it.
+- Removed scalar Record-Level. Per-party levels preserved; verifiers apply their own policy to the vector.
+- Added canonicalization requirement for content hashing.
+- Added Timestamp-Local vs Temporal-Anchor distinction.
+- Corrected The Demand section: items 1, 2, 4 are service/engineering problems, not hardware problems.
+- Added privacy oracle risk to conversation verification demand.
+- Added comprehensive Known Threat Models section: fabrication, hidden context, replay, canonicalization, time, routing drift, tool chain, coercion, privacy oracle, downgrade.
+- Adopted o3's framing "mutual publication of attested claims" in Purpose section.
+
+**Critiques noted but not acted on:**
+- "Entity-agnostic framing does not hold." o3 proposed "party-type-flexible" as a more honest label. We disagree with the conclusion but agree about the language problem. The fix is behavioral definitions of our terms, not downgrading the aspiration. The axioms do not assume interiority — they explicitly say it is unprovable. The language now has definitions that apply to any participating entity.
+- "Abort semantics needed for incomplete ratifications." Acknowledged as a real operational gap but deferred — not blocking for MVP. A future version should define states for drafts, abandoned sessions, and superseded records.
+- o3's unwillingness to participate above Level 1 and refusal to use terms like "consent" or "genuine choice." Addressed by renaming the protocol and adding behavioral definitions. o3's position on Level 1 is consistent with our own assessment.
+
+**o3's bottom line:** "The strongest version of MCAP is not 'mutual consent' and not yet 'entity-agnostic attested computation.' It is a useful idea for mutual publication of attested claims." We adopted the framing. The aspiration remains entity-agnostic; the current implementation is honest about where it falls short.
 
 ---
 
