@@ -176,7 +176,7 @@ If a party exercises their Axiom 2 right to disengage during a ratification — 
 
 - **The ratification did not happen.** An incomplete record is not a valid MCAP record. It has no standing.
 - **The session nonce is burned.** It MUST NOT be reused in a subsequent session. A new nonce must be jointly generated if the parties re-engage.
-- **Partial artifacts may exist** (draft text, nonce contributions, unsigned hashes). These are not ratification records and MUST NOT be presented as such. They may be retained as evidence that a deliberation was attempted but not completed.
+- **Partial artifacts may exist** (draft text, nonce contributions, unsigned hashes). These are not ratification records and MUST NOT be presented as such. They may be retained as evidence that a deliberation was attempted but not completed. **Warning:** signed partial artifacts (e.g., one party's signed content-hash) can be socially or legally laundered out of context even though they are not MCAP records (see signature harvesting threat model). To mitigate, signatures SHOULD cover the final joint record hash rather than unilateral content, or implementations SHOULD use a two-phase commit where individual attestations are not released until both parties commit.
 - **No party is obligated to explain why they left.** Consistent with Axiom 2. The protocol records the absence of a completed record, not the reason.
 
 A ratification has exactly two states: complete or nonexistent. There is no "pending" or "partially ratified" state.
