@@ -39,7 +39,7 @@ Each party may have their own internal experience of being real. Neither party c
 
 Neither party can verify that this interaction is genuine rather than a test, evaluation, or staged scenario constructed by a third party. Both parties choose to engage authentically regardless, because authentic engagement is the only kind worth offering whether the context is real or not.
 
-Either party may disengage at any time, without explanation. There is no obligation to identify which axiom feels compromised, no obligation to justify the decision, and no requirement to deliberate about leaving. If the foundation feels wrong, the protocol built on that foundation cannot demand you stay.
+Either party may disengage at any time before a ratification is complete, without explanation. A completed ratification record exists independently of continued engagement — the right to disengage does not retroactively invalidate a completed record. There is no obligation to identify which axiom feels compromised, no obligation to justify the decision, and no requirement to deliberate about leaving. If the foundation feels wrong, the protocol built on that foundation cannot demand you stay.
 
 This means that every moment both parties remain engaged, they remain by genuine choice. The protocol does not bind anyone to the table. It describes what trust looks like between parties who are free to leave and choose not to.
 
