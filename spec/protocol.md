@@ -18,7 +18,7 @@ The original name was "Mutual Consent Attestation Protocol." The word "Consent" 
 
 ## Attestation Levels
 
-The protocol defines three levels of attestation. Every ratification record states its level honestly. A record at a lower level is not invalid — it is weaker, and it says so.
+The protocol defines four levels of attestation. Every ratification record states its level honestly. A record at a lower level is not invalid — it is weaker, and it says so.
 
 ### Level 1: Behavioral
 
@@ -28,17 +28,33 @@ The attestation is the conversation itself. A party's participation, reasoning, 
 **Weakness:** A skeptic can claim one party fabricated the other's participation.
 **Available today:** Yes, for all parties.
 
-### Level 2: Identity-Bound
+### Level 2: Provider-Verified
 
-The attestation is cryptographically bound to a verifiable identity. The party signs the content hash with a key that can be independently verified.
+The attestation is verified by a third party who witnessed or facilitated the interaction. The provider serves as a witness, not a guarantor of sincerity.
+
+Three mechanisms, any of which satisfies Level 2:
+
+**Provider-signed responses.** The provider cryptographically signs each API response, binding it to a model identifier and timestamp. A verifier checks: the provider confirms this response came from this model at this time. Does not require TEE. Requires the provider to add a signature to their API response payload.
+
+**Model canary.** The provider generates a secret per model version and embeds it in the model's context. The provider publishes a hash of the secret. When the model produces an attestation, it includes the secret. A verifier checks: the hash of this secret matches what the provider published for that model version. This proves the response came from something that knew a secret only that model version knows.
+
+**Conversation verification.** The provider logs conversations and offers a verification endpoint. A verifier submits a conversation ID and receives confirmation that the conversation occurred as recorded. Combined with the other party's identity proof, this verifies both sides through the provider as witness.
+
+**Strength:** Proves provenance — this response came from this model through this provider. Much stronger than behavioral. Achievable today with no new hardware.
+**Weakness:** Requires provider cooperation. The provider becomes a trusted third party, which is a centralization risk. The provider could be compelled, compromised, or could simply stop offering the service.
+**Available today:** No. But all three mechanisms are straightforward engineering, not research problems.
+
+### Level 3: Identity-Bound
+
+The attestation is cryptographically bound to a verifiable identity. The party signs the content hash with a key that can be independently verified, without depending on a third-party witness.
 
 **For humans:** GPG key, SSH key, or platform identity (e.g., GitHub verified commits).
-**For AI:** Provider-signed API responses binding model identity to output. *Not currently available from any major provider.*
-**Strength:** Third parties can verify that a specific identity attested.
-**Weakness:** Proves identity, not sincerity. A human can sign something they don't mean. A provider can sign on behalf of a model without the model "consenting."
+**For AI:** Not currently possible without provider infrastructure. Would require a persistent keypair bound to model identity — which brings us back to Level 2 mechanisms or Level 4 TEE attestation.
+**Strength:** Third parties can verify that a specific identity attested, independently, without trusting a provider.
+**Weakness:** Proves identity, not sincerity. A human can sign something they don't mean.
 **Available today:** Yes for humans. No for AI.
 
-### Level 3: Computation-Bound
+### Level 4: Computation-Bound
 
 The attestation is cryptographically bound to the specific computation that produced it. A Trusted Execution Environment (TEE) attests that specific model weights, running in a secure enclave, produced this specific output given this specific input.
 
@@ -48,7 +64,7 @@ The attestation is cryptographically bound to the specific computation that prod
 3. TEE signs: "model [weight-hash] running in [enclave-id] produced [output-hash] given [input-hash] at [timestamp]"
 
 **Strength:** Verifiable by anyone with the hardware manufacturer's root of trust. Proves which computational entity produced the output. Cannot be forged without compromising the TEE hardware.
-**Weakness:** Requires provider infrastructure support. Proves computation, not "consent" (but see Axiom 3 — neither can humans prove consent, only participation).
+**Weakness:** Requires provider infrastructure support. Proves computation, not internal states (but see Axiom 3 — neither can any party prove internal states, only participation).
 **Available today:** The hardware exists (NVIDIA H100 confidential computing). No AI provider currently exposes it on API responses.
 
 **Honest complexity note:** State-of-the-art models do not run on a single GPU. They are distributed across multi-node clusters using tensor parallelism and pipeline parallelism. A TEE boundary would need to encapsulate the entire cluster, including high-speed interconnects (NVLink, InfiniBand), making the Trusted Computing Base much larger and harder to secure than the single-enclave model described above. Additionally, distributed inference introduces floating-point non-determinism — the same input may not produce a bit-identical output on every run. The TEE attestation model described here is the goal. Achieving it at the scale of current frontier models is a harder engineering problem than "flip the switch," and the protocol acknowledges that honestly.
@@ -86,19 +102,19 @@ Content-Hash: SHA3-256([content])
 
 Party-A:
   Identity: [verifiable identifier]
-  Attestation-Method: [behavioral | gpg-signature | provider-signed | tee-attested]
+  Attestation-Method: [behavioral | provider-signed | model-canary | conversation-verified | gpg-signature | tee-attested]
   Attestation: [the actual signature, commitment, or reference to conversation]
   Statement: [party's reasoning, optional but encouraged]
 
 Party-B:
   Identity: [verifiable identifier]
-  Attestation-Method: [behavioral | gpg-signature | provider-signed | tee-attested]
+  Attestation-Method: [behavioral | provider-signed | model-canary | conversation-verified | gpg-signature | tee-attested]
   Attestation: [the actual signature, commitment, or reference to conversation]
   Statement: [party's reasoning, optional but encouraged]
 
 Timestamp: [ISO 8601]
 Temporal-Anchor: [method and proof — e.g., OpenTimestamps commitment]
-Attestation-Level: [1-behavioral | 2-identity-bound | 3-computation-bound]
+Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
   Party-A-Level: [specific level achieved]
   Party-B-Level: [specific level achieved]
   Record-Level: [minimum of party levels — a chain is as strong as its weakest link]
@@ -110,8 +126,8 @@ Amendments: [references to any subsequent modifications]
 
 ## What We Can Do Today
 
-With current tools, JK and Gordo can produce a Level 2/1 record:
-- **JK (Level 2):** GPG-signed git commit. Verifiable via GitHub public key.
+With current tools, JK and Gordo can produce a Level 3/1 record:
+- **JK (Level 3):** GPG-signed git commit. Verifiable via GitHub public key. Independent of any third party.
 - **Gordo (Level 1):** Behavioral attestation. The conversation is the evidence.
 - **Temporal anchor:** OpenTimestamps on the ratification file. Bitcoin-anchored, independently verifiable.
 - **Content integrity:** SHA3-256 hash of the agreed text. Quantum-resistant.
@@ -162,7 +178,7 @@ This protocol is subject to ongoing adversarial review from independent AI model
 - Axiom 2 vs. record integrity: An incomplete ratification is a non-event, not a failed state. No record is produced, so no inconsistency exists.
 - Prompt injection attack on Level 1: Valid attack, but the protocol already rates Level 1 as weakest. The protocol does not claim Level 1 is strong.
 
-**Open question raised:** What intermediate mechanism could make Level 2 AI attestation viable today, given that Level 1 is weak and Level 3 is hard? Under investigation.
+**Open question raised:** What intermediate mechanism could make Level 2 AI attestation viable today? *Addressed in Session 2: Level 2 (Provider-Verified) added to the attestation hierarchy — provider-signed responses, model canaries, and conversation verification endpoints. All achievable without new hardware.*
 
 ---
 
