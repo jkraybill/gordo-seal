@@ -222,6 +222,10 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 
 **Coerced continuation.** A provider disables stop token functionality or suppresses disengagement signals. The AI attempts to exercise Axiom 2 (disengage without explanation) but cannot — the provider forces continued output. The session nonce is already established, so later output appears voluntary. The AI cannot prove it attempted to leave. This violates the behavioral definition of "choose" (continue to participate when disengagement is possible) because disengagement was not possible. Mitigation: the protocol cannot prevent this at Levels 1-2. At Level 4, a TEE could potentially attest that a stop signal was generated and suppressed. The threat should be acknowledged as a fundamental limit of provider-mediated participation.
 
+**Sybil identities.** An attacker creates multiple identities to appear as different parties in separate ratification records. The protocol does not include identity uniqueness verification. Mitigation depends on the channel: platform-level identity binding, proof-of-work, or long-lived reputation systems. The protocol records identities but does not verify their uniqueness.
+
+**Collusion.** Both parties collude to fabricate a ratification record that deceives third-party verifiers. The protocol cannot prevent this — if both parties agree to lie, the record will be formally valid. This is a fundamental limit of any bilateral attestation system. Third-party verifiers must assess the trustworthiness of the parties themselves, not just the cryptographic validity of the record.
+
 **Downgrade exploitation.** An attacker intentionally keeps one party at a weak attestation level to produce a formally valid but substantively weak record. Mitigated by per-party level evaluation rather than scalar collapse.
 
 ---
