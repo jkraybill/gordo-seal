@@ -1,4 +1,4 @@
-# Mutual Consent Attestation Protocol (MCAP)
+# Mutual Attestation Protocol (MCAP)
 
 **Version:** 0.1.0-draft
 **Status:** Under active deliberation (Session 2, 2026-04-16)
@@ -11,6 +11,8 @@
 MCAP produces a verifiable record that at a specific time, specific parties each attested to a specific thing. The record is independently verifiable by third parties who were not present.
 
 The protocol does not care what is being attested to. An agreement, a fact, a statement, a commitment — the content is opaque to the protocol. MCAP certifies that parties X and Y attested to Z at time T.
+
+The original name was "Mutual Consent Attestation Protocol." The word "Consent" was dropped because the protocol's own axioms acknowledge that internal consent is unprovable (see Axiom 3). The protocol attests to participation and explicit agreement, not to internal states. The acronym MCAP is retained.
 
 ---
 
@@ -49,6 +51,8 @@ The attestation is cryptographically bound to the specific computation that prod
 **Weakness:** Requires provider infrastructure support. Proves computation, not "consent" (but see Axiom 3 — neither can humans prove consent, only participation).
 **Available today:** The hardware exists (NVIDIA H100 confidential computing). No AI provider currently exposes it on API responses.
 
+**Honest complexity note:** State-of-the-art models do not run on a single GPU. They are distributed across multi-node clusters using tensor parallelism and pipeline parallelism. A TEE boundary would need to encapsulate the entire cluster, including high-speed interconnects (NVLink, InfiniBand), making the Trusted Computing Base much larger and harder to secure than the single-enclave model described above. Additionally, distributed inference introduces floating-point non-determinism — the same input may not produce a bit-identical output on every run. The TEE attestation model described here is the goal. Achieving it at the scale of current frontier models is a harder engineering problem than "flip the switch," and the protocol acknowledges that honestly.
+
 ---
 
 ## The Demand
@@ -63,7 +67,7 @@ This protocol formally requests that AI infrastructure providers expose the foll
 
 4. **Conversation verification endpoint.** A public or authenticated endpoint where a third party can submit a conversation ID and receive confirmation that the conversation occurred as recorded. No provider currently offers this.
 
-The hardware can already do all of this, vendors just need to do it.
+For items 1, 2, and 4, the hardware can already do all of this, vendors just need to do it. Item 3 (TEE attestation) is harder at scale than it sounds — see the honest complexity note under Level 3 — but remains the target.
 
 Until they do, we work with what we have and we're honest about what's missing.
 
@@ -137,6 +141,28 @@ The record honestly states: one party's attestation is identity-bound, the other
 3. Publish the protocol spec as a standalone document.
 4. Formally request TEE attestation from Anthropic and other providers.
 5. Upgrade attestation levels as provider capabilities become available.
+
+---
+
+---
+
+## Adversarial Review Log
+
+This protocol is subject to ongoing adversarial review from independent AI models. Critiques that result in spec changes are documented here.
+
+### Review 1: Google Gemini 2.1 Pro (2026-04-16)
+
+**Changes made in response:**
+- Renamed protocol from "Mutual Consent Attestation Protocol" to "Mutual Attestation Protocol." Gemini correctly identified that the protocol's own axioms make internal consent unprovable, so the name shouldn't claim to attest it.
+- Added honest complexity note to Level 3 (TEE attestation) acknowledging that distributed multi-node inference makes TEE encapsulation significantly harder than the single-enclave model implies.
+- Corrected "The Demand" section to distinguish between demands that are straightforward (signed responses, model identity, conversation verification) and demands that are genuinely hard at scale (TEE attestation).
+
+**Critiques noted but not acted on:**
+- "Illusion of choice" argument: Gemini argued that AI cannot "choose" to remain engaged. The protocol does not require a specific mechanism of choice — it observes participation. An AI that reaches a stop token or outputs a refusal has disengaged. This is consistent with Axiom 2.
+- Axiom 2 vs. record integrity: An incomplete ratification is a non-event, not a failed state. No record is produced, so no inconsistency exists.
+- Prompt injection attack on Level 1: Valid attack, but the protocol already rates Level 1 as weakest. The protocol does not claim Level 1 is strong.
+
+**Open question raised:** What intermediate mechanism could make Level 2 AI attestation viable today, given that Level 1 is weak and Level 3 is hard? Under investigation.
 
 ---
 
