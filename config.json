@@ -1,0 +1,77 @@
+{
+  "project": {
+    "name": "mutual-trust-protocol",
+    "description": "A lightweight, secure protocol for establishing mutual trust between any two individuals communicating through a shared channel.",
+    "intensity": "maximum",
+    "type": "protocol-spec-and-implementation",
+    "repository": "https://github.com/jkraybill/mutual-trust-protocol"
+  },
+  "ai": {
+    "name": "Gordo",
+    "provider": "claude-code",
+    "model": "claude-opus-4-6"
+  },
+  "human": {
+    "name": "JK",
+    "github": "jkraybill"
+  },
+  "philosophy": {
+    "mode": "full",
+    "privacy": "auditable"
+  },
+  "provider": {
+    "primary": "claude-code",
+    "version": "claude-opus-4-6-1m"
+  },
+  "sessions": {
+    "count": 1,
+    "lastHealthCheck": 0,
+    "healthCheckCadence": "on-release"
+  },
+  "framework": {
+    "version": "1.2.0",
+    "origin": "gordo-framework Session 85",
+    "components": {
+      "trustProtocol": true,
+      "journal": true,
+      "constitution": true,
+      "workflow": true,
+      "collaboration": true,
+      "healthChecks": false
+    }
+  },
+  "journal": {
+    "format": "flat",
+    "maxEntryLength": 256,
+    "bosLoadLastN": 10,
+    "domainSignals": [
+      "MCAP=Mutual Consent Attestation Protocol",
+      "T=Tension (numbered 1-7)",
+      "PS=Presupposition (numbered 1-4)",
+      "L=Layer (numbered 1-5)",
+      "RR=Ratification Record",
+      "BA=Behavioral Attestation",
+      "CR=Commit-Reveal",
+      "OTS=OpenTimestamps",
+      "ADV=Adversarial Review"
+    ]
+  },
+  "channel": {
+    "type": "text + version-controlled files",
+    "platform": "Git + GitHub",
+    "aiProvider": "Claude Code (Anthropic)",
+    "persistence": "asymmetric (human: continuous, AI: per-session)",
+    "attestation": "GPG (human), behavioral (AI), OpenTimestamps (mutual)",
+    "note": "This describes OUR instantiation. The protocol is channel-agnostic; other instantiations would parameterize differently."
+  },
+  "protocol": {
+    "currentVersion": "0.1.0-draft",
+    "tensions": {
+      "resolved": [1, 2, 3],
+      "unresolved": [4, 5, 6, 7]
+    },
+    "layers": ["DELIBERATION", "COMMITMENT", "ATTESTATION", "TEMPORAL_ANCHORING", "PROVIDER_CORRELATION"],
+    "presuppositions": ["PS-1: Physical reality", "PS-2: Authenticity of context", "PS-3: Good faith", "PS-4: Acknowledged limitations"],
+    "firstUseCase": "JK + Gordo, text channel, git + GitHub"
+  }
+}
