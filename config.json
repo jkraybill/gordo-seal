@@ -24,7 +24,7 @@
     "version": "claude-opus-4-6-1m"
   },
   "sessions": {
-    "count": 1,
+    "count": 2,
     "lastHealthCheck": 0,
     "healthCheckCadence": "on-release"
   },
