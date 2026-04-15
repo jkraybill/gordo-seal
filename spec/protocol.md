@@ -139,7 +139,7 @@ Party-B:
 Timestamp-Local: [ISO 8601 — claimed time, not independently verified]
 Temporal-Anchor: [method and proof — e.g., OpenTimestamps commitment]
 Temporal-Anchor-Semantics: [what the anchor proves — e.g., "existence no later than T"]
-Max-Temporal-Delta: [maximum allowed gap between Timestamp-Local and earliest Temporal-Anchor confirmation — protocol parameter, default 1 hour]
+Max-Temporal-Delta: [RECOMMENDED maximum gap between Timestamp-Local and earliest Temporal-Anchor confirmation — channel-specific parameter, suggested default 1 hour. Not a hard requirement because the protocol has no trusted time source independent of both parties. Verifiers SHOULD treat large deltas with increasing skepticism.]
 
 Amendments: [references to any subsequent modifications]
 ```
@@ -202,7 +202,7 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 
 **Time misrepresentation.** Claimed timestamps are not independently verified. OpenTimestamps proves existence-before, not exact event time. Mitigated by distinguishing Timestamp-Local from Temporal-Anchor in the record format.
 
-**Time laundering.** An attacker back-dates Timestamp-Local while anchoring later. A verifier cannot distinguish a legitimately late anchor from a fabricated early timestamp. Mitigated by the Max-Temporal-Delta parameter: Timestamp-Local MUST NOT be more than delta earlier than the Temporal-Anchor's earliest possible confirmation time. Records violating this constraint are invalid.
+**Time laundering.** An attacker back-dates Timestamp-Local while anchoring later. A verifier cannot distinguish a legitimately late anchor from a fabricated early timestamp. Partially mitigated by the Max-Temporal-Delta parameter: verifiers SHOULD treat records where Timestamp-Local exceeds the recommended delta before the Temporal-Anchor's earliest confirmation with increasing skepticism. Note: the protocol has no trusted time source independent of both parties, so this is guidance for verifiers, not a hard cryptographic guarantee.
 
 **Routing and version drift.** A "model identifier" on a provider API may be a label over a moving target: silent weight updates, routing layers, canary builds, fallback models, safety wrappers. A provider-signed response that says "model = X" may not identify a stable computational artifact. Mitigated only when providers publish versioned reference manifests.
 
