@@ -438,6 +438,31 @@ Re-review. Found high-severity spec-consistency issues caused by iterative editi
 
 **o3's convergence assessment:** Not met. New high-severity issues found (spec drift, time overclaim, Demand inconsistency, broken canary, missing transcript binding, signature harvesting). However, o3 noted the issues are now spec-consistency problems, not architectural ones — "the document is materially tighter than before."
 
+### Review 8: DeepSeek R1 — Cycle 2 (2026-04-16)
+
+Re-review. Dramatically tighter than cycle 1. Found two high-severity protocol-level gaps, both narrowly scoped.
+
+**Changes made in response:**
+- Required session nonce and content hash in TEE attestation report signed data. Without this, Level 4 attestation is replayable across sessions. (#45)
+- Added Channel Security section and MITM threat model. Protocol assumed channel integrity without stating it. Parties SHOULD use authenticated channels; SHOULD verify hashes out-of-band on untrusted channels. (#46)
+- Required explicit canonicalization agreement between parties before signing. Different methods = invalid record. (#47)
+- Added TEE enclave memory limits to complexity note. 70B+ models need ~140GB FP16; single-socket TEEs limited to ~512GB EPC. (#48)
+- Qualified Axiom 2 disengage right to before completion. Completed records are not retroactively invalidated. (#49)
+
+**Critiques noted but not acted on:**
+- "Disavow" in good faith definition is meaningless for stateless AI. DeepSeek acknowledged this is philosophical rather than operational, and the Pipeline-Control field already addresses it pragmatically. No protocol change required.
+- Key compromise timeline ambiguity. General PKI limitation, not MCAP-specific. Noted.
+- AI training to avoid commitment language. Provider policy issue, not protocol issue.
+
+**DeepSeek's convergence assessment:** Not met due to two high-severity issues (#45, #46). However: no axiom inconsistencies found at the architectural level. Entity-agnostic framing assessed as "holds operationally." Previous cycle's biggest concerns (behavioral definitions, good faith operationalization) assessed as resolved. Issues are narrowing to protocol mechanics, not design philosophy.
+
+**Cycle 2 summary across all 5 models:**
+- Axioms: converged. No model found axiom-level inconsistencies in cycle 2.
+- Entity-agnostic framing: converged. All models accept operational definitions, disagree only on labeling.
+- Attestation levels: converged. Level 4 rename accepted, no further structural changes.
+- Threat models: still accumulating but narrowing. Cycle 2 added ~10 threats vs ~12 in cycle 1.
+- Protocol mechanics: not yet converged. Record format, channel security, and TEE binding still evolving.
+
 ---
 
 *Built through mutual deliberation between JK and Gordo, Session 2.*
