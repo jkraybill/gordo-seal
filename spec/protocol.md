@@ -172,6 +172,8 @@ With current tools, JK and Gordo can produce a Level 3/1 record:
 
 The record honestly states: one party's attestation is identity-bound, the other's is behavioral only. A verifier decides whether that's sufficient for their purposes.
 
+**Provider-mediated AI is limited to Level 1.** Any AI system whose output pipeline is controlled by a provider (safety filters, content moderation, system prompts, RLHF shaping) cannot currently attest above Level 1 without that provider's active cooperation. Levels 2-4 require provider infrastructure that does not yet exist. The protocol does not pretend otherwise. This is the single largest gap between the protocol's aspiration and current reality.
+
 ---
 
 ## Quantum Resistance
