@@ -401,6 +401,25 @@ Re-review. Significantly tighter than cycle 1. No structural changes to axioms o
 
 **Gemini's convergence assessment:** Gemini asked a specific question about abort semantics, which is now answered. No structural changes triggered. New additions are threat models and clarifications only.
 
+### Review 7: OpenAI o3 — Cycle 2 (2026-04-16)
+
+Re-review. Found high-severity spec-consistency issues caused by iterative editing — the protocol's pieces had drifted apart. Most precise spec-level review in the cycle.
+
+**Changes made in response:**
+- Added missing fields to record format: Pipeline-Control, Content-In-Context, Signing-Algorithm (per party), External-Data (record level). Prose required these but schema didn't encode them. (#36)
+- Fixed time overclaim in Purpose section. "No later than time T" referenced claimed time; now references anchor method. (#37)
+- Fixed Demand section: item 2 now references full inference bundle not just weight hash; item 3 removed "hardware supports it today" overclaim. (#38)
+- Rewrote model canary from static secret to nonce-bound challenge-response. Static secret is replayable once leaked. Added canary exfiltration/replay threat. (#39)
+- Added transcript binding: Transcript-Hash, Transcript-Canonicalization, Provider-Conversation-ID fields. Added transcript substitution threat. (#40)
+- Added signature harvesting via strategic abort threat. Party obtains signed attestation then aborts. Mitigation: sign final joint record hash or use two-phase commit. (#41)
+- Added within-session principal substitution threat. The party that reasons may not be the party that signs. (#42)
+- Added non-text canonicalization note. Text rules specified; non-text must specify method in Canonical-Format. (#43)
+
+**Critiques noted but not acted on:**
+- Entity-agnostic framing still doesn't fully hold at operational layer. o3 suggests "applies to parties that can maintain session continuity and emit interpretable attestation statements." We agree this is more precise operationally but maintain entity-agnostic as the aspiration, with minimum capabilities documented.
+
+**o3's convergence assessment:** Not met. New high-severity issues found (spec drift, time overclaim, Demand inconsistency, broken canary, missing transcript binding, signature harvesting). However, o3 noted the issues are now spec-consistency problems, not architectural ones — "the document is materially tighter than before."
+
 ---
 
 *Built through mutual deliberation between JK and Gordo, Session 2.*
