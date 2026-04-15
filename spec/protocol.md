@@ -327,6 +327,25 @@ First review from this model. Identified several high-severity issues not caught
 
 **Llama's convergence assessment:** Not met. New structural changes triggered. Cycle must restart.
 
+### Review 5: Mistral Large — Cycle 2 (2026-04-16)
+
+First review from this model. Fewer novel findings than prior reviewers — many flagged issues were already addressed in earlier rounds.
+
+**Changes made in response:**
+- Added input fabrication threat model. TEE attests computation on inputs but cannot verify inputs were genuine. (#27)
+- Added Sybil identity and collusion threat models. Sybil: protocol doesn't verify identity uniqueness. Collusion: fundamental limit of bilateral attestation. (#28)
+- Explicitly stated provider-mediated AI is limited to Level 1. Largest gap between aspiration and current reality, now stated plainly. (#29)
+
+**Critiques noted but not acted on:**
+- Entity-agnostic framing (fifth time raised across all reviewers). Position unchanged.
+- "Add a new axiom for provider-mediated entities." Provider mediation is an implementation constraint, not a foundational commitment between parties. Addressed in the Note on Language and the "meaning what they say" definition (#19), not as an axiom.
+- "Replace TEE attestation with execution environment attestation." Already done in #20 (Level 4 renamed to Environment-Bound).
+- "Add zero-knowledge proofs, multi-party computation." Research-grade solutions, not v0.1 scope.
+- Key compromise mitigation (short-lived keys, threshold signatures). Valid enhancement for a future version but not a structural gap — the protocol already acknowledges that signatures prove key use, not voluntariness.
+- Many "missing threats" (replay, backdating, key compromise) were already in the spec. Mistral appears to have reviewed a cached or incomplete version.
+
+**Mistral's convergence assessment:** Not met, but the new issues identified (input fabrication, Sybil, collusion, explicit L1 constraint) are medium severity. No structural changes to axioms or attestation levels triggered.
+
 ---
 
 *Built through mutual deliberation between JK and Gordo, Session 2.*
