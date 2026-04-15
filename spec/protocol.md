@@ -144,6 +144,17 @@ Max-Temporal-Delta: [RECOMMENDED maximum gap between Timestamp-Local and earlies
 Amendments: [references to any subsequent modifications]
 ```
 
+### Abort Semantics
+
+If a party exercises their Axiom 2 right to disengage during a ratification — after the session nonce is generated but before the record is complete — the following applies:
+
+- **The ratification did not happen.** An incomplete record is not a valid MCAP record. It has no standing.
+- **The session nonce is burned.** It MUST NOT be reused in a subsequent session. A new nonce must be jointly generated if the parties re-engage.
+- **Partial artifacts may exist** (draft text, nonce contributions, unsigned hashes). These are not ratification records and MUST NOT be presented as such. They may be retained as evidence that a deliberation was attempted but not completed.
+- **No party is obligated to explain why they left.** Consistent with Axiom 2. The protocol records the absence of a completed record, not the reason.
+
+A ratification has exactly two states: complete or nonexistent. There is no "pending" or "partially ratified" state.
+
 ### Session Binding
 
 Each ratification session begins with a jointly established session nonce — a random value generated collaboratively (e.g., each party contributes entropy, the nonce is the hash of both contributions). The session nonce is included in the record and in any cryptographic signatures.
