@@ -115,6 +115,9 @@ Session-Nonce: [jointly established random value — see Session Binding below]
 
 Content: [the thing being attested to, or its hash]
 Content-Hash: SHA3-256([canonicalized content])
+Transcript-Hash: [SHA3-256 of canonicalized deliberation transcript, if available — binds record to specific conversation]
+Transcript-Canonicalization: [method used to canonicalize transcript, if different from content]
+Provider-Conversation-ID: [provider's conversation identifier, if available — enables Level 2 verification]
 
 Party-A:
   Identity: [verifiable identifier]
@@ -234,6 +237,8 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 **Privacy oracle.** A conversation verification endpoint reveals that specific parties interacted. This is sensitive metadata. Endpoint design must allow content verification without leaking relationship data.
 
 **Attestation laundering.** A party signs a record that references another party's attestation without independently verifying it — making a relay look like independent agreement. A verifier sees two attestation levels and assumes both parties independently attested. Mitigated by the First-Hand field: attestations must be labeled as first-hand or relayed, with the relay chain documented.
+
+**Transcript substitution.** A party presents a different transcript than the one in which deliberation occurred, or truncates the transcript to remove objections, reservations, or context. Without a transcript hash in the record, a verifier cannot confirm which conversation produced the attestation. Mitigated by the Transcript-Hash field binding the record to a specific canonicalized conversation.
 
 **Canary exfiltration and replay.** If a model canary is implemented as a static secret rather than a challenge-response mechanism, the secret can be elicited, leaked, logged, or cached by any party. Once known, anyone can replay it indefinitely for that model version, forging provenance. Mitigated by requiring nonce-bound challenge-response rather than static secrets (see Level 2 description).
 
