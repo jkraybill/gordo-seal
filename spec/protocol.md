@@ -22,6 +22,8 @@ The original name was "Mutual Consent Attestation Protocol." The word "Consent" 
 
 The protocol defines four levels of attestation. Every ratification record states its level honestly. A record at a lower level is not invalid — it is weaker, and it says so.
 
+**A note on Axiom 1 and attestation hierarchy:** Axiom 1 says neither party's claim to physical reality is granted more weight. The attestation levels do not contradict this. They do not claim that a party with hardware attestation is "more real." They claim that the *provenance of an output* can be verified with different degrees of confidence. A Level 4 attestation says "this output came from this environment" — not "this entity is more real than one attesting at Level 1." The hierarchy measures verifiability of output origin, not reality of the party.
+
 ### Level 1: Behavioral
 
 The attestation is the conversation itself. A party's participation, reasoning, and explicit statement of agreement constitute the evidence. No cryptographic binding to identity or computation.
