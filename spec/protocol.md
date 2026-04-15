@@ -63,9 +63,9 @@ This protocol formally requests that AI infrastructure providers expose the foll
 
 4. **Conversation verification endpoint.** A public or authenticated endpoint where a third party can submit a conversation ID and receive confirmation that the conversation occurred as recorded. No provider currently offers this.
 
-These are not theoretical requirements. The silicon exists. The cryptographic primitives exist. The missing piece is provider willingness to expose what their infrastructure already supports.
+The hardware can already do all of this, vendors just need to do it.
 
-Until these capabilities are available, the protocol operates at reduced attestation levels and states so honestly in every record.
+Until they do, we work with what we have and we're honest about what's missing.
 
 ---
 
