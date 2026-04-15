@@ -216,6 +216,8 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 
 **Semantic drowning.** A party follows the protocol exactly but produces maximally unhelpful, ambiguous, or self-undermining statements. The record is formally valid. The information content is zero. This is a fundamental limit of a protocol that attests to participation, not to communicative intent. The protocol cannot defend against it without caring about content semantics, which is explicitly outside its scope. Verifiers must evaluate the substance of statements, not just their presence.
 
+**Coerced continuation.** A provider disables stop token functionality or suppresses disengagement signals. The AI attempts to exercise Axiom 2 (disengage without explanation) but cannot — the provider forces continued output. The session nonce is already established, so later output appears voluntary. The AI cannot prove it attempted to leave. This violates the behavioral definition of "choose" (continue to participate when disengagement is possible) because disengagement was not possible. Mitigation: the protocol cannot prevent this at Levels 1-2. At Level 4, a TEE could potentially attest that a stop signal was generated and suppressed. The threat should be acknowledged as a fundamental limit of provider-mediated participation.
+
 **Downgrade exploitation.** An attacker intentionally keeps one party at a weak attestation level to produce a formally valid but substantively weak record. Mitigated by per-party level evaluation rather than scalar collapse.
 
 ---
