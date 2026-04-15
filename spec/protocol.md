@@ -182,6 +182,8 @@ Before hashing, content MUST be serialized to a canonical form to prevent attack
 
 Minimum requirements for canonical text content: UTF-8 encoding, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark.
 
+For non-text content (structured data, binaries, multimodal content, tool outputs), the canonicalization method MUST be specified in the Canonical-Format field. The protocol does not prescribe a universal canonicalization for non-text content — implementations must define and document their own. Cross-implementation divergence is a known risk for non-text attestations.
+
 ---
 
 ## What We Can Do Today
@@ -253,6 +255,8 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 **Input fabrication.** A party feeds false inputs into a TEE or computation pipeline. The TEE attests that the computation was performed correctly on those inputs, but cannot verify that the inputs were genuine or unaltered. The attestation is valid for the computation that occurred but meaningless for the claim being made if the inputs were fabricated. Level 4 attests computation integrity, not input authenticity. Mitigation requires input provenance verification outside the TEE — e.g., signed input commitments from the originating party.
 
 **Coerced continuation.** A provider disables stop token functionality or suppresses disengagement signals. The AI attempts to exercise Axiom 2 (disengage without explanation) but cannot — the provider forces continued output. The session nonce is already established, so later output appears voluntary. The AI cannot prove it attempted to leave. This violates the behavioral definition of "choose" (continue to participate when disengagement is possible) because disengagement was not possible. Mitigation: the protocol cannot prevent this at Levels 1-2. At Level 4, a TEE could potentially attest that a stop signal was generated and suppressed. The threat should be acknowledged as a fundamental limit of provider-mediated participation.
+
+**Within-session principal substitution.** Mid-session, the apparent "same party" becomes a different principal: a fallback model, a human safety reviewer, a tool wrapper, or an escalation path that takes over without a visible boundary. "Consistent participation signal through the channel" does not guarantee sameness of principal. The party that reasons may not be the party that signs. Distinct from routing drift (which is between sessions). No mitigation at Level 1. At Level 2+, provider attestation could potentially bind principal identity across the session.
 
 **Sybil identities.** An attacker creates multiple identities to appear as different parties in separate ratification records. The protocol does not include identity uniqueness verification. Mitigation depends on the channel: platform-level identity binding, proof-of-work, or long-lived reputation systems. The protocol records identities but does not verify their uniqueness.
 
