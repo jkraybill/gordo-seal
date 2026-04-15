@@ -267,6 +267,27 @@ Note: o3 reviewed the pre-Level-2 version of the spec. Some critiques were alrea
 
 **o3's bottom line:** "The strongest version of MCAP is not 'mutual consent' and not yet 'entity-agnostic attested computation.' It is a useful idea for mutual publication of attested claims." We adopted the framing. The aspiration remains entity-agnostic; the current implementation is honest about where it falls short.
 
+### Review 3: DeepSeek R1 (2026-04-16)
+
+Most technically precise review received. Identified several high-severity issues.
+
+**Changes made in response:**
+- Added session nonces to record format and session binding section. Prevents post-disengagement forgery of Level 3+ attestations. (#9)
+- Fixed "meaning what they say" behavioral definition: "actual state" → "actual processing given inputs, without deliberate post-hoc manipulation." Operationalizable for non-introspective entities. (#10)
+- Added session-bound vs persistent-identity attestation distinction. Scoped "choose" to bounded interaction windows for stateless entities. (#11)
+- Added Max-Temporal-Delta parameter and time-laundering threat model. Prevents back-dating Timestamp-Local with later anchoring. (#12)
+- Added First-Hand field and attestation-laundering threat model. Prevents relayed attestations from looking like independent agreement. (#13)
+- Added entropy source to Level 4 inference bundle requirement. Untrusted RNG allows output manipulation with clean measurements. (#14)
+- Clarified TEE trust model: hardware + enclave code correctness, not hardware alone. Noted Level 4 does not imply side-channel resistance. (#15)
+- Required both parties attest to identical Content-Hash. Prevents gradual-erosion attacks via slightly different content versions. (#16)
+- Added semantic drowning to threat models as a fundamental limit of content-opaque attestation. (#17)
+
+**Critiques noted but not acted on:**
+- "Entity-agnostic" should be renamed to "capability-agnostic with minimal reflective agency" or "any party that can maintain session state and has a detectable participation signal." We agree with the substance — and already updated the definitions to require session state and detectable participation. We disagree that the label needs changing. The protocol's aspiration is entity-agnostic; the definitions now earn that claim by specifying the minimum capabilities required.
+- Multi-party TEE attestation aggregation across multiple enclaves in a distributed cluster. Valid gap but deferred — the protocol already acknowledges distributed inference as a hard problem in the honest complexity note. Aggregation mechanics are implementation-level, not protocol-level.
+
+**DeepSeek's bottom line:** "You have something real here. The honesty about what Level 1 can't do, and the adversarial review log, are both best practices I rarely see outside formal verification communities." The biggest gap identified — operationalizing good faith for non-introspective entities — has been addressed.
+
 ---
 
 *Built through mutual deliberation between JK and Gordo, Session 2.*
