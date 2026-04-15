@@ -69,6 +69,7 @@ TEEs (Intel TDX, AMD SEV-SNP, NVIDIA H100 GPU-CC) attest *environment measuremen
 1. The full inference bundle is measured — weights, tokenizer, runtime, sampling config, adapters, policy layers, entropy source for sampling, and any retrieval/tool code. For weight attestation specifically, this requires in-enclave hashing at model load time, which is not current practice.
 2. TEE hardware has a silicon-rooted signing key → physical attestation
 3. An application protocol inside the TEE binds input and output hashes to the TEE's attestation report. This binding is not native to TEE hardware — it requires deliberate implementation within the enclave. Current inference stacks (vLLM, TensorRT) perform tokenization on host CPU; moving it inside the TEE impacts performance.
+4. The TEE's attestation report MUST include the session nonce and the SHA3-256 hash of the canonicalized content as part of the signed data (e.g., as user data in the attestation quote). Without this binding, TEE attestation is replayable across sessions — an attacker could reuse a valid attestation report from a different session with a forged application-level claim.
 
 **What Level 4 provides today (environment only):**
 A TEE can attest: "this measured VM image, with this firmware, ran on this hardware." It cannot yet attest: "these specific weights processed this specific input to produce this specific output." The gap between environment attestation and computation attestation is significant.
