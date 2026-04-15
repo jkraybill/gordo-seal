@@ -103,6 +103,7 @@ A ratification record contains:
 MCAP Ratification Record
 Version: 0.1.0
 Canonical-Format: [serialization method used — see Canonicalization below]
+Session-Nonce: [jointly established random value — see Session Binding below]
 
 Content: [the thing being attested to, or its hash]
 Content-Hash: SHA3-256([canonicalized content])
@@ -129,6 +130,12 @@ Temporal-Anchor-Semantics: [what the anchor proves — e.g., "existence no later
 
 Amendments: [references to any subsequent modifications]
 ```
+
+### Session Binding
+
+Each ratification session begins with a jointly established session nonce — a random value generated collaboratively (e.g., each party contributes entropy, the nonce is the hash of both contributions). The session nonce is included in the record and in any cryptographic signatures.
+
+The session nonce binds attestations to active participation. A cryptographic signature produced after a party has disengaged — for example, using a compromised key — will not include the correct session nonce unless the attacker also compromises the nonce. This prevents post-disengagement forgery of Level 3+ attestations.
 
 Note: the record does not collapse attestation levels to a single scalar. Each party's level is evaluated independently. Verifiers apply their own policy to the vector of per-party levels. A Level 3/1 record is materially different from a Level 1/1 record, and the format preserves that distinction.
 
