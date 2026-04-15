@@ -8,9 +8,9 @@
 
 ## Purpose
 
-MCAP produces a verifiable record that specific parties each attested to a specific thing, no later than a specific time. The record is independently verifiable by third parties who were not present.
+MCAP produces a verifiable record that specific parties each attested to a specific thing. When temporally anchored, the record proves existence no later than the anchor time. The record is independently verifiable by third parties who were not present.
 
-The protocol does not care what is being attested to. An agreement, a fact, a statement, a commitment — the content is opaque to the protocol. MCAP certifies that parties X and Y attested to Z no later than time T.
+The protocol does not care what is being attested to. An agreement, a fact, a statement, a commitment — the content is opaque to the protocol. MCAP certifies that parties X and Y attested to Z, with temporal proof bounded by the anchoring method used (not by claimed timestamps).
 
 Put another way: MCAP is a protocol for **mutual publication of attested claims**.
 
