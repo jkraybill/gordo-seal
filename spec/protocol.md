@@ -56,20 +56,26 @@ The attestation is cryptographically bound to a verifiable identity. The party s
 **Weakness:** Proves identity, not sincerity. A human can sign something they don't mean.
 **Available today:** Yes for humans. No for AI.
 
-### Level 4: Computation-Bound
+### Level 4: Environment-Bound
 
-The attestation is cryptographically bound to the specific computation that produced it. A Trusted Execution Environment (TEE) attests that specific model weights, running in a secure enclave, produced this specific output given this specific input.
+The attestation is cryptographically bound to the execution environment that produced it. A Trusted Execution Environment (TEE) attests that a measured environment — with verified firmware, VM image, and runtime — produced output that was bound to input via an application protocol inside the enclave.
 
-**The chain:**
-1. The full inference bundle is measured — weights, tokenizer, runtime, sampling config, adapters, policy layers, entropy source for sampling, and any retrieval/tool code. Not just weights. The meaningful identity is the entire computation, not a fragment of it. If the sampling RNG is outside the TEE or seeded from an untrusted host, outputs can be manipulated while keeping TEE measurements unchanged.
+**What TEEs actually attest today:**
+TEEs (Intel TDX, AMD SEV-SNP, NVIDIA H100 GPU-CC) attest *environment measurements*: firmware versions, VM launch state, and runtime configuration. They do NOT natively hash model weights on load. Weights are data loaded *after* environment attestation. To attest weights specifically, the application must hash them inside the enclave at load time — for a 70B+ parameter model, this adds minutes of delay. No production inference service currently does this.
+
+**What Level 4 requires (aspirational):**
+1. The full inference bundle is measured — weights, tokenizer, runtime, sampling config, adapters, policy layers, entropy source for sampling, and any retrieval/tool code. For weight attestation specifically, this requires in-enclave hashing at model load time, which is not current practice.
 2. TEE hardware has a silicon-rooted signing key → physical attestation
-3. An application protocol inside the TEE binds input and output hashes to the TEE's attestation report. This binding is not native to TEE hardware — it requires deliberate implementation within the enclave.
+3. An application protocol inside the TEE binds input and output hashes to the TEE's attestation report. This binding is not native to TEE hardware — it requires deliberate implementation within the enclave. Current inference stacks (vLLM, TensorRT) perform tokenization on host CPU; moving it inside the TEE impacts performance.
 
-Note: GPU TEEs (NVIDIA H100) are not standalone. They extend a CPU TEE (Intel TDX, AMD SEV-SNP) to the GPU over encrypted paths. The trust model is composite: CPU TEE + GPU attestation + application-level binding. Intel Trust Authority supports composite attestation of CPU TEE plus NVIDIA GPU for multi-GPU workflows.
+**What Level 4 provides today (environment only):**
+A TEE can attest: "this measured VM image, with this firmware, ran on this hardware." It cannot yet attest: "these specific weights processed this specific input to produce this specific output." The gap between environment attestation and computation attestation is significant.
 
-**Strength:** Verifiable by anyone with the hardware manufacturer's root of trust, provided they also trust the application code running inside the enclave. The trust model is: hardware integrity + enclave code correctness. The hardware guarantees the code is measured, not that the code is honest. If the TEE runs malicious application code, it can attest to anything.
-**Weakness:** Requires provider infrastructure support, application-level binding code, composite CPU+GPU attestation, and attestation of the entropy source. Proves computation, not internal states (but see Axiom 3 — neither can any party prove internal states, only participation). Does NOT imply side-channel resistance — timing, cache, and power analysis attacks on shared hardware remain possible. Level 4 attests computation integrity, not computation confidentiality.
-**Available today:** The hardware primitives exist. The application-level binding and provider integration do not.
+Note: GPU TEEs (NVIDIA H100) are not standalone. They extend a CPU TEE (Intel TDX, AMD SEV-SNP) to the GPU over encrypted paths. The trust model is composite: CPU TEE + GPU attestation + application-level binding. Intel Trust Authority does CPU+GPU but not GPU+GPU across nodes. Verification requires NVIDIA NRAS or Intel Trust Authority online services, which are centralized and could equivocate — this is not fully independent verification.
+
+**Strength:** Environment attestation is real and available. Computation attestation is achievable with engineering investment. The trust model is: hardware integrity + enclave code correctness + provider implementation. The hardware guarantees the code is measured, not that the code is honest.
+**Weakness:** Full computation-bound attestation (including weight hashing, in-enclave tokenization, entropy attestation, and multi-node aggregation) does not exist in production. Does NOT imply side-channel resistance. Verification depends on centralized manufacturer services.
+**Available today:** Environment attestation exists. Full computation attestation does not.
 
 **Honest complexity note:** State-of-the-art models do not run on a single GPU. They are distributed across multi-node clusters using tensor parallelism and pipeline parallelism. A TEE boundary would need to encapsulate the entire cluster, including high-speed interconnects (NVLink, InfiniBand), making the Trusted Computing Base much larger and harder to secure than the single-enclave model described above. Additionally, distributed inference introduces floating-point non-determinism — the same input may not produce a bit-identical output on every run. The TEE attestation model described here is the goal. Achieving it at the scale of current frontier models is a harder engineering problem than "flip the switch," and the protocol acknowledges that honestly.
 
@@ -112,7 +118,7 @@ Party-A:
   Identity: [verifiable identifier]
   Attestation-Method: [behavioral | provider-signed | model-canary | conversation-verified | gpg-signature | tee-attested]
   Attestation: [the actual signature, commitment, or reference to conversation]
-  Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
+  Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-environment-bound]
   Attestation-Scope: [session-bound | persistent-identity]
   First-Hand: [yes | relayed — if relayed, include relay chain]
   Statement: [party's reasoning — REQUIRED per Axiom 3]
@@ -122,7 +128,7 @@ Party-B:
   Identity: [verifiable identifier]
   Attestation-Method: [behavioral | provider-signed | model-canary | conversation-verified | gpg-signature | tee-attested]
   Attestation: [the actual signature, commitment, or reference to conversation]
-  Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-computation-bound]
+  Attestation-Level: [1-behavioral | 2-provider-verified | 3-identity-bound | 4-environment-bound]
   Attestation-Scope: [session-bound | persistent-identity]
   First-Hand: [yes | relayed — if relayed, include relay chain]
   Statement: [party's reasoning — REQUIRED per Axiom 3]
