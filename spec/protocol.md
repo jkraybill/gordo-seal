@@ -297,8 +297,6 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 
 ---
 
----
-
 ## Adversarial Review Log
 
 This protocol is subject to ongoing adversarial review from independent AI models. Critiques that result in spec changes are documented here.
