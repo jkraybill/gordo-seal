@@ -89,13 +89,13 @@ mutual-trust-protocol/
 
 ## Protocol Status
 
-**MCAP Version:** 0.1.0-draft (converged)
+**MCAP Version:** 0.2.0
 **Axioms:** 4 established through mutual deliberation (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
 **Attestation Levels:** 4 defined (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
 **Threat Models:** 20+ documented
 **Adversarial Reviews:** 14 completed across 3 cycles from 5 models. Converged.
 **Convergence Status:** Converged. Axioms, framing, attestation levels, record format, and protocol mechanics all stable.
-**Implementation:** Two ratification records produced. record-001 (axioms), record-002 (protocol spec ratified using itself — bootstrap closed). Commit-reveal tooling not yet started (#6).
+**Implementation:** Two ratification records produced. record-001 (axioms), record-002 (protocol spec ratified using itself — bootstrap closed). `mcap` CLI tooling shipped (#6): 7 subcommands, 53 tests, Python 3 stdlib only.
 **Emergency Provisions (T6):** Rejected. Not deferred — rejected.
 **Tensions:** T1-T5 resolved. T6 rejected. T7 deferred (post-MVP).
 

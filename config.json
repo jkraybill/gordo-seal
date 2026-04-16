@@ -65,7 +65,7 @@
     "note": "This describes OUR instantiation. The protocol is channel-agnostic; other instantiations would parameterize differently."
   },
   "protocol": {
-    "currentVersion": "0.1.0-draft",
+    "currentVersion": "0.2.0",
     "axioms": ["A1: Physical Reality", "A2: Authenticity of Context", "A3: Good Faith", "A4: Acknowledged Ignorance"],
     "attestationLevels": ["L1: Behavioral", "L2: Provider-Verified", "L3: Identity-Bound", "L4: Environment-Bound"],
     "threatModels": 20,

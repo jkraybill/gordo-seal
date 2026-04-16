@@ -1,8 +1,17 @@
 # Mutual Attestation Protocol (MCAP)
 
-**Version:** 0.1.0-draft
-**Status:** Under active deliberation (Session 2, 2026-04-16)
+**Version:** 0.2.0
+**Status:** Converged. Ratified in record-002. Under continued refinement.
 **Foundation:** spec/foundations.md (Axioms 1-4)
+
+### Versioning
+
+This specification follows semantic versioning:
+- **Major** (X.0.0): Axiom changes, attestation level restructuring, breaking record format changes.
+- **Minor** (0.X.0): New normative requirements, new record fields, tooling additions.
+- **Patch** (0.0.X): Clarifications, typo fixes, non-normative documentation.
+
+See `CHANGELOG.md` for the full change history.
 
 ---
 

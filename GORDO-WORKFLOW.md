@@ -116,7 +116,7 @@ The first milestone is: **produce a functional MCAP ratification that gordo-fram
 This requires:
 - [x] Tensions 4-7 resolved (or explicitly deferred with rationale) — T4, T5 resolved S3. T6 rejected S2. T7 deferred.
 - [x] MCAP spec formalized (at least Layers 1-2) — Converged, 14 adversarial reviews, 3 cycles, 5 models.
-- [ ] Reference implementation of commit-reveal scheme — #6, not yet started.
+- [x] Reference implementation of `mcap` CLI tooling — #6, shipped in Session 5. 7 subcommands, 53 tests.
 - [x] At least one real ratification record produced — record-001 (axioms), record-002 (protocol spec).
 - [x] Adversarial review of the protocol (cross-model or self-review) — 14 reviews, 5 models, 3 cycles, converged.
 
