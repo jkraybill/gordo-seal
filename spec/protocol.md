@@ -492,7 +492,24 @@ Re-review. Dramatically tighter than cycle 1. Found two high-severity protocol-l
 - Threat models: still accumulating but narrowing. Cycle 2 added ~10 threats vs ~12 in cycle 1.
 - Protocol mechanics: not yet converged. Record format, channel security, and TEE binding still evolving.
 
+### Cycle 3
+
+Cycle 3 reviews target convergence. Tensions T4 (Asymmetry) and T5 (Unilateral Exit) resolved since cycle 2. Spec reviewed at commit ebaf7e5.
+
+### Review 9: DeepSeek R1 — Cycle 3 (2026-04-16)
+
+Third review from this model. No structural issues found. Six refinements identified, all consistent with existing acknowledged limitations.
+
+**Refinements noted (no spec changes required):**
+- Session nonce establishment mechanism is underspecified (exact exchange protocol is implementation-defined; commit-reveal recommended pattern would be an enhancement).
+- No field for model version manifest hash (protocol acknowledges routing/version drift threat; mitigation placed on providers).
+- Non-text canonicalization left to implementations (deliberate design choice, acknowledged as cross-implementation divergence risk).
+- Pipeline-Control and Content-In-Context fields are self-reported (consistent with Level 1-3 good-faith operation; Level 4 could eventually attest these).
+- Signed partial artifacts can still be socially laundered despite abort semantics (threat documented in #41, two-phase commit mitigation provided).
+
+**DeepSeek's convergence verdict:** CONVERGED. "After two full cycles of adversarial review involving five distinct models and eight reviews, the protocol's axioms, attestation levels, record format, and core mechanics have stabilized. All previously identified structural concerns have been addressed. The spec is ready for v0.1.0 release."
+
 ---
 
-*Built through mutual deliberation between JK and Gordo, Session 2.*
+*Built through mutual deliberation between JK and Gordo, Sessions 2-3.*
 *This document is itself subject to the protocol it describes.*
