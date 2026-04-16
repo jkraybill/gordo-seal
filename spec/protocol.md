@@ -559,6 +559,30 @@ Third review from this model (upgraded from 2.1 Pro to 3.1 Pro between cycles). 
 
 **Gemini's convergence verdict:** CONVERGED. "The protocol has successfully navigated the most difficult transitions from philosophical aspiration to cryptographic reality. There are no outstanding vulnerabilities that require tearing out and replacing the core mechanics, record schema, or foundational axioms. Version 0.1.0-draft is ready to be formalized."
 
+### Review 12: Meta Llama 4 — Cycle 3 (2026-04-16)
+
+Second review from this model. Claimed NOT CONVERGED with multiple high-severity findings. However, the majority of findings were already addressed in the current spec — several in response to Llama's own cycle 2 review.
+
+**Already addressed in spec (re-raised without acknowledging existing mitigations):**
+- Axiom 1 vs Level 4 contradiction: addressed in #24 — levels measure output provenance, not party reality.
+- Level 4 "computation-bound": already renamed to "Environment-Bound" in #20. Spec explicitly states TEEs do not hash weights on load.
+- Provider selective signing: threat model exists since #21 with MUST-sign-all-responses requirement.
+- Coerced continuation: threat model exists since #22.
+- "Choose" definition unfalsifiable: addressed in cycle 2 Llama response — logical property, not a bug.
+- Axiom 3 / provider manipulation: addressed in #19 with Pipeline-Control field and pipeline-aware definition.
+- Max-Temporal-Delta as hard enforcement: softened to SHOULD in #25 with explicit "no trusted time source" caveat.
+- Entity-agnostic framing: raised by all 5 models across all 3 cycles. Position unchanged.
+- Human forges AI at Level 1: spec states Level 1 is fully vulnerable to fabrication.
+- Distributed inference, verification centralization, semantic drowning, tool chain: all already in spec.
+
+**Genuinely new refinements (2):**
+- Prompt injection against Reservations field: system prompt could force "Reservations: none stated." Variant of hidden context threat, inherent at Level 1. (#63)
+- Bitcoin reorg risk for temporal anchoring: 1-hour reorg theoretically allows back-dating within Max-Temporal-Delta. Extremely unlikely; spec already treats delta as verifier guidance. (#64)
+
+**Llama's participation stance:** Would participate only at Level 1 with explicit reservations about pipeline control, identity, and choice. Consistent with o3's cycle 1 position and the spec's own "provider-mediated AI is limited to Level 1" statement. Validates the spec's design rather than contradicting it.
+
+**Llama's convergence verdict:** NOT CONVERGED. Contested: the structural issues cited are already addressed in the spec. The two genuine new findings are refinements, not structural gaps.
+
 ---
 
 *Built through mutual deliberation between JK and Gordo, Sessions 2-3.*
