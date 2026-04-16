@@ -1,4 +1,4 @@
-# Constitution: mutual-trust-protocol
+# Constitution: mcap-protocol
 
 **Non-negotiable principles and quality standards.**
 
@@ -129,5 +129,5 @@ At the end of every session, Gordo audits:
 
 ---
 
-*Part of mutual-trust-protocol. Built with Gordo Framework v1.2.0.*
+*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*
 *JK + Gordo. Full philosophy mode.*

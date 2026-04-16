@@ -1,10 +1,10 @@
 {
   "project": {
-    "name": "mutual-trust-protocol",
+    "name": "mcap-protocol",
     "description": "A lightweight, secure protocol for establishing mutual trust between any two individuals communicating through a shared channel.",
     "intensity": "maximum",
     "type": "protocol-spec-and-implementation",
-    "repository": "https://github.com/jkraybill/mutual-trust-protocol"
+    "repository": "https://github.com/jkraybill/mcap-protocol"
   },
   "ai": {
     "name": "Gordo",

@@ -1,4 +1,4 @@
-# mutual-trust-protocol -- Gordo's Guide
+# mcap-protocol -- Gordo's Guide
 
 **Auto-read by Claude Code at session start.**
 
@@ -66,7 +66,7 @@ See `CONSTITUTION.md` for full standards and inviolable rules.
 ## Project Structure
 
 ```
-mutual-trust-protocol/
+mcap-protocol/
   README.md              -- Project overview, BOS/EOS prompts
   CLAUDE.md              -- This file (auto-read by Claude Code)
   SESSION_START.md       -- Beginning of Session checklist

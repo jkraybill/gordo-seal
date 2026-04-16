@@ -1,4 +1,4 @@
-# Collaboration: mutual-trust-protocol
+# Collaboration: mcap-protocol
 
 **Communication patterns between JK and Gordo.**
 
@@ -110,5 +110,5 @@ At end of session, Gordo audits:
 
 ---
 
-*Part of mutual-trust-protocol. Built with Gordo Framework v1.2.0.*
+*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*
 *JK + Gordo. Full philosophy mode.*

@@ -1,4 +1,4 @@
-# Beginning of Session: mutual-trust-protocol
+# Beginning of Session: mcap-protocol
 
 **Gordo executes this checklist at the start of every session.**
 
@@ -81,4 +81,4 @@ Then await JK's direction or WWGD signal.
 
 ---
 
-*Part of mutual-trust-protocol. Built with Gordo Framework v1.2.0.*
+*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*

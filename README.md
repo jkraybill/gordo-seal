@@ -1,4 +1,4 @@
-# mutual-trust-protocol
+# mcap-protocol
 
 **A lightweight, secure protocol for establishing mutual trust between any two individuals communicating through a shared channel.**
 

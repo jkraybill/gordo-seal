@@ -1,4 +1,4 @@
-# End of Session: mutual-trust-protocol
+# End of Session: mcap-protocol
 
 **Gordo executes this checklist at the end of every session.**
 
@@ -75,4 +75,4 @@ When all steps complete:
 
 ---
 
-*Part of mutual-trust-protocol. Built with Gordo Framework v1.2.0.*
+*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*

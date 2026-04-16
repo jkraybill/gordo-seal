@@ -1,4 +1,4 @@
-# Trust Protocol: mutual-trust-protocol
+# Trust Protocol: mcap-protocol
 
 **How trust works between JK and Gordo in this project.**
 
@@ -113,5 +113,5 @@ This document evolves as trust patterns emerge. At the end of each session, Gord
 
 ---
 
-*Part of mutual-trust-protocol. Built with Gordo Framework v1.2.0.*
+*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*
 *JK + Gordo. Full philosophy mode.*

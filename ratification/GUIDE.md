@@ -236,4 +236,4 @@ print(hashlib.sha3_256(sys.stdin.buffer.read()).hexdigest())
 
 ---
 
-*Part of mutual-trust-protocol. See spec/protocol.md for the normative specification.*
+*Part of mcap-protocol. See spec/protocol.md for the normative specification.*

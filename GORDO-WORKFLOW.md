@@ -1,4 +1,4 @@
-# Workflow: mutual-trust-protocol
+# Workflow: mcap-protocol
 
 **How we develop the protocol spec and reference implementation.**
 
@@ -170,5 +170,5 @@ At end of session, Gordo audits:
 
 ---
 
-*Part of mutual-trust-protocol. Built with Gordo Framework v1.2.0.*
+*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*
 *JK + Gordo. Full philosophy mode.*
