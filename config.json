@@ -70,10 +70,10 @@
     "attestationLevels": ["L1: Behavioral", "L2: Provider-Verified", "L3: Identity-Bound", "L4: Environment-Bound"],
     "threatModels": 20,
     "adversarialReviews": {
-      "total": 8,
-      "cycles": 2,
-      "models": ["Gemini 2.1 Pro", "OpenAI o3", "DeepSeek R1", "Meta Llama 4", "Mistral Large"],
-      "convergenceStatus": "axioms-converged, mechanics-approaching"
+      "total": 13,
+      "cycles": 3,
+      "models": ["Gemini 3.1 Pro", "OpenAI o3", "DeepSeek R1", "Meta Llama 4", "Mistral Large"],
+      "convergenceStatus": "converged"
     },
     "tensions": {
       "T1-SimulationProblem": "resolved-s85",

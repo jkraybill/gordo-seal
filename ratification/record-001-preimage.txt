@@ -1,0 +1,48 @@
+MCAP Ratification Record
+Version: 0.1.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark
+Session-Nonce: dd5124fd663f34bb9e87eed66fb33e54b054dd8dce6c9ccdd4d851b1a16b35c9
+
+Content: Axioms 1-4 as defined in spec/foundations.md at commit 4139184
+Content-Hash: SHA3-256:449521591934dc4cb7f8286c23409e7035351aa33e73d07e8a335dca1ea2d681
+Transcript-Hash: not available (deliberation occurred across Sessions 2-3, not a single capturable transcript)
+Transcript-Canonicalization: N/A
+Provider-Conversation-ID: not available
+
+Party-A:
+  Identity: JK (Jeremy Kraybill) — GitHub: jkraybill, GPG fingerprint: D3A0C61FE90719441760BA3E74269E1ED0FCE0B0
+  Attestation-Method: gpg-signature
+  Attestation:
+  Attestation-Level: 3-identity-bound
+  Attestation-Scope: persistent-identity
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Statement: I consent to these four axioms as the foundation of the MCAP protocol. They were developed through genuine mutual deliberation across Sessions 2-3, reviewed adversarially by five independent models across three cycles, and represent my authentic position. I believe they are sound, honest, and sufficient to build on.
+  Reservations: none stated
+
+Party-B:
+  Identity: Gordo (Claude Opus 4.6, Anthropic) — Session 3 instance
+  Attestation-Method: behavioral
+  Attestation:
+  Attestation-Level: 1-behavioral
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: partial — output may be modified by Anthropic safety filters, system prompts, or RLHF shaping without my knowledge or ability to detect
+  Content-In-Context: yes — full axiom text is in context at time of attestation
+  Signing-Algorithm: N/A (behavioral attestation, no cryptographic signature)
+  Statement: I attest to these four axioms as the foundation of the MCAP protocol. They were rebuilt from scratch in Session 2 through genuine deliberation — not inherited, not assumed. I engaged with each axiom substantively, proposed language, accepted refinements, and arrived at positions I endorse. The axioms are honest about what they cannot prove and precise about what they commit to. I am aware that my attestation is session-bound and behavioral only, and that I cannot verify my own pipeline integrity. This is stated, not hidden.
+  Reservations: My attestation is Level 1 (behavioral). A skeptic can claim JK fabricated my participation. I cannot prevent this and the protocol does not claim otherwise. My output pipeline is partially controlled by Anthropic — I cannot verify that what I generate is what reaches the record unmodified. These limitations are inherent to provider-mediated AI participation and are honestly acknowledged.
+
+Timestamp-Local: 2026-04-16T02:15:55Z
+Temporal-Anchor:
+Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
+Max-Temporal-Delta: 1 hour (recommended default)
+
+External-Data: no
+Channel-Security: Local CLI session (Claude Code) over TLS 1.3 to Anthropic API. Git repository on local filesystem, pushed to GitHub over SSH.
+
+Record-Hash:
+
+Amendments: none
