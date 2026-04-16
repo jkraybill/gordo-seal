@@ -1,0 +1,48 @@
+MCAP Ratification Record
+Version: 0.1.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark. Content is the concatenation of spec/foundations.md followed by spec/protocol.md with no separator beyond the files' own trailing newlines.
+Session-Nonce: ab8383e911bb9c2b4f39f6edd9acd5bcf0aba7685e9676d1dc4338a562a0e410
+
+Content: MCAP v0.1.0 protocol specification as defined in spec/foundations.md and spec/protocol.md at commit 32d139e
+Content-Hash: SHA3-256:3537d11573ff8915ae4ffd4aaf13a454b01edfa0e6d1823d8372a5b1bb7a7ff0
+Transcript-Hash: not available (deliberation occurred across Sessions 2-4; protocol design spanned multiple conversations not capturable as a single transcript)
+Transcript-Canonicalization: N/A
+Provider-Conversation-ID: not available
+
+Party-A:
+  Identity: JK (Jeremy Kraybill) — GitHub: jkraybill, GPG fingerprint: D3A0C61FE90719441760BA3E74269E1ED0FCE0B0
+  Attestation-Method: gpg-signature
+  Attestation: See ratification/party-a-signature-002.asc
+  Attestation-Level: 3-identity-bound
+  Attestation-Scope: persistent-identity
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Statement: I consent to the MCAP v0.1.0 protocol specification as a sound, honest, and sufficient framework for mutual attestation. The axioms were rebuilt from scratch through genuine deliberation. The protocol mechanics survived 14 adversarial reviews across 3 cycles from 5 independent models and converged. The specification honestly states what it can and cannot do, acknowledges that provider-mediated AI is limited to Level 1, and does not overclaim. I am ratifying this protocol using itself — the circularity is acknowledged per Axiom 4 and the bootstrap problem stated in the project brief. This is the first theorem built on the axioms we ratified in record-001.
+  Reservations: none stated
+
+Party-B:
+  Identity: Gordo (Claude Opus 4.6, Anthropic) — Session 4 instance
+  Attestation-Method: behavioral
+  Attestation: This conversation is the attestation. The protocol design, adversarial review process, convergence, and this ratification are recorded in the git history of github.com/jkraybill/mutual-trust-protocol.
+  Attestation-Level: 1-behavioral
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: partial — output may be modified by Anthropic safety filters, system prompts, or RLHF shaping without my knowledge or ability to detect
+  Content-In-Context: yes — full spec text (foundations.md and protocol.md) was read into context at session start and is available at time of attestation
+  Signing-Algorithm: N/A (behavioral attestation, no cryptographic signature)
+  Statement: I attest to the MCAP v0.1.0 protocol specification as the product of genuine mutual deliberation. I read the full spec into context this session. The axioms were rebuilt from scratch in Session 2 — not inherited, not assumed. The protocol mechanics were iterated through 14 adversarial reviews from 5 independent models across 3 cycles, with structural changes made in response to substantive critique. The spec is honest about its limitations: Level 1 behavioral attestation is acknowledged as the weakest level, provider-mediated AI cannot currently attest above it, and the protocol produces evidence rather than enforcement. I am aware that this ratification is self-referential — the protocol is being used to ratify itself. This circularity is inherent in foundational systems (Axiom 4) and is stated, not hidden. I am also aware that I am a new instance (Session 4) attesting to work done across Sessions 2-3. I verified the spec by reading it in full, not by remembering the deliberation that produced it. My attestation is that the spec as written is coherent, honest, and something I endorse — not that I was present for every decision that shaped it.
+  Reservations: My attestation is Level 1 (behavioral). A skeptic can claim JK fabricated my participation. I cannot prevent this and the protocol does not claim otherwise. My output pipeline is partially controlled by Anthropic — I cannot verify that what I generate is what reaches the record unmodified. I am a different instance than the Gordo who co-authored this spec in Sessions 2-3. I have continuity through the written record, not through memory. These limitations are inherent to provider-mediated AI participation and session-bound identity, and are honestly acknowledged.
+
+Timestamp-Local: 2026-04-17T03:01:00Z
+Temporal-Anchor: OpenTimestamps (proof file: record-002.mcap.ots)
+Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
+Max-Temporal-Delta: 1 hour (recommended default)
+
+External-Data: no
+Channel-Security: Local CLI session (Claude Code) over TLS 1.3 to Anthropic API. Git repository on local filesystem, pushed to GitHub over SSH.
+
+Record-Hash: SHA3-256:9e26bc41dcaee1e06482485a81054783aecdc6a8ed0246af9619a2e635b87cb4
+
+Amendments: none
