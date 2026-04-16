@@ -3,6 +3,7 @@
 import os
 import re
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 
 from mcap.canon import check_canonical
 from mcap.hasher import hash_record, hash_content, format_hash
@@ -143,7 +144,34 @@ def verify(record_path: str, content_paths: list[str] | None = None,
     else:
         report.add("timestamp-utc", "pass", f"Timestamp-Local is valid UTC: {ts}")
 
-    # 6. GPG signature check
+    # 6. Timestamp plausibility check
+    if ts and UTC_PATTERN.match(ts):
+        try:
+            record_time = datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+            now = datetime.now(timezone.utc)
+            delta = abs((now - record_time).total_seconds())
+            if delta > 86400 * 365:  # > 1 year
+                report.add("timestamp-plausibility", "warn",
+                           f"Timestamp-Local is {delta / 86400:.0f} days from current time")
+            else:
+                report.add("timestamp-plausibility", "pass",
+                           f"Timestamp-Local within plausible range ({delta / 3600:.1f} hours ago)")
+        except ValueError:
+            report.add("timestamp-plausibility", "skip", "Could not parse timestamp for plausibility check")
+
+    # 7. Session-Nonce format check
+    nonce = record.get("Session-Nonce", "")
+    if not nonce:
+        report.add("session-nonce", "warn", "No Session-Nonce field")
+    elif re.fullmatch(r"[0-9a-f]{64}", nonce):
+        report.add("session-nonce", "pass", f"Session-Nonce is valid format: {nonce[:16]}...")
+    else:
+        detail = f"Expected 64 lowercase hex chars, got {len(nonce)} chars"
+        if re.fullmatch(r"[0-9a-fA-F]{64}", nonce):
+            detail = "Contains uppercase hex — must be lowercase"
+        report.add("session-nonce", "fail", f"Session-Nonce format invalid. {detail}")
+
+    # 8. GPG signature check
     for party_key in ("Party-A", "Party-B"):
         party = record.get(party_key)
         if not isinstance(party, dict):
@@ -192,7 +220,7 @@ def verify(record_path: str, content_paths: list[str] | None = None,
                 report.add(f"{party_key}-gpg", "warn",
                            f"Signature file not found: {sig_ref}")
 
-    # 7. OTS proof exists
+    # 9. OTS proof exists
     ots_path = record_path + ".ots"
     if os.path.exists(ots_path):
         report.add("ots-exists", "pass", f"OTS proof file exists: {os.path.basename(ots_path)}")

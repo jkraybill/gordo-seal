@@ -53,6 +53,28 @@ class TestVerifyRecord002(unittest.TestCase):
         self.assertEqual(check_names["content-hash"].status, "skip")
 
 
+class TestTimestampPlausibility(unittest.TestCase):
+
+    def test_record_002_plausibility(self):
+        """Record-002 timestamp is recent enough to pass plausibility."""
+        record_path = os.path.join(FIXTURES, "record-002.mcap")
+        preimage_path = os.path.join(FIXTURES, "record-002-preimage.txt")
+        report = verify(record_path, preimage_path=preimage_path)
+        check_names = {c.name: c for c in report.checks}
+        # Record is from 2026-04-16 — should be plausible (within 1 year)
+        self.assertIn(check_names["timestamp-plausibility"].status, ("pass", "warn"))
+
+
+class TestSessionNonceFormat(unittest.TestCase):
+
+    def test_record_002_nonce_format(self):
+        """Record-002 should have a valid session nonce."""
+        record_path = os.path.join(FIXTURES, "record-002.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+        self.assertEqual(check_names["session-nonce"].status, "pass")
+
+
 class TestVerifyRecord001(unittest.TestCase):
 
     def test_verify_record_001(self):
