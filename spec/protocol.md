@@ -546,6 +546,19 @@ Third review from this model. Found one structural issue and three refinements. 
 
 **o3's convergence verdict:** NOT CONVERGED (due to undefined attestation target). Structural issue has been resolved. Axioms, entity-operational framing, and attestation hierarchy assessed as stable.
 
+### Review 11: Google Gemini 3.1 Pro — Cycle 3 (2026-04-16)
+
+Third review from this model (upgraded from 2.1 Pro to 3.1 Pro between cycles). No structural issues found. Five refinements identified.
+
+**Refinements noted (filed for future work):**
+- Identity resolvability: bare identifier (GPG key ID, DID) without public key material or resolution endpoint creates long-term verification risk if keyserver vanishes. SHOULD include full public key or resolution method.
+- Relayed attestation binding: First-Hand field flags relays but no dedicated field for the original party's cryptographic signature. Automated relay chain verification would benefit from a Relayed-Record-Hash field.
+- Model canary terminology: "verifier issues a nonce challenge" conflates the session counterparty (who issues during session) with the third-party verifier (who checks later). Clarify roles.
+- External-Data traceability: boolean flag provides zero traceability. Could upgrade to list of hashes/URIs for RAG context, tool outputs, etc.
+- Null state for optional fields in Record-Hash preimage: if Transcript-Hash is omitted, must the field be excluded entirely or left as empty key? Needs explicit definition to prevent canonicalization mismatches. (#61)
+
+**Gemini's convergence verdict:** CONVERGED. "The protocol has successfully navigated the most difficult transitions from philosophical aspiration to cryptographic reality. There are no outstanding vulnerabilities that require tearing out and replacing the core mechanics, record schema, or foundational axioms. Version 0.1.0-draft is ready to be formalized."
+
 ---
 
 *Built through mutual deliberation between JK and Gordo, Sessions 2-3.*
