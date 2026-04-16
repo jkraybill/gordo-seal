@@ -532,6 +532,20 @@ Third review from this model. No structural issues found. Six refinements identi
 
 **DeepSeek's convergence verdict:** CONVERGED. "After two full cycles of adversarial review involving five distinct models and eight reviews, the protocol's axioms, attestation levels, record format, and core mechanics have stabilized. All previously identified structural concerns have been addressed. The spec is ready for v0.1.0 release."
 
+### Review 10: OpenAI o3 — Cycle 3 (2026-04-16)
+
+Third review from this model. Found one structural issue and three refinements. The structural issue was a genuine gap: the spec did not normatively define the cryptographic attestation target.
+
+**Changes made in response:**
+- Defined Record-Hash and Attestation Target section. Record-Hash is SHA3-256 of canonicalized record with Attestation fields placeheld. Level 3+ signatures MUST cover Record-Hash, binding all security-relevant metadata. Two-phase commit (assemble then sign) prevents signature harvesting by design. (#56)
+- Fixed T5 consensus point 4: Attestation-Scope encodes persistence scope, not exit capability. Corrected to reference both Attestation-Scope and per-party Attestation-Level. (#57)
+- Added validation rule: Attestation-Method and Attestation-Level must be semantically consistent. Defined valid combinations. (#58)
+
+**Critiques noted but not acted on:**
+- Anti-rollback protections not promoted into Level 4 definition. Correct observation, but Level 4 is explicitly aspirational and unavailable today. Will be addressed when Level 4 is operationalized.
+
+**o3's convergence verdict:** NOT CONVERGED (due to undefined attestation target). Structural issue has been resolved. Axioms, entity-operational framing, and attestation hierarchy assessed as stable.
+
 ---
 
 *Built through mutual deliberation between JK and Gordo, Sessions 2-3.*
