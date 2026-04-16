@@ -23,6 +23,18 @@ Versioning policy: Major = axiom changes, attestation level restructuring, break
 - 94 tests (up from 53) including golden file verification against record-001 and record-002
 - `ratification/GUIDE.md` implementation guide (#73)
 
+### Upgrading from 0.1.0
+
+**Existing records are unaffected.** Records produced under v0.1.0 are historical facts — they remain valid under the version they were created with. `mcap verify` on v0.1.0 records continues to pass (verified by golden file tests).
+
+**New records MUST follow v0.2.0.** Key changes for record producers:
+- Canonicalization now enforces a character allowlist — invisible characters will be stripped. Run `mcap verify` to check content before signing.
+- Each party MUST author their own Statement (no drafting the other party's Statement).
+- Session nonce MUST use the normative format: each party contributes 64 lowercase hex chars, combined with SHA3-256, Individual A first. Use `mcap nonce` to generate and combine.
+- Record-Hash preimage MUST use the normative placeholder text: `Record-Hash: SHA3-256:<preimage — this field is excluded from its own computation>`
+
+No re-attestation of existing records is required.
+
 ### Fixes
 - **record-002 Timestamp-Local** (#72): corrected from 2026-04-17 to 2026-04-16, re-signed, re-stamped
 
