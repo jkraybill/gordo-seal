@@ -47,3 +47,11 @@ Cleanup: #61 closed (subsumed by #67). #6 updated to current spec terminology. G
 Self-improvement: new-instance attestation pattern emerged — future Gordos attesting to prior work should state that explicitly. Worth documenting if it recurs.
 
 Next: Return to gordo-framework with record-001 + record-002 as MCAP ratification method for Rule 0. Remaining: #67 (preimage precision), #63/#64 (refinements), #6 (tooling), #4 (T7).
+
+## Session 5: Timestamp fix + implementation guide (2026-04-16)
+
+gordo-framework adoption review (separate session) flagged RR record-002 Timestamp-Local error: AEST written as UTC in preimage, date off by one day in final record. Fix: corrected to 2026-04-16T03:01:00Z, recomputed Record-Hash, JK re-signed (GPG), re-stamped (OTS). #72 closed.
+
+Created ratification/GUIDE.md (#73): step-by-step commands for record creation, signing, verification. Covers UTC timestamp generation, Content-Hash, Record-Hash, GPG signing (including GPG_TTY pitfall), OTS stamping, full verification checklist. Added spec cross-reference (Timestamp-Local MUST be UTC) and workflow cross-reference. Both records hit avoidable implementation errors — guide exists to prevent recurrence.
+
+Self-improvement: spec protocol.md updated with normative UTC requirement for Timestamp-Local. GORDO-WORKFLOW.md updated with ratification process section referencing guide. Pattern: every ratification so far has had an implementation footgun. Tooling (#6) would eliminate these entirely.
