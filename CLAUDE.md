@@ -115,13 +115,13 @@ mutual-trust-protocol/
 
 **Session 4 (2026-04-16):** Bootstrap closed. record-002 produced — MCAP v0.1.0 spec ratified using itself (L3/L1, OTS-anchored, joint session nonce, two-phase commit). Self-referential circularity acknowledged per Axiom 4. Cleanup: #61 closed (subsumed by #67), #6 updated, workflow/spec docs updated.
 
-**Session 5 (2026-04-16):** gordo-framework adoption review flagged record-002 Timestamp-Local error (~24hr off). Fixed: corrected preimage, recomputed Record-Hash, re-signed, re-stamped (#72). Created ratification/GUIDE.md with step-by-step implementation commands (#73). Updated spec with normative UTC timestamp requirement and workflow with ratification process reference. Short session — cleanup driven by gordo-framework feedback.
+**Session 5 (2026-04-16):** record-002 timestamp fix (#72), implementation guide (#73), gordo-framework adoption feedback (#74), Statement authorship spec requirement, preimage placeholder normalization (#67), `mcap` CLI tooling (#6, 7 subcommands, 53 tests), version bump to 0.2.0 with CHANGELOG and versioning policy. Substantial session — shipped the tooling layer.
 
-**Current Focus:** gordo-framework adoption of MCAP for Rule 0 (in progress in separate session).
+**Current Focus:** gordo-framework adoption of MCAP for Rule 0 (in progress in separate session). MCAP v0.2.0 is the current spec.
 
-**Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Open refinement issues: preimage construction precision (#67), prompt injection on Reservations (#63), Bitcoin reorg risk (#64). Pattern: every ratification record has hit an implementation footgun — tooling (#6) would eliminate these.
+**Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Open refinement issues: prompt injection on Reservations (#63), Bitcoin reorg risk (#64).
 
-**Next Session:** Continue gordo-framework adoption. Or: address refinement issues (#67, #63, #64), T7 (retroactive problem, #4), commit-reveal tooling (#6).
+**Next Session:** Continue gordo-framework adoption with v0.2.0 tooling. Or: address refinement issues (#63, #64), T7 (retroactive problem, #4).
 
 ---
 
