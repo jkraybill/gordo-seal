@@ -126,6 +126,23 @@ def cmd_verify(args):
         return 1
 
 
+def cmd_nonce(args):
+    """Generate entropy for session nonce, or combine two contributions."""
+    import hashlib
+    if args.combine:
+        parts = args.combine
+        if len(parts) != 2:
+            print("ERROR: --combine requires exactly 2 hex strings", file=sys.stderr)
+            return 2
+        combined = (parts[0] + parts[1]).encode()
+        nonce = hashlib.sha3_256(combined).hexdigest()
+        print(f"Session-Nonce: {nonce}")
+    else:
+        entropy = os.urandom(32).hex()
+        print(entropy)
+    return 0
+
+
 def cmd_stamp(args):
     """OTS stamp a finalized record."""
     if not check_ots_available():
@@ -181,6 +198,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--content", nargs="+", help="Content file(s) for Content-Hash verification")
     p.add_argument("--preimage", help="Preimage file path (auto-detected if not specified)")
 
+    # nonce
+    p = sub.add_parser("nonce", help="Generate entropy or combine nonce contributions")
+    p.add_argument("--combine", nargs=2, metavar="HEX",
+                   help="Combine two entropy contributions into a session nonce (SHA3-256)")
+
     # stamp
     p = sub.add_parser("stamp", help="OTS timestamp a finalized record")
     p.add_argument("record", help="Record .mcap file path")
@@ -199,6 +221,7 @@ def main(argv=None):
         "sign": cmd_sign,
         "finalize": cmd_finalize,
         "verify": cmd_verify,
+        "nonce": cmd_nonce,
         "stamp": cmd_stamp,
     }
 

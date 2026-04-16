@@ -133,20 +133,14 @@ Place this value in the `Record-Hash:` field of the final record (not the preima
 
 ## Step 5: GPG Sign the Record-Hash (Level 3)
 
-The signing target is the Record-Hash hex string (without the `SHA3-256:` prefix).
+The `mcap sign` command computes the Record-Hash from the preimage and invokes GPG clearsign in one step, with GPG_TTY handling built in:
 
-**Before signing**, ensure GPG can access the terminal for passphrase entry:
 ```bash
-export GPG_TTY=$(tty)
+./mcap sign ratification/record-NNN-preimage.txt -o ratification/party-a-signature-NNN.asc
 ```
 
-Without this, GPG fails with `Inappropriate ioctl for device` when reading from stdin in terminal environments where the TTY isn't automatically inherited (e.g., piped input, some IDE terminals, tmux sessions).
-
+To verify the signature:
 ```bash
-# Sign the hash
-echo "HASH_VALUE_HERE" | gpg --clearsign -o ratification/party-a-signature-NNN.asc
-
-# Verify the signature
 gpg --verify ratification/party-a-signature-NNN.asc
 ```
 
