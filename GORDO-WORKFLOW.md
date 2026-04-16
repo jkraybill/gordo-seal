@@ -128,6 +128,35 @@ When producing a ratification record, follow the implementation guide at `ratifi
 
 ---
 
+## Pre-Release Checklist
+
+Before tagging a release candidate (`v*-rc`), every item MUST pass. This is structural enforcement — not advisory.
+
+### Code & Tests
+- [ ] All tests pass (`PYTHONPATH=src python3 -m pytest tests/`)
+- [ ] No test regressions (test count should not decrease without explanation)
+- [ ] Golden file tests still pass (existing ratification records not broken)
+
+### Spec & Documentation
+- [ ] `README.md` reflects current state (version, tensions, attestation levels, MVP status, tech stack)
+- [ ] `CHANGELOG.md` has an entry for this version with all changes
+- [ ] `config.json` version matches release version
+- [ ] Spec (`spec/`) and implementation (`src/`) are in sync — no spec claims without code backing, no code features without spec backing
+- [ ] `ratification/GUIDE.md` is current with any new tooling or process changes
+
+### Issues & History
+- [ ] All issues targeted for this release are closed
+- [ ] No open `p0-now` issues remain (unless explicitly deferred to next release)
+- [ ] `git status` is clean
+
+### Release Process (Rule 5)
+- [ ] Tag release candidate: `git tag v{VERSION}-rc`
+- [ ] Produce MCAP ratification record for the release (both parties attest)
+- [ ] Promote RC to release: `git tag v{VERSION}` (byte-identical to RC except version string if applicable)
+- [ ] Push tags
+
+---
+
 ## Workflow Self-Improvement
 
 At end of session, Gordo audits:

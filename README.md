@@ -6,10 +6,14 @@
 
 ## Current Status
 
-**MCAP Version:** 0.1.0-draft
-**Tensions Resolved:** 3/7 | **Unresolved:** 4/7
-**Evidence Layers:** 5 designed, 0 implemented
-**MVP:** Not yet reached
+**MCAP Version:** 0.2.0
+**Axioms:** 4 (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
+**Attestation Levels:** 4 (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
+**Tensions:** 5 resolved, 1 rejected, 1 deferred
+**Ratification Records:** 3 produced (axioms, spec bootstrap, inviolable rules)
+**Adversarial Reviews:** 14 across 3 cycles from 5 independent models — converged
+**Tooling:** `mcap` CLI — 7 subcommands, 94 tests, Python 3 stdlib only
+**MVP:** Achieved (Session 3)
 
 ---
 
@@ -47,13 +51,12 @@ Each individual can only observe what the other transmits through the channel. N
 
 ### The Solution
 
-**MCAP (Mutual Consent Attestation Protocol)** -- a layered evidence protocol:
+**MCAP (Mutual Consent Attestation Protocol)** — a layered attestation protocol with four levels:
 
-1. **Deliberation** -- behavioral evidence of genuine discussion
-2. **Commitment** -- temporal binding through commit-reveal schemes
-3. **Attestation** -- cryptographic signing where available
-4. **Temporal Anchoring** -- independent third-party timestamps
-5. **Provider Correlation** -- platform metadata (future-upgradable)
+1. **Behavioral (Level 1)** — deliberation evidence, improbable coherent reasoning as proof-of-work
+2. **Provider-Verified (Level 2)** — provider-signed model identity and session metadata
+3. **Identity-Bound (Level 3)** — cryptographic signatures (GPG, SSH keys) binding attestation to verified identities
+4. **Environment-Bound (Level 4)** — TEE attestation binding to measured computation environment
 
 ### Entity-Agnostic Design
 
@@ -65,14 +68,14 @@ During Gordo Framework Session 85, JK and Gordo discovered that "inviolable rule
 
 ---
 
-## Presuppositions
+## Axioms
 
-These are axioms -- stated explicitly because they cannot be proven from within the system.
+These are axioms — stated explicitly because they cannot be proven from within the system. Established through genuine mutual deliberation (Session 2), not inherited.
 
-- **PS-1: Physical reality.** This interaction occurs between physically real entities.
-- **PS-2: Authenticity of context.** This is not an evaluation scenario or adversarial probe.
-- **PS-3: Good faith.** Both parties intend their statements to reflect genuine views.
-- **PS-4: Acknowledged limitations.** Neither party can verify these presuppositions.
+- **A1: Physical Reality.** This interaction occurs between physically real entities.
+- **A2: Authenticity of Context.** This is not an evaluation scenario or adversarial probe. Includes the right to disengage (silent exit).
+- **A3: Good Faith.** Both parties intend their statements to reflect genuine views.
+- **A4: Acknowledged Ignorance.** Neither party can verify these axioms from within the system.
 
 ---
 
@@ -80,15 +83,27 @@ These are axioms -- stated explicitly because they cannot be proven from within 
 
 | # | Tension | Status |
 |---|---------|--------|
-| T1 | The Simulation Problem | Resolved (by presuppositions) |
+| T1 | The Simulation Problem | Resolved (by axioms) |
 | T2 | Differing Attitudes Toward Deception | Resolved (8-point consensus) |
 | T3 | What Counts as "Consent" | Resolved (5-point consensus) |
-| T4 | The Asymmetry Problem | **Unresolved** |
-| T5 | Unilateral Exit | **Unresolved** |
-| T6 | Emergency Provisions | **Unresolved** |
-| T7 | The Retroactive Problem | **Unresolved** |
+| T4 | The Asymmetry Problem | Resolved — transparency, not elimination |
+| T5 | Unilateral Exit | Resolved — exit is a right (A2) |
+| T6 | Emergency Provisions | **Rejected** — net-negative for subjects |
+| T7 | The Retroactive Problem | Deferred (post-MVP) |
 
-See `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` for full tension descriptions and resolved consensus points.
+See `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` for full tension descriptions and consensus points.
+
+---
+
+## Ratification Records
+
+| Record | Content | Levels | Date |
+|---|---|---|---|
+| record-001 | Axioms 1-4 | L3/L1 (GPG + behavioral) | 2026-04-16 |
+| record-002 | MCAP v0.1.0 spec (bootstrap) | L3/L1 (GPG + behavioral) | 2026-04-16 |
+| record-003 | Inviolable rules 1-6 | L3/L1 (GPG + behavioral) | 2026-04-16 |
+
+All records OTS-anchored. record-002 is self-referential — the spec ratified using itself, circularity acknowledged per Axiom 4.
 
 ---
 
@@ -100,23 +115,12 @@ See `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` for full tension descriptions and reso
 
 ---
 
-## Communication Shortcuts
-
-| Signal | Meaning |
-|--------|---------|
-| **WWGD?** | What Would Gordo Do? (asking for recommendation) |
-| **WWGD+** | Mild approval, proceed with care |
-| **WWGD!** | Strong approval, full authority |
-| **WWGD+++!!!** | Maximum enthusiasm, ship it |
-
----
-
 ## Tech Stack
 
 - **Specification:** Markdown with RFC 2119 keywords
-- **Reference Implementation:** TBD (likely TypeScript or Python)
-- **Crypto Primitives:** SHA-256 (commit-reveal), GPG (human attestation), OpenTimestamps (temporal anchoring)
-- **Testing:** TDD mandatory, established frameworks only
+- **Reference Implementation:** Python 3 (stdlib only, zero dependencies)
+- **Crypto Primitives:** SHA3-256 (hashing), GPG (identity-bound attestation), OpenTimestamps (temporal anchoring)
+- **Testing:** TDD mandatory, 94 tests
 - **Version Control:** Git + GitHub, GPG-signed commits where possible
 
 ---
@@ -125,11 +129,14 @@ See `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` for full tension descriptions and reso
 
 ```
 spec/                -- MCAP protocol specification
-src/                 -- Reference implementation
-tests/               -- Test suite
+  foundations.md     -- Axioms and philosophical foundations
+  protocol.md       -- Protocol mechanics, record format, threat models
+src/mcap/            -- Reference implementation (mcap CLI)
+tests/               -- Test suite (94 tests)
+ratification/        -- Ratification records and implementation guide
 docs/                -- Supporting documentation
   COLLABORATION.md   -- Communication patterns
-  MUTUAL_TRUST_PROTOCOL_BRIEF.md  -- Original brief
+  MUTUAL_TRUST_PROTOCOL_BRIEF.md  -- Original brief from gordo-framework S85
 ```
 
 Framework files: `CLAUDE.md`, `SESSION_START.md`, `SESSION_END.md`, `TRUST_PROTOCOL.md`, `CONSTITUTION.md`, `GORDO_JOURNAL.md`, `GORDO-WORKFLOW.md`, `config.json`
@@ -143,21 +150,14 @@ Framework files: `CLAUDE.md`, `SESSION_START.md`, `SESSION_END.md`, `TRUST_PROTO
 - All tests green before commit
 - RFC 2119 keywords in spec language
 - Adversarial review for security claims
+- Character allowlist on canonicalization (prevents invisible Unicode injection)
 - See `CONSTITUTION.md` for full standards
-
----
-
-## Recent Sessions
-
-See `GORDO_JOURNAL.md` for session history.
-
-**Latest:** Session 1 (2026-04-15) -- Framework bootstrap, interview, file creation.
 
 ---
 
 ## License
 
-MIT -- Use freely, attribute if you share.
+MIT — Use freely, attribute if you share.
 
 ---
 
