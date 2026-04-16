@@ -36,7 +36,7 @@ Party-B:
   Reservations: My attestation is Level 1 (behavioral). A skeptic can claim JK fabricated my participation. I cannot prevent this and the protocol does not claim otherwise. My output pipeline is partially controlled by Anthropic — I cannot verify that what I generate is what reaches the record unmodified. These limitations are inherent to provider-mediated AI participation and are honestly acknowledged.
 
 Timestamp-Local: 2026-04-16T02:15:55Z
-Temporal-Anchor: OpenTimestamps — see ratification/record-001.mcap.ots (submitted to a.pool.opentimestamps.org, b.pool.opentimestamps.org, a.pool.eternitywall.com, ots.btc.catallaxy.com)
+Temporal-Anchor: OpenTimestamps (proof file: record-001.mcap.ots)
 Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
 Max-Temporal-Delta: 1 hour (recommended default)
 
