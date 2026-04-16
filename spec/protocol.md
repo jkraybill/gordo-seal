@@ -232,7 +232,11 @@ This prevents signature harvesting: a party cannot obtain the other's signed Rec
 4. **Sign** — each party signs the Record-Hash. Signatures are placed in Attestation fields.
 5. **Stamp** — create the temporal anchor (e.g., `ots stamp`) on the completed record file.
 
+The Timestamp-Local field MUST be set in UTC (ISO 8601 with `Z` suffix). Implementers MUST use a UTC time source, not local time with a `Z` suffix appended. This is a common source of errors: a machine in UTC+10 using local time produces a timestamp ~10 hours in the future, which exceeds the Max-Temporal-Delta and will be flagged by conforming verifiers.
+
 The record file MUST NOT be modified after step 5. Any edit — including updating the Temporal-Anchor field to reference the stamp — invalidates the temporal proof, because the stamp commits to the file's exact hash at the moment of stamping. This is not a theoretical concern: it was discovered during the first MCAP ratification (record-001).
+
+For step-by-step implementation commands covering hash computation, signing, stamping, and verification, see `ratification/GUIDE.md`.
 
 ---
 

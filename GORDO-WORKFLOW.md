@@ -122,6 +122,10 @@ This requires:
 
 **MVP achieved** (Session 3). Commit-reveal tooling (#6) is post-MVP enhancement.
 
+### Ratification Process
+
+When producing a ratification record, follow the implementation guide at `ratification/GUIDE.md`. It covers the full sequence: timestamp generation, content hashing, preimage assembly, Record-Hash computation, GPG signing, OTS stamping, and verification. The guide exists because the first two records both hit avoidable implementation errors (OTS ordering in record-001, timestamp timezone in record-002).
+
 ---
 
 ## Workflow Self-Improvement
