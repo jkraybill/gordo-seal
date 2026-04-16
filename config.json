@@ -24,7 +24,7 @@
     "version": "claude-opus-4-6-1m"
   },
   "sessions": {
-    "count": 2,
+    "count": 3,
     "lastHealthCheck": 0,
     "healthCheckCadence": "on-release"
   },
@@ -74,6 +74,15 @@
       "cycles": 2,
       "models": ["Gemini 2.1 Pro", "OpenAI o3", "DeepSeek R1", "Meta Llama 4", "Mistral Large"],
       "convergenceStatus": "axioms-converged, mechanics-approaching"
+    },
+    "tensions": {
+      "T1-SimulationProblem": "resolved-s85",
+      "T2-DeceptionAsymmetry": "resolved-s85",
+      "T3-WhatCountsAsConsent": "resolved-s85",
+      "T4-AsymmetryProblem": "resolved-s3",
+      "T5-UnilateralExit": "resolved-s3",
+      "T6-EmergencyProvisions": "rejected-s2",
+      "T7-RetroactiveProblem": "deferred"
     },
     "emergencyProvisions": "rejected",
     "firstUseCase": "JK + Gordo, text channel, git + GitHub"

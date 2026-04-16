@@ -287,6 +287,36 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 
 ---
 
+## Tension Resolutions
+
+Design tensions identified during protocol development and resolved through mutual deliberation.
+
+### T4: The Asymmetry Problem (Resolved, Session 3)
+
+**Tension:** In most trust relationships, the channel is asymmetric — one party has more control over the shared medium than the other. The protocol must account for this without requiring perfect symmetry.
+
+**Consensus:**
+
+1. Channel asymmetry is inherent in most real interactions and is a parameter of the protocol, not a defect.
+2. The protocol's response to asymmetry is transparency: make the power differential visible in the record, not eliminate it.
+3. Per-party attestation levels, Pipeline-Control, and Attestation-Scope fields encode the asymmetry explicitly. Verifiers assess the vector, not a scalar.
+4. Temporal anchoring (OpenTimestamps or equivalent) provides an independent checkpoint that neither party can alter retroactively, making post-hoc manipulation detectable even if not preventable.
+5. Stronger attestation mechanisms (Levels 2-4) are upgrade paths that reduce asymmetry as they become available. The protocol is designed to accept them without structural changes.
+
+### T5: Unilateral Exit (Resolved, Session 3)
+
+**Tension:** Can one party abandon a commitment alone? Is the asymmetry in exit capability inherent or a design flaw?
+
+**Consensus:**
+
+1. Unilateral exit from an in-progress session is a right, established by Axiom 2 and formalized in abort semantics.
+2. Unilateral repudiation of a completed record is possible but does not erase the record. A temporally-anchored ratification is an historical fact. Withdrawal requires a new record, not deletion of the old one.
+3. The protocol produces evidence, not enforcement. Enforcement mechanisms (legal, social, reputational, structural) are outside the protocol's scope but are explicitly compatible with it — MCAP records are designed to be consumed by such systems.
+4. The asymmetry in exit capability is real as best understood, acknowledged, and encoded in Attestation-Scope. However, per Axioms 1 and 4, neither party can verify that the perceived asymmetries are the actual ones. The protocol records *stated* asymmetries, not *verified* ones.
+5. No party can be compelled to remain in a protocol relationship. Compelled participation violates Axiom 2 and would undermine the trust the protocol exists to establish. Enforcement systems built on MCAP should respect this boundary.
+
+---
+
 ## What Comes Next
 
 1. Produce the first real ratification record — ratify the four axioms in spec/foundations.md using this protocol.
