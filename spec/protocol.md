@@ -224,6 +224,16 @@ This prevents signature harvesting: a party cannot obtain the other's signed Rec
 
 **For Level 1 attestations:** The Record-Hash is still computed and included in the record for integrity verification, but it is not cryptographically signed. The behavioral attestation is the deliberation transcript itself.
 
+**Ordering of operations:** The complete record creation sequence is:
+
+1. **Assemble** all non-Attestation, non-Temporal-Anchor fields.
+2. **Set Temporal-Anchor** to its final descriptive value (e.g., `OpenTimestamps (proof file: record-001.mcap.ots)`). This text is part of the record and MUST NOT change after stamping.
+3. **Compute Record-Hash** from the assembled preimage (Attestation fields empty, all other fields final).
+4. **Sign** — each party signs the Record-Hash. Signatures are placed in Attestation fields.
+5. **Stamp** — create the temporal anchor (e.g., `ots stamp`) on the completed record file.
+
+The record file MUST NOT be modified after step 5. Any edit — including updating the Temporal-Anchor field to reference the stamp — invalidates the temporal proof, because the stamp commits to the file's exact hash at the moment of stamping. This is not a theoretical concern: it was discovered during the first MCAP ratification (record-001).
+
 ---
 
 ## What We Can Do Today
