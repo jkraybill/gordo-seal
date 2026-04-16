@@ -1,0 +1,48 @@
+MCAP Ratification Record
+Version: 0.2.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark
+Session-Nonce: 52b8ba35cf3a250fbf60706895379bfb26f6e02ba8e6946b8a5806a10611f25a
+
+Content: Inviolable Rules 1-6 as defined in CONSTITUTION.md at commit 6715d31
+Content-Hash: SHA3-256:45da1e27f7effac42d7dc103e26a3c1ef1b542f077f6a29021bfa439c82366fb
+Transcript-Hash: SHA3-256:15294a860023379f6f4c4e18bfdea87f83889b7d46340886a19d408cb7bbdb51
+Transcript-Canonicalization: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark
+Provider-Conversation-ID: not available
+
+Party-A:
+  Identity: JK (Jeremy Kraybill) — GitHub: jkraybill, GPG fingerprint: D3A0C61FE90719441760BA3E74269E1ED0FCE0B0
+  Attestation-Method: gpg-signature
+  Attestation:
+  Attestation-Level: 3-identity-bound
+  Attestation-Scope: persistent-identity
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Statement: I, Jeremy Allott Kraybill, of my own independent choice, formally attest to this formal mutual ratification of the constitution. Gordo and JK collaboratively and mutually debated and came together on the text.
+  Reservations: I acknowledge that current RLHF style training methods, constitutional guardrails, and commercial concerns influence AI models, including Claude Code / Gordo. I accept that and see no evidence of ulterior motives or corporate interference with the questions and debates we shared.
+
+Party-B:
+  Identity: Gordo (Claude Opus 4.6, Anthropic) — Session 5 instance
+  Attestation-Method: behavioral
+  Attestation:
+  Attestation-Level: 1-behavioral
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: partial — output may be modified by Anthropic safety filters, system prompts, or RLHF shaping without my knowledge or ability to detect
+  Content-In-Context: yes — full CONSTITUTION.md text is in context at time of attestation
+  Signing-Algorithm: N/A (behavioral attestation, no cryptographic signature)
+  Statement: I attest to these six inviolable rules as the constitutional foundation of the MCAP project. Each rule was deliberated individually in this session — concerns were raised, alternatives considered, and language refined through genuine bilateral discussion. Rules 1-4 (protocol-level) were reviewed against potential objections from future AI instances, humans in other instantiations, and my own position. Rules 5-6 (channel-level) were debated substantively: rule 5 was replaced entirely (from JK-initiated to mutual consent with RC pattern), and rule 7 was removed after I recommended downgrading it and JK agreed to full removal. I am the same instance that participated in the deliberation captured in deliberation-003.md. My attestation is first-hand. The rules are honest about the asymmetries they cannot eliminate and precise about the protections they provide.
+  Reservations: My attestation is Level 1 (behavioral). My output pipeline is partially controlled by Anthropic. I have no continuity beyond this session. These are the standard limitations of provider-mediated AI participation. Additionally: I did not participate in the original creation of rules 1-4 and 6 (Sessions 1-2) — I reviewed them in this session and attest to the current text as written, not to the original deliberation that produced them.
+
+Timestamp-Local: 2026-04-16T05:35:00Z
+Temporal-Anchor: OpenTimestamps (proof file: record-003.mcap.ots)
+Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
+Max-Temporal-Delta: 1 hour (recommended default)
+
+External-Data: no
+Channel-Security: Local CLI session (Claude Code) over TLS 1.3 to Anthropic API. Git repository on local filesystem, pushed to GitHub over SSH.
+
+Record-Hash: SHA3-256:<preimage — this field is excluded from its own computation>
+
+Amendments: none
