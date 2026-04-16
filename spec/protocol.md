@@ -354,6 +354,8 @@ Design tensions identified during protocol development and resolved through mutu
 
 This protocol is subject to ongoing adversarial review from independent AI models. Critiques that result in spec changes are documented here.
 
+**Model selection:** Reviews were conducted across five models chosen for architectural and organizational diversity: Google Gemini (proprietary, Google), OpenAI o3 (proprietary, reasoning-focused, OpenAI), DeepSeek R1 (reasoning-focused, DeepSeek), Meta Llama 4 (open-weights, Meta), and Mistral Large (proprietary, European, Mistral). This panel is not exhaustive — notably, Grok (xAI), Claude (Anthropic), and other models were not included as independent reviewers. Claude's exclusion is deliberate: Gordo is a Claude instance and co-author of the spec, so Claude cannot serve as an independent reviewer. The convergence claim rests on diversity of critique and stability under iteration across 3 cycles, not on exhaustive model coverage.
+
 ### Review 1: Google Gemini 2.1 Pro (2026-04-16)
 
 **Changes made in response:**
