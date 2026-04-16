@@ -127,13 +127,29 @@ def cmd_verify(args):
 
 
 def cmd_nonce(args):
-    """Generate entropy for session nonce, or combine two contributions."""
+    """Generate entropy for session nonce, or combine two contributions.
+
+    Per spec: each party contributes 32 bytes (64 lowercase hex chars).
+    Nonce = SHA3-256(Individual-A-contribution || Individual-B-contribution).
+    Individual A contributes first.
+    """
     import hashlib
     if args.combine:
         parts = args.combine
         if len(parts) != 2:
-            print("ERROR: --combine requires exactly 2 hex strings", file=sys.stderr)
+            print("ERROR: --combine requires exactly 2 hex strings (Individual A first, then B)",
+                  file=sys.stderr)
             return 2
+        import re
+        for i, part in enumerate(parts):
+            label = "Individual A" if i == 0 else "Individual B"
+            if not re.fullmatch(r"[0-9a-f]{64}", part):
+                if re.fullmatch(r"[0-9a-fA-F]{64}", part):
+                    print(f"ERROR: {label} contribution must be lowercase hex", file=sys.stderr)
+                    return 2
+                print(f"ERROR: {label} contribution must be exactly 64 lowercase hex characters "
+                      f"(got {len(part)} chars)", file=sys.stderr)
+                return 2
         combined = (parts[0] + parts[1]).encode()
         nonce = hashlib.sha3_256(combined).hexdigest()
         print(f"Session-Nonce: {nonce}")

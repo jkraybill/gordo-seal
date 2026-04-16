@@ -198,7 +198,19 @@ A ratification has exactly two states: complete or nonexistent. There is no "pen
 
 ### Session Binding
 
-Each ratification session begins with a jointly established session nonce — a random value generated collaboratively (e.g., each party contributes entropy, the nonce is the hash of both contributions). The session nonce is included in the record and in any cryptographic signatures.
+Each ratification session begins with a jointly established session nonce. The session nonce is included in the record and in any cryptographic signatures.
+
+#### Nonce Generation
+
+Each party MUST contribute 32 bytes of entropy, encoded as 64 lowercase hexadecimal characters. The session nonce is computed as:
+
+    Session-Nonce = SHA3-256(Individual-A-contribution || Individual-B-contribution)
+
+where `||` denotes string concatenation of the hex-encoded contributions (128 ASCII characters total input). The result is encoded as 64 lowercase hexadecimal characters.
+
+Individual A contributes first. Individual B contributes second. If the parties' roles are symmetric (neither is designated A or B in advance), the party who proposes the ratification contributes first.
+
+Both contributions MUST be generated from a cryptographically secure random source. Both contributions MUST be shared in the clear during the session — the nonce ceremony is not a commitment scheme (unlike the two-phase commit for the record itself). Transparency of contributions allows both parties to verify the nonce computation independently.
 
 The session nonce binds attestations to active participation. A cryptographic signature produced after a party has disengaged — for example, using a compromised key — will not include the correct session nonce unless the attacker also compromises the nonce. This prevents post-disengagement forgery of Level 3+ attestations.
 
@@ -587,7 +599,7 @@ Cycle 3 reviews target convergence. Tensions T4 (Asymmetry) and T5 (Unilateral E
 Third review from this model. No structural issues found. Six refinements identified, all consistent with existing acknowledged limitations.
 
 **Refinements noted (no spec changes required):**
-- Session nonce establishment mechanism is underspecified (exact exchange protocol is implementation-defined; commit-reveal recommended pattern would be an enhancement).
+- Session nonce establishment mechanism was underspecified. Now normative: SHA3-256 of concatenated hex contributions, Individual A first. (#78)
 - No field for model version manifest hash (protocol acknowledges routing/version drift threat; mitigation placed on providers).
 - Non-text canonicalization left to implementations (deliberate design choice, acknowledged as cross-implementation divergence risk).
 - Pipeline-Control and Content-In-Context fields are self-reported (consistent with Level 1-3 good-faith operation; Level 4 could eventually attest these).

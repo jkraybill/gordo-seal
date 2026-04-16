@@ -70,6 +70,38 @@ class TestVerifyCLI(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
 
 
+class TestNonceCLI(unittest.TestCase):
+
+    def test_generate_entropy(self):
+        result = run_mcap("nonce")
+        self.assertEqual(result.returncode, 0)
+        # Should be 64 lowercase hex chars
+        self.assertRegex(result.stdout.strip(), r"^[0-9a-f]{64}$")
+
+    def test_combine_valid(self):
+        a = "a" * 64
+        b = "b" * 64
+        result = run_mcap("nonce", "--combine", a, b)
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("Session-Nonce:", result.stdout)
+
+    def test_combine_rejects_short(self):
+        result = run_mcap("nonce", "--combine", "abcd", "efgh")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("64 lowercase hex", result.stderr)
+
+    def test_combine_rejects_uppercase(self):
+        a = "A" * 64
+        b = "b" * 64
+        result = run_mcap("nonce", "--combine", a, b)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("lowercase", result.stderr)
+
+    def test_combine_rejects_one_arg(self):
+        result = run_mcap("nonce", "--combine", "a" * 64)
+        self.assertNotEqual(result.returncode, 0)
+
+
 class TestVersionCLI(unittest.TestCase):
 
     def test_version(self):
