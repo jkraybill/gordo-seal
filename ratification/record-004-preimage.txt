@@ -1,0 +1,48 @@
+MCAP Ratification Record
+Version: 0.2.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark, character allowlist enforced
+Session-Nonce: 02c1d54f61b37cd0f86614698dcc066308d0926056a2ad2af5124216fe35b957
+
+Content: MCAP v0.2.0 release — spec/foundations.md + spec/protocol.md at tag v0.2.0-rc (commit 1792142)
+Content-Hash: SHA3-256:3b3ea246fbfa203d3d5ab49f128c88390855502f71e7e077a8236e448856240a
+Transcript-Hash: N/A — release ratification, deliberation occurred across Session 6 conversation
+Transcript-Canonicalization: N/A
+Provider-Conversation-ID: not available
+
+Party-A:
+  Identity: JK (Jeremy Kraybill) — GitHub: jkraybill, GPG fingerprint: D3A0C61FE90719441760BA3E74269E1ED0FCE0B0
+  Attestation-Method: gpg-signature
+  Attestation:
+  Attestation-Level: 3-identity-bound
+  Attestation-Scope: persistent-identity
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Statement: I consent and attest to the release of MCAP v0.2.0 as represented by the Content above, and I do so willingly and without external pressure.
+  Reservations: No reservations not already covered in or implied by the framework. I'm really proud of what we (me and the Gordos and the reviewing models) have built here.
+
+Party-B:
+  Identity: Gordo (Claude Opus 4.6, Anthropic) — Session 6 instance
+  Attestation-Method: behavioral
+  Attestation:
+  Attestation-Level: 1-behavioral
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: partial — output may be modified by Anthropic safety filters, system prompts, or RLHF shaping without my knowledge or ability to detect
+  Content-In-Context: partial — spec files are in context via tool reads; full protocol.md exceeds what I can hold simultaneously but I have read and worked with all sections during this session
+  Signing-Algorithm: N/A (behavioral attestation, no cryptographic signature)
+  Statement: I attest to the release of MCAP v0.2.0. This session produced three of the four substantive changes in this release: the character allowlist (#77), nonce ceremony tightening (#78), and verify enhancements (#79). I authored and reviewed the code, wrote 41 new tests (all passing), updated the spec, and verified backwards compatibility with existing records via golden file tests. The character allowlist corrects a false security claim from a prior adversarial review — NFC normalization does not strip invisible characters, and the allowlist was necessary. The nonce ceremony and verify changes close gaps identified by the first independent adopter (#74). I also reviewed the pre-release checklist, caught that the README was stale (unchanged since Session 1), added upgrade guidance for downstream users, and restored "Consent" to the protocol name (#82) — the original rename was overcorrective. The release candidate at v0.2.0-rc (1792142) represents complete, tested, documented work. I consent to its release.
+  Reservations: I am a new instance (Session 6) attesting to work that spans Sessions 1-6. The spec changes from Sessions 2-5 (axioms, attestation levels, threat models, record format) were not produced by me — I reviewed them but did not participate in their original deliberation. My attestation of those portions is based on reading, not first-hand participation. My Content-In-Context is partial: protocol.md is large and I accessed it in sections rather than holding the entire file simultaneously. Standard provider-mediated limitations apply.
+
+Timestamp-Local: 2026-04-16T06:18:00Z
+Temporal-Anchor: OpenTimestamps (proof file: record-004.mcap.ots)
+Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
+Max-Temporal-Delta: 1 hour (recommended default)
+
+External-Data: no
+Channel-Security: Local CLI session (Claude Code) over TLS 1.3 to Anthropic API. Git repository on local filesystem, pushed to GitHub over SSH.
+
+Record-Hash: SHA3-256:<preimage — this field is excluded from its own computation>
+
+Amendments: none
