@@ -115,13 +115,13 @@ mutual-trust-protocol/
 
 **Session 4 (2026-04-16):** Bootstrap closed. record-002 produced — MCAP v0.1.0 spec ratified using itself (L3/L1, OTS-anchored, joint session nonce, two-phase commit). Self-referential circularity acknowledged per Axiom 4. Cleanup: #61 closed (subsumed by #67), #6 updated, workflow/spec docs updated.
 
-**Session 5 (2026-04-16):** record-002 timestamp fix (#72), implementation guide (#73), gordo-framework adoption feedback (#74), Statement authorship spec requirement, preimage placeholder normalization (#67), `mcap` CLI tooling (#6, 7 subcommands, 53 tests), version bump to 0.2.0 with CHANGELOG and versioning policy. Substantial session — shipped the tooling layer.
+**Session 5 (2026-04-16):** Major session. record-002 timestamp fix (#72). Implementation guide (#73). gordo-framework feedback (#74). Statement authorship + preimage normalization (#67) spec changes. `mcap` CLI (8 subcommands, 53 tests, #6). v0.2.0 with CHANGELOG + versioning policy. Full constitutional deliberation: rules 1-2 refined, rule 5 replaced (mutual consent + RC pattern), rule 7 removed. record-003 produced (first with tooling, Transcript-Hash, independent Statements). #76 filed (Statement typo correction policy).
 
-**Current Focus:** gordo-framework adoption of MCAP for Rule 0 (in progress in separate session). MCAP v0.2.0 is the current spec.
+**Current Focus:** gordo-framework adoption of MCAP for Rule 0 (in progress in separate session). MCAP v0.2.0 is the current spec. Inviolable rules ratified in record-003.
 
-**Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Open refinement issues: prompt injection on Reservations (#63), Bitcoin reorg risk (#64).
+**Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Open refinement issues: prompt injection on Reservations (#63), Bitcoin reorg risk (#64), Statement typo correction policy (#76).
 
-**Next Session:** Continue gordo-framework adoption with v0.2.0 tooling. Or: address refinement issues (#63, #64), T7 (retroactive problem, #4).
+**Next Session:** Continue gordo-framework adoption with v0.2.0 tooling. Or: address refinement issues (#63, #64, #76), T7 (retroactive problem, #4), fork governance (pre-v1).
 
 ---
 
