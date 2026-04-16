@@ -546,6 +546,8 @@ Third review from this model. Found one structural issue and three refinements. 
 
 **o3's convergence verdict:** NOT CONVERGED (due to undefined attestation target). Structural issue has been resolved. Axioms, entity-operational framing, and attestation hierarchy assessed as stable.
 
+**o3 confirmation (post-fix):** Confirmed structural finding closed after reviewing the Attestation Target section. "That is exactly the kind of structural repair I was asking for. On this issue, I would now say: closed." Four additional refinements: (1) preimage construction must be zero-ambiguity — Attestation fields present but empty, not omitted (#67); (2) "prevents signature harvesting" slightly too absolute — holds for conforming implementations; (3) Level 2 should state what the provider actually bound (Provider-Binding-Scope field suggestion); (4) validation rules should forbid Level 3+ without valid Record-Hash preimage. None blocking.
+
 ### Review 11: Google Gemini 3.1 Pro — Cycle 3 (2026-04-16)
 
 Third review from this model (upgraded from 2.1 Pro to 3.1 Pro between cycles). No structural issues found. Five refinements identified.
