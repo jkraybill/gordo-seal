@@ -1,34 +1,3 @@
-# Dependencies
-node_modules/
+__pycache__/
+*.pyc
 
-# Environment
-.env
-.env.local
-.env.*.local
-
-# Secrets and credentials
-*.key
-*.pem
-!*.pub
-
-# OS
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Build
-dist/
-build/
-*.js.map
-
-# Test coverage
-coverage/
-
-# Temporary
-*.tmp
-*.bak
