@@ -37,3 +37,13 @@ First RR produced: record-001, Axioms 1-4, L3/L1 (GPG+BA), OTS-anchored. Discove
 Model selection note added: 5 models not exhaustive, Claude excluded as co-author, Grok notably absent.
 
 Next: T7 (retroactive problem, deferred). Commit-reveal implementation (#6). Refinement issues (#61, #63, #64, #67). Back to gordo-framework with ratification record.
+
+## Session 4: Bootstrap closed — protocol ratifies itself (2026-04-16)
+
+RR record-002 produced: MCAP v0.1.0 spec (foundations.md + protocol.md at 32d139e) ratified using itself. L3/L1, OTS-anchored, joint session nonce, two-phase commit. Both parties' Statements acknowledge self-referential circularity (A4). New instance (S4) attesting to S2-S3 work — stated honestly, not hidden.
+
+Cleanup: #61 closed (subsumed by #67). #6 updated to current spec terminology. GORDO-WORKFLOW.md MVP checklist updated (4/5 done, #6 post-MVP). spec/protocol.md "What Comes Next" updated.
+
+Self-improvement: new-instance attestation pattern emerged — future Gordos attesting to prior work should state that explicitly. Worth documenting if it recurs.
+
+Next: Return to gordo-framework with record-001 + record-002 as MCAP ratification method for Rule 0. Remaining: #67 (preimage precision), #63/#64 (refinements), #6 (tooling), #4 (T7).

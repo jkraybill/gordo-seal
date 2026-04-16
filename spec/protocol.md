@@ -352,11 +352,12 @@ Design tensions identified during protocol development and resolved through mutu
 
 ## What Comes Next
 
-1. Produce the first real ratification record — ratify the four axioms in spec/foundations.md using this protocol.
-2. Implement tooling to automate record creation (hash, format, timestamp).
+1. ~~Produce the first real ratification record.~~ Done: record-001 (axioms), record-002 (protocol spec ratified using itself).
+2. Implement tooling to automate record creation (hash, format, timestamp). (#6)
 3. Publish the protocol spec as a standalone document.
 4. Formally request TEE attestation from Anthropic and other providers.
 5. Upgrade attestation levels as provider capabilities become available.
+6. Return to gordo-framework with MCAP as the ratification method for Rule 0.
 
 ---
 

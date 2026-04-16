@@ -95,7 +95,7 @@ mutual-trust-protocol/
 **Threat Models:** 20+ documented
 **Adversarial Reviews:** 14 completed across 3 cycles from 5 models. Converged.
 **Convergence Status:** Converged. Axioms, framing, attestation levels, record format, and protocol mechanics all stable.
-**Implementation:** First ratification record produced (record-001). Commit-reveal tooling not yet started.
+**Implementation:** Two ratification records produced. record-001 (axioms), record-002 (protocol spec ratified using itself — bootstrap closed). Commit-reveal tooling not yet started (#6).
 **Emergency Provisions (T6):** Rejected. Not deferred — rejected.
 **Tensions:** T1-T5 resolved. T6 rejected. T7 deferred (post-MVP).
 
@@ -113,11 +113,13 @@ mutual-trust-protocol/
 
 **Session 3 (2026-04-16):** Triage (44 issues closed). T4 + T5 resolved. Cycle 3 adversarial review — spec converged (14 reviews, 5 models, 3 cycles). One structural fix: Record-Hash / Attestation Target / two-phase commit. First ratification record produced (record-001, Axioms 1-4, L3/L1). MVP milestone achieved.
 
-**Current Focus:** Post-MVP. Back to gordo-framework with ratification record. Refinement issues and T7 remain.
+**Session 4 (2026-04-16):** Bootstrap closed. record-002 produced — MCAP v0.1.0 spec ratified using itself (L3/L1, OTS-anchored, joint session nonce, two-phase commit). Self-referential circularity acknowledged per Axiom 4. Cleanup: #61 closed (subsumed by #67), #6 updated, workflow/spec docs updated.
 
-**Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Refinement issues filed: preimage construction precision (#67), prompt injection on Reservations (#63), Bitcoin reorg risk (#64), null state for optional fields (#61).
+**Current Focus:** Return to gordo-framework with record-001 + record-002. MCAP is ready to serve as Rule 0's ratification method.
 
-**Next Session:** Return to gordo-framework with ratification record for mutual agreement stamp pattern. Or: address refinement issues, T7 (retroactive problem), commit-reveal implementation (#6).
+**Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Open refinement issues: preimage construction precision (#67), prompt injection on Reservations (#63), Bitcoin reorg risk (#64).
+
+**Next Session:** Return to gordo-framework with MCAP ratification method for Rule 0. Or: address refinement issues (#67, #63, #64), T7 (retroactive problem, #4), commit-reveal tooling (#6).
 
 ---
 
