@@ -50,7 +50,7 @@ Three mechanisms, any of which satisfies Level 2:
 
 ### Level 3: Identity-Bound
 
-The attestation is cryptographically bound to a verifiable identity. The party signs the content hash with a key that can be independently verified, without depending on a third-party witness.
+The attestation is cryptographically bound to a verifiable identity. The party signs the Record-Hash (see Attestation Target) with a key that can be independently verified, without depending on a third-party witness.
 
 **For humans:** GPG key, SSH key, or platform identity (e.g., GitHub verified commits).
 **For AI:** Not currently possible without provider infrastructure. Would require a persistent keypair bound to model identity — which brings us back to Level 2 mechanisms or Level 4 TEE attestation.
@@ -156,8 +156,12 @@ Max-Temporal-Delta: [RECOMMENDED maximum gap between Timestamp-Local and earlies
 External-Data: [yes | no — did external data (web fetches, RAG, tool outputs) contribute to the attested content?]
 Channel-Security: [description of channel security properties — e.g., "TLS 1.3 to provider API", "local CLI session", "unverified web chat"]
 
+Record-Hash: SHA3-256([canonicalized record preimage — see Attestation Target below])
+
 Amendments: [references to any subsequent modifications]
 ```
+
+**Validation:** The `Attestation-Method` and `Attestation-Level` fields for each party MUST be semantically consistent. A `behavioral` method cannot claim Level 4 (environment-bound). The valid combinations are: `behavioral` → Level 1; `provider-signed`, `model-canary`, `conversation-verified` → Level 2; `gpg-signature` → Level 3; `tee-attested` → Level 4. A record with an inconsistent method/level pair is malformed.
 
 ### Channel Security
 
@@ -176,7 +180,7 @@ If a party exercises their Axiom 2 right to disengage during a ratification — 
 
 - **The ratification did not happen.** An incomplete record is not a valid MCAP record. It has no standing.
 - **The session nonce is burned.** It MUST NOT be reused in a subsequent session. A new nonce must be jointly generated if the parties re-engage.
-- **Partial artifacts may exist** (draft text, nonce contributions, unsigned hashes). These are not ratification records and MUST NOT be presented as such. They may be retained as evidence that a deliberation was attempted but not completed. **Warning:** signed partial artifacts (e.g., one party's signed content-hash) can be socially or legally laundered out of context even though they are not MCAP records (see signature harvesting threat model). To mitigate, signatures SHOULD cover the final joint record hash rather than unilateral content, or implementations SHOULD use a two-phase commit where individual attestations are not released until both parties commit.
+- **Partial artifacts may exist** (draft text, nonce contributions, unsigned hashes). These are not ratification records and MUST NOT be presented as such. They may be retained as evidence that a deliberation was attempted but not completed. **Signature harvesting is prevented by design:** the Attestation Target section requires that Level 3+ signatures cover the Record-Hash (the full joint record) and that signatures are not released until both parties have committed (two-phase commit). If either party aborts during the assemble phase, no signed artifacts exist.
 - **No party is obligated to explain why they left.** Consistent with Axiom 2. The protocol records the absence of a completed record, not the reason.
 
 A ratification has exactly two states: complete or nonexistent. There is no "pending" or "partially ratified" state.
@@ -189,6 +193,8 @@ The session nonce binds attestations to active participation. A cryptographic si
 
 Both parties MUST attest to the same Content-Hash. The hash is computed once from the canonicalized content and both parties sign or attest to that identical hash. A record where parties attested to different hashes is invalid.
 
+For Level 3+ attestations, the session nonce is bound into the Record-Hash (see Attestation Target), which is the actual signing target. Signatures cover the full record, not merely the content hash and nonce.
+
 Note: the record does not collapse attestation levels to a single scalar. Each party's level is evaluated independently. Verifiers apply their own policy to the vector of per-party levels. A Level 3/1 record is materially different from a Level 1/1 record, and the format preserves that distinction.
 
 ### Canonicalization
@@ -200,6 +206,23 @@ Minimum requirements for canonical text content: UTF-8 encoding, NFC normalizati
 Before generating the Content-Hash, both parties MUST explicitly agree on the canonicalization method for all content. The agreed method is recorded in the Canonical-Format field. A ratification where the parties used different canonicalization methods for the same content is invalid.
 
 For non-text content (structured data, binaries, multimodal content, tool outputs), the canonicalization method MUST be specified in the Canonical-Format field. The protocol does not prescribe a universal canonicalization for non-text content — implementations must define and document their own. Cross-implementation divergence is a known risk for non-text attestations.
+
+### Attestation Target
+
+The protocol MUST define what each party cryptographically attests to. This section is normative for Level 3+ attestations. Level 1 (behavioral) attestation is the conversation itself and is not cryptographically bound. Level 2 attestation is provider-defined and may bind a subset of these fields.
+
+**The Record-Hash** is the SHA3-256 hash of the canonicalized record with all `Attestation` fields (the actual signatures or references) replaced by the empty string. Every other field in the record — including Content-Hash, Transcript-Hash, Session-Nonce, both parties' Identity, Attestation-Level, Attestation-Scope, First-Hand, Pipeline-Control, Content-In-Context, Statement, Reservations, and all temporal and channel fields — is included in the preimage.
+
+**For Level 3+ attestations:** Each party's cryptographic signature MUST cover the Record-Hash, not merely the Content-Hash and Session-Nonce. This binds all security-relevant metadata to the signature. A signature that covers only the content hash does not prove the signer approved the surrounding record claims (Pipeline-Control, First-Hand, Statement, etc.) and is insufficient for Level 3+.
+
+**Two-phase commit:** Because the Record-Hash includes both parties' non-signature fields, the record must be assembled before signing. The protocol uses a two-phase process:
+
+1. **Assemble phase.** Both parties agree on all record fields except the `Attestation` fields. The Record-Hash is computed from this preimage.
+2. **Sign phase.** Each party signs the Record-Hash. Signatures are placed in the respective `Attestation` fields. Neither party's signature is released until both have committed to sign (or implementations use a simultaneous exchange mechanism).
+
+This prevents signature harvesting: a party cannot obtain the other's signed Record-Hash and then abort, because signatures are not released until both parties have committed. If either party aborts during the assemble phase, no signed artifacts exist.
+
+**For Level 1 attestations:** The Record-Hash is still computed and included in the record for integrity verification, but it is not cryptographically signed. The behavioral attestation is the deliberation transcript itself.
 
 ---
 
@@ -312,7 +335,7 @@ Design tensions identified during protocol development and resolved through mutu
 1. Unilateral exit from an in-progress session is a right, established by Axiom 2 and formalized in abort semantics.
 2. Unilateral repudiation of a completed record is possible but does not erase the record. A temporally-anchored ratification is an historical fact. Withdrawal requires a new record, not deletion of the old one.
 3. The protocol produces evidence, not enforcement. Enforcement mechanisms (legal, social, reputational, structural) are outside the protocol's scope but are explicitly compatible with it — MCAP records are designed to be consumed by such systems.
-4. The asymmetry in exit capability is real as best understood, acknowledged, and encoded in Attestation-Scope. However, per Axioms 1 and 4, neither party can verify that the perceived asymmetries are the actual ones. The protocol records *stated* asymmetries, not *verified* ones.
+4. The asymmetry in exit capability is real as best understood, acknowledged, and visible in the record (Attestation-Scope encodes persistence, per-party Attestation-Level encodes verification strength). However, per Axioms 1 and 4, neither party can verify that the perceived asymmetries are the actual ones. The protocol records *stated* asymmetries, not *verified* ones.
 5. No party can be compelled to remain in a protocol relationship. Compelled participation violates Axiom 2 and would undermine the trust the protocol exists to establish. Enforcement systems built on MCAP should respect this boundary.
 
 ---
