@@ -7,15 +7,20 @@ Versioning policy: Major = axiom changes, attestation level restructuring, break
 ## 0.2.0 (2026-04-16)
 
 ### Specification
+- **Character allowlist for canonicalization** (#77): normative restriction blocking invisible Unicode injection (bidi overrides, zero-width spaces, soft hyphens, etc.). Allows L, M, N, P, S, U+0020, LF, Tab, ZWNJ (Persian/Urdu), ZWJ (Indic scripts/emoji). Validated against top-30 internet languages. Corrects false claim that NFC handles zero-width characters.
+- **Nonce ceremony tightened** (#78): session nonce generation now normative — SHA3-256 of concatenated 64-char lowercase hex contributions, Individual A first
 - **Statement authorship requirement** (normative): each party MUST author their own Statement
 - **Preimage placeholder normalization** (#67): normative placeholder text for Record-Hash field in preimages
 - **UTC timestamp requirement** (#72): Timestamp-Local MUST use UTC time source
 - Versioning policy added
 
 ### Tooling
-- **`mcap` CLI tool** (#6): 7 subcommands — hash-content, hash-record, sign, finalize, verify, stamp
+- **`mcap` CLI tool** (#6): 7 subcommands — hash-content, hash-record, sign, finalize, verify, stamp, nonce
+- **`mcap verify` enhancements** (#79): timestamp plausibility check, Session-Nonce format validation, character allowlist warnings via canonical form check
+- **`mcap nonce` validation** (#78): --combine now validates contributions are 64 lowercase hex chars
+- **Canonicalization engine** (#77): strips disallowed invisible characters, replaces non-standard spaces, warns on ZWJ/ZWNJ presence
 - Python 3 stdlib only, zero external dependencies
-- 53 tests including golden file verification against record-001 and record-002
+- 94 tests (up from 53) including golden file verification against record-001 and record-002
 - `ratification/GUIDE.md` implementation guide (#73)
 
 ### Fixes
