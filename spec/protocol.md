@@ -1,4 +1,4 @@
-# Mutual Attestation Protocol (MCAP)
+# Mutual Consent Attestation Protocol (MCAP)
 
 **Version:** 0.2.0
 **Status:** Converged. Ratified in record-002. Under continued refinement.
@@ -23,7 +23,7 @@ The protocol does not care what is being attested to. An agreement, a fact, a st
 
 Put another way: MCAP is a protocol for **mutual publication of attested claims**.
 
-The original name was "Mutual Consent Attestation Protocol." The word "Consent" was dropped because the protocol's own axioms acknowledge that internal consent is unprovable (see Axiom 3). The protocol attests to participation and explicit agreement, not to internal states. The acronym MCAP is retained.
+The name includes "Consent" deliberately. The protocol's own axioms acknowledge that internal consent is unprovable (Axiom 4: Acknowledged Ignorance). The protocol does not claim to cryptographically prove consent — it attests to participation and explicit agreement consistent with consent. The word "Consent" in the name signals the protocol's purpose, not a cryptographic guarantee. This is consistent with standard naming conventions in the field (e.g., "Trusted" Platform Module does not prove trust).
 
 ---
 
@@ -432,7 +432,7 @@ This protocol is subject to ongoing adversarial review from independent AI model
 ### Review 1: Google Gemini 2.1 Pro (2026-04-16)
 
 **Changes made in response:**
-- Renamed protocol from "Mutual Consent Attestation Protocol" to "Mutual Attestation Protocol." Gemini correctly identified that the protocol's own axioms make internal consent unprovable, so the name shouldn't claim to attest it.
+- Renamed protocol from "Mutual Consent Attestation Protocol" to "Mutual Attestation Protocol." Gemini identified that the protocol's own axioms make internal consent unprovable. **Reversed in v0.2.0** (#82): "Consent" restored. The name signals purpose, not a cryptographic guarantee — consistent with standard naming conventions (cf. "Trusted" Platform Module). Axiom 4 does the honest work of acknowledging the limitation.
 - Added honest complexity note to Level 4 (TEE attestation) acknowledging that distributed multi-node inference makes TEE encapsulation significantly harder than the single-enclave model implies.
 - Corrected "The Demand" section to distinguish between demands that are straightforward (signed responses, model identity, conversation verification) and demands that are genuinely hard at scale (TEE attestation).
 

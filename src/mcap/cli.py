@@ -1,4 +1,4 @@
-"""MCAP CLI — command-line interface for the Mutual Attestation Protocol."""
+"""MCAP CLI — command-line interface for the Mutual Consent Attestation Protocol."""
 
 import argparse
 import os
@@ -182,7 +182,7 @@ def cmd_stamp(args):
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="mcap",
-        description=f"MCAP — Mutual Attestation Protocol tooling v{__version__}",
+        description=f"MCAP — Mutual Consent Attestation Protocol tooling v{__version__}",
     )
     parser.add_argument("--version", action="version", version=f"mcap {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
