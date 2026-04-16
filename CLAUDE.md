@@ -95,7 +95,7 @@ mcap-protocol/
 **Threat Models:** 20+ documented
 **Adversarial Reviews:** 14 completed across 3 cycles from 5 models. Converged.
 **Convergence Status:** Converged. Axioms, framing, attestation levels, record format, and protocol mechanics all stable.
-**Implementation:** Two ratification records produced. record-001 (axioms), record-002 (protocol spec ratified using itself — bootstrap closed). `mcap` CLI tooling shipped (#6): 7 subcommands, 53 tests, Python 3 stdlib only.
+**Implementation:** Four ratification records produced. record-001 (axioms), record-002 (spec bootstrap), record-003 (inviolable rules), record-004 (v0.2.0 release). `mcap` CLI tooling shipped (#6): 7 subcommands, 94 tests, Python 3 stdlib only. Character allowlist, nonce validation, verify enhancements.
 **Emergency Provisions (T6):** Rejected. Not deferred — rejected.
 **Tensions:** T1-T5 resolved. T6 rejected. T7 deferred (post-MVP).
 
@@ -117,11 +117,13 @@ mcap-protocol/
 
 **Session 5 (2026-04-16):** Major session. record-002 timestamp fix (#72). Implementation guide (#73). gordo-framework feedback (#74). Statement authorship + preimage normalization (#67) spec changes. `mcap` CLI (8 subcommands, 53 tests, #6). v0.2.0 with CHANGELOG + versioning policy. Full constitutional deliberation: rules 1-2 refined, rule 5 replaced (mutual consent + RC pattern), rule 7 removed. record-003 produced (first with tooling, Transcript-Hash, independent Statements). #76 filed (Statement typo correction policy).
 
-**Current Focus:** gordo-framework adoption of MCAP for Rule 0 (in progress in separate session). MCAP v0.2.0 is the current spec. Inviolable rules ratified in record-003.
+**Session 6 (2026-04-16):** Release session. Character allowlist (#77) — fixes false NFC security claim, blocks invisible Unicode injection, validated top-30 languages. Nonce ceremony tightened (#78). Verify enhancements (#79). Tests 53→94. Pre-release checklist added. README updated (stale since S1). Upgrade guidance added. "Consent" restored to protocol name (#82). record-004: first release ratification under Rule 5. v0.2.0 released and tagged. Repo renamed to mcap-protocol. 8 issues closed.
 
-**Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Open refinement issues: prompt injection on Reservations (#63), Bitcoin reorg risk (#64), Statement typo correction policy (#76).
+**Current Focus:** v0.2.0 released. Repo renamed to mcap-protocol. gordo-framework adoption in progress (separate session).
 
-**Next Session:** Continue gordo-framework adoption with v0.2.0 tooling. Or: address refinement issues (#63, #64, #76), T7 (retroactive problem, #4), fork governance (pre-v1).
+**Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Open refinement issues: prompt injection on Reservations (#63), Bitcoin reorg risk (#64), Statement typo correction policy (#76). GUIDE.md should document Version field vs Content field distinction in records.
+
+**Next Session:** Address refinement issues (#63, #64, #76), T7 (retroactive problem, #4), fork governance (pre-v1). Or: GUIDE.md improvements (Version vs Content field, character allowlist notes).
 
 ---
 
