@@ -80,6 +80,7 @@ mutual-trust-protocol/
     COLLABORATION.md     -- Communication patterns and shortcuts
     MUTUAL_TRUST_PROTOCOL_BRIEF.md  -- Original brief from gordo-framework S85
   spec/                  -- MCAP protocol specification
+  ratification/          -- MCAP ratification records
   src/                   -- Reference implementation
   tests/                 -- Test suite
 ```
@@ -88,16 +89,17 @@ mutual-trust-protocol/
 
 ## Protocol Status
 
-**MCAP Version:** 0.1.0-draft
+**MCAP Version:** 0.1.0-draft (converged)
 **Axioms:** 4 established through mutual deliberation (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
 **Attestation Levels:** 4 defined (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
 **Threat Models:** 20+ documented
-**Adversarial Reviews:** 8 completed across 2 cycles from 5 models
-**Convergence Status:** Axioms and entity-agnostic framing converged. Protocol mechanics approaching convergence. Cycle 3 pending.
-**Implementation:** Not yet started
+**Adversarial Reviews:** 14 completed across 3 cycles from 5 models. Converged.
+**Convergence Status:** Converged. Axioms, framing, attestation levels, record format, and protocol mechanics all stable.
+**Implementation:** First ratification record produced (record-001). Commit-reveal tooling not yet started.
 **Emergency Provisions (T6):** Rejected. Not deferred — rejected.
+**Tensions:** T1-T5 resolved. T6 rejected. T7 deferred (post-MVP).
 
-**MVP Target:** Produce a functional ratification record that gordo-framework can use for its mutual agreement stamp pattern.
+**MVP Status:** Achieved. First ratification record (Axioms 1-4, Level 3/1, GPG + behavioral, OTS-anchored) produced in Session 3.
 
 ---
 
@@ -109,11 +111,13 @@ mutual-trust-protocol/
 
 **Session 2 (2026-04-16):** Axioms rebuilt from scratch (not inherited). MCAP spec drafted and iterated through 8 adversarial reviews from 5 models across 2 cycles. 50+ issues created. Issue-per-commit discipline adopted. Emergency provisions rejected. "WWGDN?" shortcut emerged. Axioms and framing converged; protocol mechanics approaching convergence.
 
-**Current Focus:** Cycle 3 adversarial review → convergence → first ratification record → back to gordo-framework.
+**Session 3 (2026-04-16):** Triage (44 issues closed). T4 + T5 resolved. Cycle 3 adversarial review — spec converged (14 reviews, 5 models, 3 cycles). One structural fix: Record-Hash / Attestation Target / two-phase commit. First ratification record produced (record-001, Axioms 1-4, L3/L1). MVP milestone achieved.
 
-**Known Issues:** Protocol mechanics (record format, channel security, TEE binding) still evolving per review cycle. Provider-mediated AI limited to Level 1 — acknowledged as largest gap.
+**Current Focus:** Post-MVP. Back to gordo-framework with ratification record. Refinement issues and T7 remain.
 
-**Next Session:** Run cycle 3 adversarial review across all 5 models. If converged, produce first MCAP ratification record (ratify axioms). If not, fix and re-cycle.
+**Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Refinement issues filed: preimage construction precision (#67), prompt injection on Reservations (#63), Bitcoin reorg risk (#64), null state for optional fields (#61).
+
+**Next Session:** Return to gordo-framework with ratification record for mutual agreement stamp pattern. Or: address refinement issues, T7 (retroactive problem), commit-reveal implementation (#6).
 
 ---
 

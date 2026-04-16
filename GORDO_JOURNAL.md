@@ -25,3 +25,15 @@ JK requested issue-per-commit discipline mid-session. Good call — adopted as d
 "WWGDN?" emerged as new shortcut (What Would Gordo Do Next?). Add to COLLABORATION.md.
 
 Next: cycle 3 adversarial review targeting convergence. Then first ratification record. Then back to gordo-framework.
+
+## Session 3: Convergence + first ratification (2026-04-16)
+
+Triage: 44 issues closed (all had commits from S2 but were never closed). T4:Asymmetry resolved — transparency not elimination, asymmetry is a parameter. T5:Unilateral Exit resolved — exit is a right (A2), completed records are historical facts, protocol produces evidence not enforcement, perceived asymmetries may not be actual (A1+A4). JK refined both resolutions. T6 closed as rejected (not planned). T3 closed (gordo-memory superseded by Claude Code memory).
+
+ADV cycle 3: 5 models, 14 total reviews. DeepSeek R1=CONVERGED, o3=NOT CONVERGED (1 structural: attestation target undefined), Gemini 3.1 Pro=CONVERGED, Llama 4=NOT CONVERGED (contested — re-raised already-addressed issues), Mistral Large=CONVERGED. o3 structural fix: Record-Hash + Attestation Target section + two-phase commit promoted to normative. o3 confirmed fix closed finding. Convergence declared.
+
+First RR produced: record-001, Axioms 1-4, L3/L1 (GPG+BA), OTS-anchored. Discovered OTS ordering footgun (edit-after-stamp invalidates proof) — added to spec as implementation guidance. MVP milestone (#7) closed.
+
+Model selection note added: 5 models not exhaustive, Claude excluded as co-author, Grok notably absent.
+
+Next: T7 (retroactive problem, deferred). Commit-reveal implementation (#6). Refinement issues (#61, #63, #64, #67). Back to gordo-framework with ratification record.
