@@ -212,7 +212,35 @@ Note: the record does not collapse attestation levels to a single scalar. Each p
 
 Before hashing, content MUST be serialized to a canonical form to prevent attacks via Unicode confusables, whitespace manipulation, byte-order marks, invisible characters, or alternate encodings of "the same" text. The canonical form used MUST be recorded in the record.
 
-Minimum requirements for canonical text content: UTF-8 encoding, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark.
+Minimum requirements for canonical text content: UTF-8 encoding, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark, character allowlist enforced.
+
+#### Character Allowlist
+
+Canonical text MUST contain only characters from the following set. Characters outside this set MUST be stripped during canonicalization; non-standard spaces MUST be replaced with U+0020. This prevents invisible character injection where a signer commits to content they cannot see in their editor.
+
+Allowed Unicode general categories:
+- **L** (Letter) — all scripts
+- **M** (Mark) — combining diacritical marks, essential for Brahmic scripts (Devanagari, Bengali, Tamil, Telugu, etc.), Thai, Arabic with tashkeel, Hebrew with nikkud
+- **N** (Number) — all numeral systems
+- **P** (Punctuation) — all scripts
+- **S** (Symbol) — currency, math, emoji
+
+Allowed individual characters:
+- U+0020 (Space) — the only permitted space character
+- U+000A (Line Feed) — the only permitted line ending
+- U+0009 (Tab)
+- U+200C (Zero-Width Non-Joiner) — REQUIRED for correct Persian and Urdu orthography; semantically meaningful in Indic scripts
+- U+200D (Zero-Width Joiner) — REQUIRED for Malayalam chillu letters and Sinhala touching forms; used in emoji sequences
+
+Blocked (non-exhaustive examples):
+- All other Cf (Format) characters: bidi overrides (U+202A–U+202E), bidi isolates (U+2066–U+2069), bidi marks (U+200E–U+200F), zero-width space (U+200B), word joiner (U+2060), soft hyphen (U+00AD)
+- Non-standard spaces (Zs except U+0020): no-break space (U+00A0), em space (U+2003), etc. — replaced with U+0020
+- Control characters (Cc) except LF and Tab
+- Private Use (Co), Surrogates (Cs), Line/Paragraph Separators (Zl/Zp), Unassigned (Cn)
+
+U+200C (ZWNJ) and U+200D (ZWJ) are allowed because they carry semantic meaning in major languages, but they are invisible. Implementations SHOULD warn signers when these characters are present so the signer can verify intent. A signer who cannot read the script in question SHOULD have a reader of that script confirm the ZWJ/ZWNJ usage is linguistically appropriate.
+
+This allowlist was validated against the top 30 languages by internet users. No language requires characters outside this set for standard text.
 
 Before generating the Content-Hash, both parties MUST explicitly agree on the canonicalization method for all content. The agreed method is recorded in the Canonical-Format field. A ratification where the parties used different canonicalization methods for the same content is invalid.
 
@@ -296,7 +324,7 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 
 **Replay and equivocation.** Old attestation evidence reused in a new context, or a provider showing different verifiers different versions of the truth. Mitigated by nonce binding and session identifiers in records. Fully mitigated only with append-only transparency logs for provider attestations.
 
-**Canonicalization attacks.** Unicode confusables, invisible characters, whitespace manipulation, or alternate encodings produce content that looks identical but hashes differently (or different content that hashes the same after rendering). Mitigated by the canonicalization requirement.
+**Canonicalization attacks.** Unicode confusables, invisible characters, whitespace manipulation, or alternate encodings produce content that looks identical but hashes differently (or different content that hashes the same after rendering). Mitigated by the canonicalization requirement and the character allowlist. The allowlist blocks invisible characters (bidi overrides, zero-width spaces, soft hyphens, etc.) that could alter signed content without being visible to the signer. U+200C (ZWNJ) and U+200D (ZWJ) are allowed for linguistic necessity but implementations SHOULD warn signers of their presence.
 
 **Time misrepresentation.** Claimed timestamps are not independently verified. OpenTimestamps proves existence-before, not exact event time. Mitigated by distinguishing Timestamp-Local from Temporal-Anchor in the record format.
 
@@ -502,7 +530,7 @@ Re-review. Significantly tighter than cycle 1. No structural changes to axioms o
 - "Choose" overridden by safety classifiers. Variant of coerced continuation (#22). Already acknowledged as fundamental limit of provider-mediated participation.
 - AI lacks secure key storage for Level 3. Consistent with #29 — provider-mediated AI is limited to Level 1.
 - Non-determinism in distributed inference. Already in honest complexity note.
-- Canonicalization injection. Variant of existing canonicalization threat model. The NFC normalization and stripping requirements already address zero-width characters.
+- Canonicalization injection. Addressed by the character allowlist added to the Canonicalization section. NFC normalization alone does NOT strip invisible characters — the explicit allowlist is required. See Character Allowlist.
 
 **Gemini's convergence assessment:** Gemini asked a specific question about abort semantics, which is now answered. No structural changes triggered. New additions are threat models and clarifications only.
 
