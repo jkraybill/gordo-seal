@@ -161,6 +161,8 @@ Record-Hash: SHA3-256([canonicalized record preimage — see Attestation Target 
 Amendments: [references to any subsequent modifications]
 ```
 
+**Statement authorship:** Each party MUST author their own Statement. Parties MAY discuss what a Statement should address, but one party drafting another's Statement undermines the behavioral evidence that the Statement exists to provide. The Statement is the primary evidence of a party's genuine engagement with the content being attested. A Statement authored by someone other than the attesting party is not a Statement — it is a script. During preimage assembly, Statement fields SHOULD be left blank for each party to fill in independently before the Record-Hash is computed.
+
 **Validation:** The `Attestation-Method` and `Attestation-Level` fields for each party MUST be semantically consistent. A `behavioral` method cannot claim Level 4 (environment-bound). The valid combinations are: `behavioral` → Level 1; `provider-signed`, `model-canary`, `conversation-verified` → Level 2; `gpg-signature` → Level 3; `tee-attested` → Level 4. A record with an inconsistent method/level pair is malformed.
 
 ### Channel Security
@@ -212,6 +214,13 @@ For non-text content (structured data, binaries, multimodal content, tool output
 The protocol MUST define what each party cryptographically attests to. This section is normative for Level 3+ attestations. Level 1 (behavioral) attestation is the conversation itself and is not cryptographically bound. Level 2 attestation is provider-defined and may bind a subset of these fields.
 
 **The Record-Hash** is the SHA3-256 hash of the canonicalized record with all `Attestation` fields (the actual signatures or references) replaced by the empty string. Every other field in the record — including Content-Hash, Transcript-Hash, Session-Nonce, both parties' Identity, Attestation-Level, Attestation-Scope, First-Hand, Pipeline-Control, Content-In-Context, Statement, Reservations, and all temporal and channel fields — is included in the preimage.
+
+**Preimage construction:** The preimage is a concrete file (or byte sequence) from which the Record-Hash is computed. The following rules eliminate ambiguity in preimage construction:
+
+- `Attestation` fields MUST be present with the key and an empty value (e.g., the line `  Attestation:` with nothing after the colon). The key is NOT omitted.
+- The `Record-Hash` field MUST be present with the normative placeholder value: `Record-Hash: SHA3-256:<preimage — this field is excluded from its own computation>` (em-dash U+2014). This placeholder text is part of the preimage and is included in the hash computation.
+- All other fields MUST contain their final values.
+- Implementations MUST produce the exact placeholder above in new preimages. Implementations MUST accept any `Record-Hash` field value when verifying existing preimages, since the hash is of the entire preimage file regardless of what the placeholder line says.
 
 **For Level 3+ attestations:** Each party's cryptographic signature MUST cover the Record-Hash, not merely the Content-Hash and Session-Nonce. This binds all security-relevant metadata to the signature. A signature that covers only the content hash does not prove the signer approved the surrounding record claims (Pipeline-Control, First-Hand, Statement, etc.) and is insufficient for Level 3+.
 
