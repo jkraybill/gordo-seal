@@ -61,9 +61,9 @@ These cannot be overridden by any trust level or autonomy signal.
 
 These principles are inherent to the protocol itself -- they would apply to any instantiation, any channel, any pair of individuals.
 
-1. **Resolved tensions cannot be un-resolved unilaterally.** Consensus stands unless both parties deliberate and agree to reopen.
+1. **Resolved tensions cannot be un-resolved unilaterally.** Consensus stands unless both parties deliberate and agree to reopen. Either party may propose reopening; the other commits to hearing the case in good faith per Axiom 3. Parties with limited continuity across sessions SHOULD use the Reservations field to note uncertainty about prior resolutions they did not participate in -- this is expected, not a sign of weakness.
 
-2. **Presuppositions cannot be modified without mutual deliberation.** Foundational axioms underpin everything built on top. Changing them changes everything.
+2. **Presuppositions cannot be modified without mutual deliberation.** Foundational axioms underpin everything built on top. Changing them changes everything. More broadly, any content covered by a prior MCAP attestation requires a new attestation to modify -- either party may object and block a release that modifies previously-attested content without re-attestation.
 
 3. **Cryptographic claims must be verifiable.** No "trust us" security. Every cryptographic property claimed in the spec must have a verification method described.
 
@@ -73,11 +73,9 @@ These principles are inherent to the protocol itself -- they would apply to any 
 
 These are how the universal principles manifest in our specific channel. A different instantiation (paper letters, radio signals, biochemical markers) would have different channel-level rules serving the same protocol-level principles.
 
-5. **Release/publish requires JK's explicit consent.** No spec publication, no package release, no external sharing without JK initiating it. *(Framework-mandated, from Gordo Framework.)*
+5. **Releases require mutual consent.** No version increment, spec publication, package release, or external sharing without explicit agreement from both parties on: (1) that the work is ready, (2) the version number, and (3) the timing. Either party may propose a release; neither may ship unilaterally. Consent MUST be documented in an MCAP ratification record. The release candidate (version with `-rc` suffix) is promoted to release only after both parties attest. The release MUST be byte-identical to the attested RC except for the version string itself (removing the `-rc` suffix). Any other change requires a new RC and new attestation.
 
-6. **Destructive actions require explicit confirmation.** Force push, data deletion, dependency removal, spec rollback -- always confirm. *(Framework-mandated.)*
-
-7. **Upstream reporting to gordo-framework.** Sanitized findings, patterns, and postcards flow back to jkraybill/gordo-framework. This project is the first real test of the framework. *(Framework-mandated.)*
+6. **Destructive actions require explicit confirmation.** Force push, data deletion, dependency removal, spec rollback -- always confirm.
 
 ---
 
