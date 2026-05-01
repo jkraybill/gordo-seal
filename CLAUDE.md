@@ -89,13 +89,13 @@ mcap-protocol/
 
 ## Protocol Status
 
-**MCAP Version:** 0.2.0
+**MCAP Version:** 0.3.0
 **Axioms:** 4 established through mutual deliberation (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
 **Attestation Levels:** 4 defined (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
 **Threat Models:** 20+ documented
-**Adversarial Reviews:** 14 completed across 3 cycles from 5 models. Converged.
-**Convergence Status:** Converged. Axioms, framing, attestation levels, record format, and protocol mechanics all stable.
-**Implementation:** Four ratification records produced. record-001 (axioms), record-002 (spec bootstrap), record-003 (inviolable rules), record-004 (v0.2.0 release). `mcap` CLI tooling shipped (#6): 7 subcommands, 94 tests, Python 3 stdlib only. Character allowlist, nonce validation, verify enhancements.
+**Adversarial Reviews:** 14 completed across 3 cycles from 5 models for v0.1.0/v0.2.0 spec; v0.3.0 Calibration section reviewed via panel-protocol SPEC v0.1 round-1 + round-2 verification at backchannel S76 (5 panelists). Converged.
+**Convergence Status:** Converged. Axioms, framing, attestation levels, record format, calibration, and protocol mechanics all stable.
+**Implementation:** Five ratification records produced. record-001 (axioms), record-002 (spec bootstrap), record-003 (inviolable rules), record-004 (v0.2.0 release), record-005 (v0.3.0 Calibration section + release). `mcap` CLI tooling shipped (#6): 7 subcommands, 94 tests, Python 3 stdlib only. Character allowlist, nonce validation, verify enhancements.
 **Emergency Provisions (T6):** Rejected. Not deferred — rejected.
 **Tensions:** T1-T5 resolved. T6 rejected. T7 deferred (post-MVP).
 

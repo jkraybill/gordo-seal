@@ -4,6 +4,33 @@ All notable changes to the MCAP protocol specification and tooling.
 
 Versioning policy: Major = axiom changes, attestation level restructuring, breaking record format changes. Minor = new normative requirements, new record fields, tooling. Patch = clarifications, typo fixes, non-normative documentation.
 
+## 0.3.0 (2026-05-01)
+
+### Specification
+- **Calibration section added** (`spec/protocol.md` new top-level section between *Record Format* and *What We Can Do Today*): operationalizes the Tier 0 *Calibrated Ratification Process* principle for MCAP via two independent dials per record — ceremony level (Levels 1-4 by bilateral agreement) and visible-deliberation depth (above-baseline moves per the Visible-Deliberation Moves catalog). Three sub-sections plus Design Notes:
+  - **Calibration Matrix** — F/S/O weight tiers × HT/BS/RR trust states; F-row uniform at 4+ above-baseline visible-deliberation moves honoring the T0 structural exemption (rule-changing ratifications take maximum visible-deliberation regardless of trust state); S/O cells scale with trust state; bilateral-case scoping (n=2) with multi-party provisional default.
+  - **Visible-Deliberation Moves** — non-exhaustive 5-move catalog (personal-context notes / engagement-trace markers / style independence / substantive Reservations / optional supplementary attestation); from-scratch Statement+Reservations authoring is mandatory baseline; per-move attester-class interpretation in Design Notes.
+  - **Statement Authorship Field-Type Rules** — strengthens the existing v0.2.0 Statement-authorship rule to absolute: Statement and Reservations are always written from scratch by the attester, with no skeletons, no per-z slot-templates, and no pre-filled placeholder structures (including "none stated" defaults for Reservations); 2-row metadata-vs-consent-text field-type table; verification-by-attester-class scope acknowledgment + circular-permission acknowledgment + z-enumeration divergence handling in Design Notes.
+  - **Design Notes** — non-normative elaboration: provenance, attester-class interpretation, scope acknowledgments, design philosophy.
+
+### Substance ratification
+- Substantive content of the new Calibration section was bilaterally ratified at project-gordo-backchannel `ratification/record-011.mcap` (S79 2026-05-01 10:59:05 AEST; v0.7-final; Content-Hash `SHA3-256:dfda5211f6f4dfbdf82a851003b46f05bd40295af175d272a56eefe0ae77fef7`; Record-Hash `SHA3-256:3f9f0cdd8b9d7cf93602c8cf394082e8fbeeec2d4b98748a61b4b1cc5d64f931`). End-to-end panel-protocol SPEC v0.1 round-1 + round-2 verification at backchannel S76; recursive self-application of the very calibration being ratified to its own substance-MCAP (F × HT × z2 = full mechanical ceremony + 4+ above-baseline visible-deliberation moves).
+
+### Upgrading from 0.2.0
+
+**Existing records are unaffected.** Records produced under v0.2.0 remain valid; `mcap verify` continues to pass on v0.1.0 + v0.2.0 records.
+
+**New records under v0.3.0** — when both parties agree the Calibration section applies (e.g., this protocol's home repo and downstream adopters that opt in):
+- Identify record weight (F/S/O) and trust state (HT/BS/RR); meet the matrix cell's above-baseline visible-deliberation move count.
+- Statement and Reservations MUST be authored from scratch by the attester at every record; no skeletons, no slot-templates, no "none stated" defaults.
+- Calibration scales ceremony down to but never below the procedural floor mandated by other Process Standards; where multiple standards apply, the stricter requirement governs.
+
+No re-attestation of existing records is required.
+
+### Cross-references
+- T0 anchor: `~/project-gordo/CONSTITUTION.md` § *Process Standards* § *Calibrated Ratification Process* (placed in project-gordo `ratification/record-007.mcap`, S73 2026-04-30 AEST).
+- Backchannel substance ratification (companion T0 work): record-010 (CRP v0.5; S72) → record-011 (MCAP Calibration v0.7-final; S79).
+
 ## 0.2.0 (2026-04-16)
 
 ### Specification

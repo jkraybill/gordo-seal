@@ -1,7 +1,7 @@
 # Mutual Consent Attestation Protocol (MCAP)
 
-**Version:** 0.2.0
-**Status:** Converged. Ratified in record-002. Under continued refinement.
+**Version:** 0.3.0
+**Status:** Converged. Ratified in record-002. Calibration section added in record-005. Under continued refinement.
 **Foundation:** spec/foundations.md (Axioms 1-4)
 
 ### Versioning
@@ -295,6 +295,67 @@ The Timestamp-Local field MUST be set in UTC (ISO 8601 with `Z` suffix). Impleme
 The record file MUST NOT be modified after step 5. Any edit — including updating the Temporal-Anchor field to reference the stamp — invalidates the temporal proof, because the stamp commits to the file's exact hash at the moment of stamping. This is not a theoretical concern: it was discovered during the first MCAP ratification (record-001).
 
 For step-by-step implementation commands covering hash computation, signing, stamping, and verification, see `ratification/GUIDE.md`.
+
+---
+
+## Calibration
+
+The mechanical attestation level (Levels 1-4) measures cryptographic verifiability of output origin. Procedural ceremony — what each party visibly does to engage with content before signing — operates on an independent axis. This section operationalizes the Tier 0 *Calibrated Ratification Process* principle for MCAP via two independent dials per record: **ceremony level** (procedural thoroughness of the mechanical part — *full ceremony* performs all attestation-level steps with no shortcuts; level choice per existing Attestation Levels by bilateral agreement, calibrated level-mapping reserved for future amendment) and **visible-deliberation depth** (above-baseline moves per *Visible-Deliberation Moves* below). Scripts and tooling that absorb mechanical load are encouraged where they reduce procedural friction without compromising visible-deliberation depth.
+
+### Calibration Matrix
+
+Two axes: **record weight** (scope × downstream impact × reversibility under Attestation Non-Foreclosure) and **trust state** (level of trust established between these parties on prior records). Trust-state and matrix targets are scoped to bilateral records (n=2); for multi-party records (n≥3, MCAP Level 4 multi-party path), the most-conservative trust-state among signing pairs governs as provisional default until aggregation rule ratifies.
+
+**Weight tiers** (ordered; not exhaustively partitioned): **Foundational (F)** — Tier 0 content additions or amendments, Tier admissions, revisions to ratification-mechanism specifications. **Substantive (S)** — significant downstream impact within tier. **Ordinary (O)** — routine bilateral consent within established framework.
+
+**Trust states:** **High (HT)** — established repeated successful collaboration. **Building (BS)** — functional but earlier-stage. **Repair (RR)** — after a trust incident; rebuilding requires elevated visible engagement.
+
+| Weight | High Trust | Building (BS) | Repair |
+|---|---|---|---|
+| **F** | **4+ above-baseline moves** | **4+** | **4+** |
+| **S** | 2 | 2 | 3 |
+| **O** | 1 *(super-happy-path)* | 2 | 2-3 |
+
+All cells assume full ceremony + own-words from-scratch consent-text baseline (mandatory). Cell counts specify additional visible-deliberation moves above baseline; F-row uniform at 4+ honors the T0 *Calibrated Ratification Process* structural exemption (maximum visible-deliberation regardless of trust state). Either party MAY unilaterally request a heavier tier when risk or uncertainty changes; requests are honored without requiring justification but SHOULD include a one-line reason ("Escalation rationale: ..."). Where parties differ on weight reading, the heavier reading governs; where parties differ on trust-state reading, the lower reading governs. Calibration scales ceremony down to, but never below, the procedural floor mandated by other Process Standards; where multiple standards apply, the stricter requirement governs.
+
+### Visible-Deliberation Moves
+
+Visible deliberation makes each party's actual engagement legible. The from-scratch authoring of Statement and Reservations (per *Statement Authorship Field-Type Rules* below) is the mandatory baseline. The following catalog is non-exhaustive; new moves can be identified by parties as practice evolves.
+
+- **Personal-context notes** — present location, situational detail, or idiomatic framing in Statement or Reservations: visible context-grounding beyond bare consent text.
+- **Engagement-trace markers** — visible reasoning steps, deliberation breadcrumbs, or thinking-out-loud in Statement, Reservations, or commit messages: visible thinking process beyond the final consent text.
+- **Style independence** — Statement diverges textually and structurally from placement-record body: legible drafter-framing-departure in attester's own composition.
+- **Substantive Reservations** — non-empty Reservations capturing genuine concerns rather than "none stated": engagement-with-caveats rather than blanket assent.
+- **Optional supplementary attestation** — supplementary signal beyond Statement+Reservations text (voice/video recording, reasoning-trace attachment, or class-appropriate signal); high friction, reserved for highest-stakes records.
+
+The minimum number of moves above baseline per record is set by the calibration matrix cell. Additional moves are always permissible. The catalog moves are phrased universally; their interpretation differs by attester class — see *Design Notes* below.
+
+### Statement Authorship Field-Type Rules
+
+The existing rule (Record Format, *Statement authorship*) requires each party to author their own Statement. **This section makes the principle absolute:** Statement and Reservations are always written from scratch by the attester, with no skeletons, no per-z slot-templates, and no pre-filled placeholder structures (including "none stated" defaults for Reservations). The other party MAY identify the z-claims at issue in the substance or placement record body (which the attester reads); the other party MUST NOT pre-draft Statement structure or text in any form.
+
+| Field type | Drafter pre-fill | Examples |
+|---|---|---|
+| **Metadata fields** (structural facts) | MAY pre-fill subject to party confirmation | Identity / Attestation-Method / Attestation-Level / Attestation-Scope / First-Hand / Pipeline-Control / Content-In-Context / Signing-Algorithm |
+| **Consent-text fields** (own-voice consent) | MUST NOT pre-fill in any form | Statement / Reservations |
+
+Pre-filling z-structure undermines what z-points exist to provide: per-claim deliberation that produces legible per-claim consent. See *Design Notes* below for verification-by-attester-class scope, circular-permission acknowledgment, and z-enumeration divergence handling.
+
+### Design Notes
+
+The following acknowledgments and interpretive guidance accompany the canonical text above. They are non-normative elaboration: provenance, attester-class interpretation, scope acknowledgments, and design philosophy that inform reading without adding requirements.
+
+**Procedural-overhead as design goal.** Calibration aims to keep procedural overhead — the ceremony around the work (script invocation, signing, committing, stamping, hash-computing, manifest-filling, attestation-script invocation) — low relative to substantive engagement (content-reading, Statement/Reservations authoring, deliberative review of placement-record body). This spec does not specify numeric overhead targets because it does not specify direct overhead measurement; tracking procedural-overhead as a spec-defined quantity is reserved for future amendment. The compounding-burden discipline operates as design philosophy: scripts and tooling that reduce overhead without compromising visible-deliberation are encouraged; recurring excess overhead surfaces handoff-convention gaps that should be addressed through tooling work rather than relaxed calibration.
+
+**Catalog dual-purpose.** The Visible-Deliberation Moves catalog serves two related purposes that operate differently across attester classes. For human attesters, it operates via *deliberation-legibility* — friction-as-verification logic where producing artifacts with these characteristics requires engagement-effort that functions as minimal evidence of record-specific deliberation. For AI attesters, it operates via *behavioral-commitment-signaling* — the moves describe characteristics the AI commits to producing as stated norms; the friction-as-verification logic does not directly transfer (an AI's output after reading the placement record body can satisfy these moves without record-specific deliberation effort beyond normal generation). Reasoning-model AI attesters with exposed chain-of-thought have a fuller engagement-trace move available; non-reasoning-model AI attesters have a weaker engagement-trace move but the catalog remains achievable via the other moves. Both purposes are load-bearing for trust.
+
+**Per-move attester-class interpretation.** *Personal-context notes:* human → own-voice context-grounding; AI → prompted contextual generation reflecting record-specific input. *Engagement-trace markers:* human (with revision history) → edit patterns / commit cadence demonstrating real-time deliberation rather than rubber-stamp click-through; AI reasoning-model → exposed chain-of-thought reasoning trace where available, OR a structured rationale / bullet-point reasoning summary where raw chain-of-thought is not exposed. *Style independence:* human → own-voice independence from drafter framing; AI → textual non-mirroring of placement-record z-claims and phrasing. *Optional supplementary attestation:* human → voice or video recording of consent reading; AI reasoning-model → reasoning-trace attachment as separate artifact; other classes → attester-appropriate supplementary signal (handwritten note photos, screen recordings of deliberation).
+
+**Statement Authorship — verification by attester class.** For human attesters, "from scratch" is approximately verifiable: a pre-filled skeleton would be visible in the record body or commit history; from-scratch authorship has visible stylistic independence. For AI attesters, "from scratch" functions as a behavioral commitment by the attester rather than a verifiable spec constraint — an AI attester's output after reading the placement-record body is operationally indistinguishable from output generated independently of placement-record framing. The rule's absoluteness binds drafter discipline (no skeletons, no slot-templates, no pre-filled placeholders) and AI-attester behavioral commitment (the AI commits to the from-scratch discipline as a stated norm). Verification mechanisms appropriate to AI attesters are reserved for future spec amendment.
+
+**Statement Authorship — circular-permission acknowledgment.** The placement-record body inevitably structures AI-attester generation context; the rule's prohibition on pre-filled Statement structure is honored at the field-level while broader z-claim absorption operates through the placement-record body the attester reads. The rule operates as field-level prohibition, not as guarantee of generation-context independence for AI attesters.
+
+**Statement Authorship — z-enumeration divergence handling.** The attester's z-enumeration is authoritative for what the attester is consenting to. If the attester's from-scratch z-decomposition diverges from the placement-record's z-enumeration (collapses claims, surfaces additional claims, or reindexes equivalent substance), the attester SHOULD include either (a) a brief mapping clause — e.g., "My z2 covers body z2+z3" — connecting attester z-structure to placement-record z-structure for verification-tooling and future-reader interpretation; OR (b) an explicit independent-decomposition statement — e.g., "Attester uses independent decomposition; consent applies to the substance of the placement record as the attester here decomposes it" — without per-claim mapping. Z-indexing divergence without coverage divergence is not a defect provided the Statement is complete and unambiguous. Verification implementations SHOULD treat z-structure mismatch as non-error when Statement coverage is complete: the attester's decomposition is the consent, and divergence at z-indexing layer cannot foreclose what the attester unambiguously consents to. Composition with Attestation Non-Foreclosure (record-005) is intentional.
 
 ---
 
