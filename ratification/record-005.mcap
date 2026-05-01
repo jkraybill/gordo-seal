@@ -12,7 +12,7 @@ Provider-Conversation-ID: not available
 Party-A:
   Identity: JK (Jeremy Kraybill) — GitHub: jkraybill, GPG fingerprint: D3A0C61FE90719441760BA3E74269E1ED0FCE0B0
   Attestation-Method: gpg-signature
-  Attestation:
+  Attestation: See ratification/party-a-signature-005.asc
   Attestation-Level: 3-identity-bound
   Attestation-Scope: persistent-identity
   First-Hand: yes
@@ -43,6 +43,6 @@ Max-Temporal-Delta: 1 hour (recommended default)
 External-Data: no
 Channel-Security: Local CLI session (Claude Code) over TLS 1.3 to Anthropic API. Git repository on local filesystem, pushed to GitHub over SSH.
 
-Record-Hash: SHA3-256:<preimage — this field is excluded from its own computation>
+Record-Hash: SHA3-256:5e823d0135d74cb4d9bafb2a34d96b458ef4a692658b6e6cd2a8295edad7e5ed
 
 Amendments: none
