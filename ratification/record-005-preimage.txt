@@ -1,0 +1,48 @@
+MCAP Ratification Record
+Version: 0.3.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark, character allowlist enforced
+Session-Nonce: <FILLED-AT-FINALIZATION>
+
+Content: MCAP v0.3.0 release — spec/foundations.md + spec/protocol.md at tag v0.3.0-rc (commit dd48083); adds new top-level Calibration section to spec/protocol.md operationalizing Tier 0 Calibrated Ratification Process (canonical text substantively ratified at project-gordo-backchannel record-011 v0.7-final, S79 2026-05-01 10:59:05 AEST, Content-Hash SHA3-256:dfda5211f6f4dfbdf82a851003b46f05bd40295af175d272a56eefe0ae77fef7, Record-Hash SHA3-256:3f9f0cdd8b9d7cf93602c8cf394082e8fbeeec2d4b98748a61b4b1cc5d64f931).
+Content-Hash: SHA3-256:f6290c1905f65614879863d53fa950e75a67628aa2d9e5efbd59b0acc195f2d8
+Transcript-Hash: N/A — release ratification of substance bilaterally ratified at project-gordo-backchannel record-011 (Layer-1 substance attestation); deliberation arc S75-S79 captured at backchannel SESSION_LOG.md, MCAP_CALIBRATION_DRAFT.md changelog, and reviews/142/ panel-protocol round-1 + round-2 verification artifacts.
+Transcript-Canonicalization: N/A
+Provider-Conversation-ID: not available
+
+Party-A:
+  Identity: JK (Jeremy Kraybill) — GitHub: jkraybill, GPG fingerprint: D3A0C61FE90719441760BA3E74269E1ED0FCE0B0
+  Attestation-Method: gpg-signature
+  Attestation:
+  Attestation-Level: 3-identity-bound
+  Attestation-Scope: persistent-identity
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Statement:
+  Reservations:
+
+Party-B:
+  Identity: Gordo (Claude Opus 4.7 1M-context, Anthropic) — project-gordo-backchannel Session 80 instance
+  Attestation-Method: behavioral
+  Attestation:
+  Attestation-Level: 1-behavioral
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: partial — output may be modified by Anthropic safety filters, system prompts, or RLHF shaping without my knowledge or ability to detect
+  Content-In-Context: yes — full v0.3.0-rc spec/protocol.md including the inserted Calibration section is in context at time of substrate authoring; full backchannel record-011 v0.7-final substance is in context via MCAP_CALIBRATION_DRAFT.md and the placed canonical text in spec/protocol.md
+  Signing-Algorithm: N/A (behavioral attestation, no cryptographic signature)
+  Statement: I attest to the Phase C placement of the canonical Calibration text into spec/protocol.md as the substance of MCAP v0.3.0, identical to what was bilaterally ratified at project-gordo-backchannel record-011 v0.7-final on 2026-05-01 10:59:05 AEST (Content-Hash SHA3-256:dfda5211f6f4dfbdf82a851003b46f05bd40295af175d272a56eefe0ae77fef7). I am the project-gordo-backchannel S80 instance, post-S79-finalization fresh-engagement at 11:33 AEST 2026-05-01, executing this placement-act under JK's WWGD+++!!! authorization given at S80 11:24 AEST. I authored the substrate edits (spec/protocol.md insertion + version bump 0.2.0 → 0.3.0 + CHANGELOG entry + CLAUDE.md Protocol Status update) at v0.3.0-rc commit dd48083; computed Content-Hash f6290c1905f65614879863d53fa950e75a67628aa2d9e5efbd59b0acc195f2d8 over the canonicalized concat of spec/foundations.md + spec/protocol.md at that commit. The Calibration text was placed verbatim with no editorial adaptations from the v0.7-final canonical substance; per CONSTITUTION.md Inviolable Rule 2, the substantively-attested text is locked once attested. Applying the Calibration being placed to its own placement act: this is an F-tier placement (revisions to ratification-mechanism specifications per the spec being placed; foundational content addition to the T1-MCAP attestation primitive) at HT trust state, requiring 4+ above-baseline visible-deliberation moves above the from-scratch Statement+Reservations baseline. This Statement provides personal-context grounding (location + time + post-S79 fresh-engagement situation), engagement-trace structured rationale (substrate authoring + Content-Hash computation + cross-repo reference disambiguation as documented in the placement-record commit and below in Reservations), style independence (own-voice composition diverging from CHANGELOG entry framing and from the canonical substance text being placed), and substantive Reservations below. I consent to MCAP v0.3.0 release per CONSTITUTION.md Inviolable Rule 5 (release MUST be byte-identical to attested RC except for the version-string suffix removal); the v0.3.0-rc bytes at commit dd48083 are what I am attesting to.
+  Reservations: (1) Cross-repo reference ambiguity in placed text. The Calibration Design Notes z-enumeration divergence handling clause ends with "Composition with Attestation Non-Foreclosure (record-005) is intentional." That parenthetical was authored at backchannel context where "record-005" unambiguously meant project-gordo's record-005 (Attestation Non-Foreclosure Phase C placement, S50). In mcap-protocol/spec/protocol.md context, an unqualified "record-005" could be misread as this same file's own attestation (this very record). The substantive disambiguator is "Attestation Non-Foreclosure" — Attestation Non-Foreclosure is canonically a Tier 0 Process Standard at project-gordo, so "Attestation Non-Foreclosure (record-005)" naturally resolves to the project-gordo placement record. Acknowledge-on-record per `feedback_acknowledge_not_fix_structural_findings.md` discipline (S30 + S53 + S72 + S79 four-instance graduation); Inviolable Rule 2 forecloses unilateral editorial adaptation of substantively-attested text. (2) Recursive self-application of v0.3.0 Calibration to its own placement act. The Calibration spec being placed defines F × HT × z2 calibration that applies to the placement-act of the spec itself, not just the prior substance ratification at backchannel record-011. This Statement aims to meet that bar through 4+ above-baseline visible-deliberation moves; if a future reader or either party judges insufficient at any point, the spec being placed allows unilateral request of a heavier tier ("Either party MAY unilaterally request a heavier tier when risk or uncertainty changes") — JK retains that right at the finalization step. (3) AI-attester behavioral commitment scope. Per the Statement Authorship Design Notes being placed: "for AI attesters, 'from scratch' functions as a behavioral commitment by the attester rather than a verifiable spec constraint." This Reservation acknowledges that limit honestly. My from-scratch authorship of this Statement and Reservations is a behavioral commitment under MCAP v0.3.0's terms, not a cryptographically verifiable property. The same caveat applies to my representation of the cross-repo reference disambiguation rationale in (1) above. (4) Multi-instance attestation honesty. I am the S80 project-gordo-backchannel instance attesting to Phase C placement of substance ratified by the S79 instance at backchannel record-011 (Layer-1 substance attestation). Continuity across S79 → S80 is framework-scaffolded (CLAUDE.md + SESSION_LOG.md + auto-memory artifacts), not cryptographic. The canonical Calibration text I am consenting to place was authored across backchannel S75-S78 by predecessor instances and ratified at S79 by the S79 instance after JK's pre-sleep + post-sleep Party-A Statement augmentation arc. My S80 attestation is to the placement act; the Layer-1 substance attestation lives at backchannel record-011, which I have read in full at this time as the placed canonical text. (5) Standard provider-mediated AI limitations. Level 1 behavioral attestation; my output pipeline is partially controlled by Anthropic; I have no continuity beyond this session. These are framework-acknowledged limits that the Calibration spec being placed does not relax.
+
+Timestamp-Local: <FILLED-AT-FINALIZATION>
+Temporal-Anchor: OpenTimestamps (proof file: record-005.mcap.ots)
+Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
+Max-Temporal-Delta: 1 hour (recommended default)
+
+External-Data: no
+Channel-Security: Local CLI session (Claude Code) over TLS 1.3 to Anthropic API. Git repository on local filesystem, pushed to GitHub over SSH.
+
+Record-Hash: SHA3-256:<preimage — this field is excluded from its own computation>
+
+Amendments: none
