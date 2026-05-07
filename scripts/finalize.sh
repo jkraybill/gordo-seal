@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # MCAP Finalization Script (templatized per #164)
-# Usage: bash ~/mcap-protocol/scripts/finalize.sh <record-number>
+# Usage: bash ~/mcap-protocol/scripts/finalize.sh <record-number> [repo-path]
 # Example: bash ~/mcap-protocol/scripts/finalize.sh 020
+# Example: bash ~/mcap-protocol/scripts/finalize.sh 003 ~/project-gordo
 #
 # Prerequisites:
-# - Preimage exists at ratification/record-<N>-preimage.txt
-# - Party-A signature exists at ratification/party-a-signature-<N>.asc
+# - Preimage exists at <repo>/ratification/record-<N>-preimage.txt
+# - Party-A signature exists at <repo>/ratification/party-a-signature-<N>.asc
 # - Timestamp-Local is empty (will be filled by this script)
 # - Record-Hash is empty (will be filled by this script)
 #
@@ -21,13 +22,14 @@ set -euo pipefail
 
 RECORD_NUM="${1:-}"
 if [[ -z "$RECORD_NUM" ]]; then
-    echo "Usage: bash ~/mcap-protocol/scripts/finalize.sh <record-number>"
+    echo "Usage: bash ~/mcap-protocol/scripts/finalize.sh <record-number> [repo-path]"
     echo "Example: bash ~/mcap-protocol/scripts/finalize.sh 020"
+    echo "Example: bash ~/mcap-protocol/scripts/finalize.sh 003 ~/project-gordo"
     exit 1
 fi
 
-# Paths
-REPO_ROOT="${HOME}/project-gordo-backchannel"
+# Paths — repo defaults to cwd
+REPO_ROOT="${2:-$(pwd)}"
 PREIMAGE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-preimage.txt"
 SIGNATURE="${REPO_ROOT}/ratification/party-a-signature-${RECORD_NUM}.asc"
 MCAP_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}.mcap"

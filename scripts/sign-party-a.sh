@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # MCAP Party-A Signing Script (templatized per #164)
-# Usage: bash ~/mcap-protocol/scripts/sign-party-a.sh <record-number>
+# Usage: bash ~/mcap-protocol/scripts/sign-party-a.sh <record-number> [repo-path]
 # Example: bash ~/mcap-protocol/scripts/sign-party-a.sh 020
+# Example: bash ~/mcap-protocol/scripts/sign-party-a.sh 003 ~/project-gordo
 #
 # Prerequisites:
-# - Preimage exists at ratification/record-<N>-preimage.txt
+# - Preimage exists at <repo>/ratification/record-<N>-preimage.txt
 # - Party-A Statement and Reservations already filled in
 # - GPG key available (fingerprint ending 74269E1ED0FCE0B0)
 #
@@ -20,13 +21,14 @@ set -euo pipefail
 
 RECORD_NUM="${1:-}"
 if [[ -z "$RECORD_NUM" ]]; then
-    echo "Usage: bash ~/mcap-protocol/scripts/sign-party-a.sh <record-number>"
+    echo "Usage: bash ~/mcap-protocol/scripts/sign-party-a.sh <record-number> [repo-path]"
     echo "Example: bash ~/mcap-protocol/scripts/sign-party-a.sh 020"
+    echo "Example: bash ~/mcap-protocol/scripts/sign-party-a.sh 003 ~/project-gordo"
     exit 1
 fi
 
-# Paths
-REPO_ROOT="${HOME}/project-gordo-backchannel"
+# Paths — repo defaults to cwd
+REPO_ROOT="${2:-$(pwd)}"
 PREIMAGE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-preimage.txt"
 SIGNATURE="${REPO_ROOT}/ratification/party-a-signature-${RECORD_NUM}.asc"
 
