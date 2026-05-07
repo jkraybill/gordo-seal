@@ -7,16 +7,13 @@
 # Prerequisites:
 # - Preimage exists at <repo>/ratification/record-<N>-preimage.txt
 # - Party-A signature exists at <repo>/ratification/party-a-signature-<N>.asc
-# - Timestamp-Local is empty (will be filled by this script)
-# - Record-Hash is empty (will be filled by this script)
+# - Timestamp-Local is set in preimage
 #
-# This script does:
+# This script:
 # 1. Validates preimage and signature exist
-# 2. Sets Timestamp-Local to current UTC time
-# 3. Computes and sets Record-Hash
-# 4. Renames preimage to .mcap
-# 5. Runs mcap stamp (with --force for cosmetic verifier quirk)
-# 6. Runs mcap verify
+# 2. Runs mcap finalize (computes Record-Hash, creates .mcap)
+# 3. Runs mcap stamp (creates OTS timestamp)
+# 4. Runs mcap verify (validates everything)
 
 set -euo pipefail
 
@@ -30,12 +27,13 @@ fi
 
 # Paths — repo defaults to cwd
 REPO_ROOT="${2:-$(pwd)}"
+MCAP_DIR="${HOME}/mcap-protocol"
 PREIMAGE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-preimage.txt"
 SIGNATURE="${REPO_ROOT}/ratification/party-a-signature-${RECORD_NUM}.asc"
 MCAP_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}.mcap"
-OTS_FILE="${MCAP_FILE}.ots"
 
 echo "=== MCAP Finalization: record-${RECORD_NUM} ==="
+echo "Repo: ${REPO_ROOT}"
 echo ""
 
 # Step 1: Validate files exist
@@ -47,67 +45,41 @@ echo "✓ Preimage found"
 
 if [[ ! -f "$SIGNATURE" ]]; then
     echo "ERROR: Party-A signature not found at ${SIGNATURE}"
-    echo "  Run: bash ~/mcap-protocol/scripts/sign-party-a.sh ${RECORD_NUM}"
+    echo "  Run: bash ~/mcap-protocol/scripts/sign-party-a.sh ${RECORD_NUM} ${REPO_ROOT}"
     exit 1
 fi
 echo "✓ Party-A signature found"
 
-# Step 2: Set Timestamp-Local
-TIMESTAMP=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
-echo ""
-echo "Setting Timestamp-Local to: ${TIMESTAMP}"
-
-# Use sed to replace empty Timestamp-Local
+# Step 2: Check Timestamp-Local is set
 if grep -q "^Timestamp-Local:$" "$PREIMAGE"; then
-    sed -i "s/^Timestamp-Local:$/Timestamp-Local: ${TIMESTAMP}/" "$PREIMAGE"
-    echo "✓ Timestamp-Local set"
-elif grep -q "^Timestamp-Local: " "$PREIMAGE"; then
-    echo "! Timestamp-Local already set, skipping"
-else
-    echo "ERROR: Timestamp-Local field not found in preimage"
+    echo "ERROR: Timestamp-Local is empty in preimage."
     exit 1
 fi
+echo "✓ Timestamp-Local set"
 
-# Step 3: Compute and set Record-Hash
+# Step 3: Run mcap finalize
 echo ""
-echo "Computing Record-Hash..."
-RECORD_HASH=$(cat "$PREIMAGE" | openssl dgst -sha3-256 | awk '{print $2}')
-echo "Record-Hash: SHA3-256:${RECORD_HASH}"
+echo "Running mcap finalize..."
+cd "${MCAP_DIR}"
+./mcap finalize "$PREIMAGE" -o "$MCAP_FILE"
+echo "✓ mcap finalize complete"
 
-if grep -q "^Record-Hash:$" "$PREIMAGE"; then
-    sed -i "s/^Record-Hash:$/Record-Hash: SHA3-256:${RECORD_HASH}/" "$PREIMAGE"
-    echo "✓ Record-Hash set"
-elif grep -q "^Record-Hash: $" "$PREIMAGE"; then
-    # Handle case where there's a trailing space
-    sed -i "s/^Record-Hash: $/Record-Hash: SHA3-256:${RECORD_HASH}/" "$PREIMAGE"
-    echo "✓ Record-Hash set"
-else
-    echo "! Record-Hash field already has value or not found"
-    echo "  Current value: $(grep '^Record-Hash:' "$PREIMAGE")"
-fi
-
-# Step 4: Rename to .mcap
-echo ""
-echo "Renaming preimage to .mcap..."
-mv "$PREIMAGE" "$MCAP_FILE"
-echo "✓ Renamed to ${MCAP_FILE}"
-
-# Step 5: Run mcap stamp
+# Step 4: Run mcap stamp
 echo ""
 echo "Running mcap stamp..."
-cd "${HOME}/mcap-protocol"
-node dist/mcap.js stamp "$MCAP_FILE" --force
+./mcap stamp "$MCAP_FILE" --force
 echo "✓ mcap stamp complete"
 
-# Step 6: Run mcap verify
+# Step 5: Run mcap verify
 echo ""
 echo "Running mcap verify..."
-node dist/mcap.js verify "$MCAP_FILE"
+./mcap verify "$MCAP_FILE" --preimage "$PREIMAGE"
 
-# Step 7: Summary
+# Step 6: Summary
 echo ""
 echo "=== Finalization complete ==="
 echo "MCAP file: ${MCAP_FILE}"
-echo "OTS file: ${OTS_FILE}"
+echo "OTS file: ${MCAP_FILE}.ots"
 echo ""
 echo "Next: git add, commit, push"
+echo "  git add ratification/record-${RECORD_NUM}.mcap ratification/record-${RECORD_NUM}.mcap.ots ratification/party-a-signature-${RECORD_NUM}.asc"
