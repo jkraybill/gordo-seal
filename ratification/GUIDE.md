@@ -211,6 +211,20 @@ ots verify ratification/record-NNN.mcap.ots
 
 ---
 
+## Cross-Record References
+
+When one MCAP record references z-statements from another record (common in two-layer ratification scenarios), use qualified references:
+
+- **Same-repo:** `r###/z#` (e.g., `r015/z1`)
+- **Cross-repo:** `<repo>/r###/z#` (e.g., `project-gordo-backchannel/r025/z1`)
+
+Use full repo names (no aliases) for grep-ability and self-documentation.
+
+**Example labeling note:**
+> The amendments below use labels from Layer-1 substance record project-gordo-backchannel/r025 (z1 through z13). Convention: same-repo references use `r###/z#`; cross-repo references use `<repo>/r###/z#`.
+
+---
+
 ## Common Pitfalls
 
 ### Timezone errors
