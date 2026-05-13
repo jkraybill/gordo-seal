@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "project": "mcap-protocol",
+  "declared_at": "2026-05-13",
+  "chain": [
+    { "name": "mcap-protocol", "url": "https://github.com/jkraybill/mcap-protocol", "created": "2026-04-01" },
+    { "name": "project-gordo", "url": "https://github.com/jkraybill/project-gordo", "root": true }
+  ],
+  "tag": "project-gordo-umbrella"
+}
