@@ -33,6 +33,16 @@
 
 ---
 
+## Constitutional Inheritance
+
+This project operates under the Project Gordo umbrella as a **Tier 1 primitive** (attestation protocol implementing T0 principles).
+
+- `~/project-gordo/CONSTITUTION.md` — T0 constitutional root
+- Foundations + Values inherited unconditionally; may add, may not subtract
+- Local `CONSTITUTION.md` governs project-specific standards within T0 constraints
+
+---
+
 ## Communication Shortcuts
 
 **WWGD family:**
