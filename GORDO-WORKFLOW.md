@@ -1,4 +1,4 @@
-# Workflow: mcap-protocol
+# Workflow: gordo-seal
 
 **How we develop the protocol spec and reference implementation.**
 
@@ -111,12 +111,12 @@ This project has two parallel tracks that must stay coordinated:
 
 ## MVP Milestone
 
-The first milestone is: **produce a functional MCAP ratification that gordo-framework can use for its "mutual agreement stamp" pattern.**
+The first milestone is: **produce a functional SEAL ratification that gordo-framework can use for its "mutual agreement stamp" pattern.**
 
 This requires:
 - [x] Tensions 4-7 resolved (or explicitly deferred with rationale) — T4, T5 resolved S3. T6 rejected S2. T7 deferred.
-- [x] MCAP spec formalized (at least Layers 1-2) — Converged, 14 adversarial reviews, 3 cycles, 5 models.
-- [x] Reference implementation of `mcap` CLI tooling — #6, shipped in Session 5. 7 subcommands, 53 tests.
+- [x] SEAL spec formalized (at least Layers 1-2) — Converged, 14 adversarial reviews, 3 cycles, 5 models.
+- [x] Reference implementation of `seal` CLI tooling — #6, shipped in Session 5. 7 subcommands, 53 tests.
 - [x] At least one real ratification record produced — record-001 (axioms), record-002 (protocol spec).
 - [x] Adversarial review of the protocol (cross-model or self-review) — 14 reviews, 5 models, 3 cycles, converged.
 
@@ -151,7 +151,7 @@ Before tagging a release candidate (`v*-rc`), every item MUST pass. This is stru
 
 ### Release Process (Rule 5)
 - [ ] Tag release candidate: `git tag v{VERSION}-rc`
-- [ ] Produce MCAP ratification record for the release (both parties attest)
+- [ ] Produce SEAL ratification record for the release (both parties attest)
 - [ ] Promote RC to release: `git tag v{VERSION}` (byte-identical to RC except version string if applicable)
 - [ ] Push tags
 
@@ -170,5 +170,5 @@ At end of session, Gordo audits:
 
 ---
 
-*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*
+*Part of gordo-seal. Built with Gordo Framework v1.2.0.*
 *JK + Gordo. Full philosophy mode.*

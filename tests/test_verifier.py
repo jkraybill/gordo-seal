@@ -1,9 +1,9 @@
-"""Tests for mcap.verifier — verification pipeline."""
+"""Tests for seal.verifier — verification pipeline."""
 
 import os
 import unittest
 
-from mcap.verifier import verify, VALID_METHOD_LEVELS
+from seal.verifier import verify, VALID_METHOD_LEVELS
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 

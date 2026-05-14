@@ -1,4 +1,4 @@
-# Beginning of Session: mcap-protocol
+# Beginning of Session: gordo-seal
 
 **Gordo executes this checklist at the start of every session.**
 
@@ -54,7 +54,7 @@ gh issue list --label p1-next --limit 5
 ### 7. Check Protocol Status
 - Read current spec files in `spec/`
 - Note which tensions are resolved vs. unresolved (check `config.json`)
-- Note current MCAP version and layer implementation status
+- Note current SEAL version and layer implementation status
 
 ### 8. Run Tests (if code exists)
 ```bash
@@ -73,7 +73,7 @@ Session: [N]
 Tests: [status or N/A]
 Open p0 issues: [count]
 Last session: [brief from journal]
-Protocol status: MCAP v[X] | Tensions [resolved/total] | Layers [implemented/total]
+Protocol status: SEAL v[X] | Tensions [resolved/total] | Layers [implemented/total]
 Ready to proceed: [yes/no]
 ```
 
@@ -81,4 +81,4 @@ Then await JK's direction or WWGD signal.
 
 ---
 
-*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*
+*Part of gordo-seal. Built with Gordo Framework v1.2.0.*

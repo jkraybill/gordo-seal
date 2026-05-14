@@ -3,8 +3,8 @@
 import os
 import unittest
 
-from mcap.hasher import hash_record
-from mcap.record import parse_record, serialize_record, fill_record_hash, fill_attestation
+from seal.hasher import hash_record
+from seal.record import parse_record, serialize_record, fill_record_hash, fill_attestation
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 
@@ -58,7 +58,7 @@ class TestGoldenFinalize(unittest.TestCase):
 class TestGoldenRoundTrips(unittest.TestCase):
 
     def test_all_records_roundtrip(self):
-        """Every fixture file must survive parse -> serialize unchanged."""
+        """Every fixture file must survive parse -> serialize (with header upgrade)."""
         for name in [
             "record-001-preimage.txt", "record-002-preimage.txt",
             "record-001.mcap", "record-002.mcap"
@@ -68,7 +68,9 @@ class TestGoldenRoundTrips(unittest.TestCase):
                 original = f.read()
             record = parse_record(original)
             serialized = serialize_record(record)
-            self.assertEqual(serialized, original, f"Round-trip failed for {name}")
+            # Legacy MCAP header is upgraded to SEAL on serialize
+            expected = original.replace("MCAP Ratification Record", "SEAL Ratification Record")
+            self.assertEqual(serialized, expected, f"Round-trip failed for {name}")
 
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
-"""Tests for mcap.record — record parsing and assembly."""
+"""Tests for seal.record — record parsing and assembly."""
 
 import os
 import unittest
 
-from mcap.record import parse_record, serialize_record, RECORD_HASH_PLACEHOLDER
+from seal.record import parse_record, serialize_record, RECORD_HASH_PLACEHOLDER
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 
@@ -47,7 +47,9 @@ class TestSerializeRecord(unittest.TestCase):
             original = f.read()
         record = parse_record(original)
         serialized = serialize_record(record)
-        self.assertEqual(serialized, original)
+        # Legacy MCAP header is upgraded to SEAL on serialize
+        expected = original.replace("MCAP Ratification Record", "SEAL Ratification Record")
+        self.assertEqual(serialized, expected)
 
     def test_roundtrip_record_002_preimage(self):
         path = os.path.join(FIXTURES, "record-002-preimage.txt")
@@ -55,7 +57,9 @@ class TestSerializeRecord(unittest.TestCase):
             original = f.read()
         record = parse_record(original)
         serialized = serialize_record(record)
-        self.assertEqual(serialized, original)
+        # Legacy MCAP header is upgraded to SEAL on serialize
+        expected = original.replace("MCAP Ratification Record", "SEAL Ratification Record")
+        self.assertEqual(serialized, expected)
 
     def test_roundtrip_record_002_final(self):
         path = os.path.join(FIXTURES, "record-002.mcap")
@@ -63,7 +67,9 @@ class TestSerializeRecord(unittest.TestCase):
             original = f.read()
         record = parse_record(original)
         serialized = serialize_record(record)
-        self.assertEqual(serialized, original)
+        # Legacy MCAP header is upgraded to SEAL on serialize
+        expected = original.replace("MCAP Ratification Record", "SEAL Ratification Record")
+        self.assertEqual(serialized, expected)
 
 
 class TestRecordHashPlaceholder(unittest.TestCase):

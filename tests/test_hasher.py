@@ -1,11 +1,11 @@
-"""Tests for mcap.hasher — SHA3-256 hashing."""
+"""Tests for seal.hasher — SHA3-256 hashing."""
 
 import hashlib
 import os
 import tempfile
 import unittest
 
-from mcap.hasher import hash_bytes, hash_content, hash_record, format_hash
+from seal.hasher import hash_bytes, hash_content, hash_record, format_hash
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 

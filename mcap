@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-# MCAP CLI wrapper — invokes the Python mcap package
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PYTHONPATH="$SCRIPT_DIR/src" exec python3 -m mcap "$@"

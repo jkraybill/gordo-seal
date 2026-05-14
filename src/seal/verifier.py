@@ -1,14 +1,14 @@
-"""Full verification pipeline for MCAP records."""
+"""Full verification pipeline for SEAL records."""
 
 import os
 import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 
-from mcap.canon import check_canonical
-from mcap.hasher import hash_record, hash_content, format_hash
-from mcap.record import parse_record, find_preimage
-from mcap.signer import verify_signature, extract_signed_content
+from seal.canon import check_canonical
+from seal.hasher import hash_record, hash_content, format_hash
+from seal.record import parse_record, find_preimage
+from seal.signer import verify_signature, extract_signed_content
 
 
 @dataclass
@@ -46,7 +46,7 @@ UTC_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
 
 def verify(record_path: str, content_paths: list[str] | None = None,
            preimage_path: str | None = None) -> VerificationReport:
-    """Run all verification checks on an MCAP record."""
+    """Run all verification checks on an SEAL record."""
     report = VerificationReport()
 
     # Read the record

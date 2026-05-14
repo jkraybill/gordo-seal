@@ -1,10 +1,10 @@
-"""GPG signing wrapper for MCAP."""
+"""GPG signing wrapper for SEAL."""
 
 import os
 import subprocess
 from dataclasses import dataclass
 
-from mcap.errors import SigningError
+from seal.errors import SigningError
 
 
 @dataclass

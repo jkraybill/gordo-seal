@@ -1,11 +1,11 @@
-"""OpenTimestamps wrapper for MCAP."""
+"""OpenTimestamps wrapper for SEAL."""
 
 import os
 import shutil
 import subprocess
 from dataclasses import dataclass
 
-from mcap.errors import StampError
+from seal.errors import StampError
 
 
 @dataclass

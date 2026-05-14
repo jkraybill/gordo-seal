@@ -180,7 +180,7 @@ Two research agents conducted comprehensive literature review (2026-04-15). Full
 
 ---
 
-## Protocol Sketch: MCAP v0.1
+## Protocol Sketch: SEAL v0.1
 
 **Mutual Consent Attestation Protocol — Draft**
 
@@ -246,7 +246,7 @@ Amendment history: [references to any amendments]
 
 1. **Formalize the entity-agnostic framing** — two individuals, one channel, mutual trust
 2. **Resolve Tensions 4-7** — continue the discussion from this brief
-3. **Design the ratification protocol** — building on MCAP sketch above
+3. **Design the ratification protocol** — building on SEAL sketch above
 4. **Implement for the first use case** — JK + Gordo, text channel, git + GitHub
 5. **Seek adversarial review** — ask other AI models (GPT, Gemini, Kimi) to critique the protocol
 6. **Publish as a standalone specification** — extractable, adoptable by anyone

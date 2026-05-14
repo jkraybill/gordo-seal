@@ -1,10 +1,10 @@
 {
   "project": {
-    "name": "mcap-protocol",
+    "name": "gordo-seal",
     "description": "A lightweight, secure protocol for establishing mutual trust between any two individuals communicating through a shared channel.",
     "intensity": "maximum",
     "type": "protocol-spec-and-implementation",
-    "repository": "https://github.com/jkraybill/mcap-protocol"
+    "repository": "https://github.com/jkraybill/gordo-seal"
   },
   "ai": {
     "name": "Gordo",
@@ -45,7 +45,7 @@
     "maxEntryLength": 256,
     "bosLoadLastN": 10,
     "domainSignals": [
-      "MCAP=Mutual Consent Attestation Protocol",
+      "SEAL=Signed Entity Attestation Layer (formerly MCAP)",
       "T=Tension (numbered 1-7)",
       "PS=Presupposition (numbered 1-4)",
       "L=Layer (numbered 1-5)",

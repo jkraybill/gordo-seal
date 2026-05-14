@@ -1,9 +1,9 @@
-"""Tests for mcap.stamper — OpenTimestamps wrapper."""
+"""Tests for seal.stamper — OpenTimestamps wrapper."""
 
 import os
 import unittest
 
-from mcap.stamper import check_completeness
+from seal.stamper import check_completeness
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 

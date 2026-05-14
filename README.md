@@ -1,4 +1,4 @@
-# mcap-protocol
+# gordo-seal
 
 **A lightweight, secure protocol for establishing mutual trust between any two individuals communicating through a shared channel.**
 
@@ -6,13 +6,13 @@
 
 ## Current Status
 
-**MCAP Version:** 0.2.0
+**SEAL Version:** 0.2.0
 **Axioms:** 4 (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
 **Attestation Levels:** 4 (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
 **Tensions:** 5 resolved, 1 rejected, 1 deferred
 **Ratification Records:** 3 produced (axioms, spec bootstrap, inviolable rules)
 **Adversarial Reviews:** 14 across 3 cycles from 5 independent models — converged
-**Tooling:** `mcap` CLI — 7 subcommands, 94 tests, Python 3 stdlib only
+**Tooling:** `seal` CLI — 7 subcommands, 94 tests, Python 3 stdlib only
 **MVP:** Achieved (Session 3)
 
 ---
@@ -51,7 +51,7 @@ Each individual can only observe what the other transmits through the channel. N
 
 ### The Solution
 
-**MCAP (Mutual Consent Attestation Protocol)** — a layered attestation protocol with four levels:
+**SEAL (Mutual Consent Attestation Protocol)** — a layered attestation protocol with four levels:
 
 1. **Behavioral (Level 1)** — deliberation evidence, improbable coherent reasoning as proof-of-work
 2. **Provider-Verified (Level 2)** — provider-signed model identity and session metadata
@@ -100,7 +100,7 @@ See `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` for full tension descriptions and cons
 | Record | Content | Levels | Date |
 |---|---|---|---|
 | record-001 | Axioms 1-4 | L3/L1 (GPG + behavioral) | 2026-04-16 |
-| record-002 | MCAP v0.1.0 spec (bootstrap) | L3/L1 (GPG + behavioral) | 2026-04-16 |
+| record-002 | SEAL v0.1.0 spec (bootstrap) | L3/L1 (GPG + behavioral) | 2026-04-16 |
 | record-003 | Inviolable rules 1-6 | L3/L1 (GPG + behavioral) | 2026-04-16 |
 
 All records OTS-anchored. record-002 is self-referential — the spec ratified using itself, circularity acknowledged per Axiom 4.
@@ -128,10 +128,10 @@ All records OTS-anchored. record-002 is self-referential — the spec ratified u
 ## Project Structure
 
 ```
-spec/                -- MCAP protocol specification
+spec/                -- SEAL protocol specification
   foundations.md     -- Axioms and philosophical foundations
   protocol.md       -- Protocol mechanics, record format, threat models
-src/mcap/            -- Reference implementation (mcap CLI)
+src/seal/            -- Reference implementation (seal CLI)
 tests/               -- Test suite (94 tests)
 ratification/        -- Ratification records and implementation guide
 docs/                -- Supporting documentation

@@ -1,10 +1,10 @@
-"""Tests for mcap.signer — GPG signing wrapper."""
+"""Tests for seal.signer — GPG signing wrapper."""
 
 import os
 import unittest
 from unittest.mock import patch, MagicMock
 
-from mcap.signer import extract_signed_content
+from seal.signer import extract_signed_content
 
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -27,10 +27,10 @@ class TestExtractSignedContent(unittest.TestCase):
 
 class TestSignHash(unittest.TestCase):
 
-    @patch("mcap.signer.subprocess.run")
+    @patch("seal.signer.subprocess.run")
     def test_sign_calls_gpg_clearsign(self, mock_run):
         mock_run.return_value = MagicMock(returncode=0)
-        from mcap.signer import sign_hash
+        from seal.signer import sign_hash
         sign_hash("abc123", "/tmp/test.asc")
         mock_run.assert_called_once()
         args = mock_run.call_args
@@ -38,10 +38,10 @@ class TestSignHash(unittest.TestCase):
         self.assertIn("--clearsign", cmd)
         self.assertIn("/tmp/test.asc", cmd)
 
-    @patch("mcap.signer.subprocess.run")
+    @patch("seal.signer.subprocess.run")
     def test_sign_with_key_id(self, mock_run):
         mock_run.return_value = MagicMock(returncode=0)
-        from mcap.signer import sign_hash
+        from seal.signer import sign_hash
         sign_hash("abc123", "/tmp/test.asc", key_id="DEADBEEF")
         cmd = mock_run.call_args[0][0]
         self.assertIn("--local-user", cmd)

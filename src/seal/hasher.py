@@ -1,4 +1,4 @@
-"""SHA3-256 hashing for MCAP content and records."""
+"""SHA3-256 hashing for SEAL content and records."""
 
 import hashlib
 

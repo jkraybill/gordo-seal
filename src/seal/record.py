@@ -1,4 +1,4 @@
-"""Record parsing, preimage assembly, and finalization for MCAP."""
+"""Record parsing, preimage assembly, and finalization for SEAL."""
 
 from collections import OrderedDict
 
@@ -12,18 +12,19 @@ STATEMENT_PLACEHOLDER_B = "<to be authored by Party-B>"
 PARTY_KEYS = ("Party-A", "Party-B")
 
 # The first line of the record is a fixed header, not a key-value pair
-HEADER_LINE = "MCAP Ratification Record"
+HEADER_LINE = "SEAL Ratification Record"
+HEADER_LINE_LEGACY = "MCAP Ratification Record"  # backwards compat
 
 # Sentinel prefix for blank line markers in the OrderedDict
 _BLANK = "_blank_"
 
 
 def parse_record(text: str) -> OrderedDict:
-    """Parse an MCAP record (preimage or final) into an ordered dict.
+    """Parse an SEAL record (preimage or final) into an ordered dict.
 
     Top-level fields are key-value pairs separated by ': '.
     Party-A and Party-B contain indented sub-fields (two-space prefix).
-    The first line is the fixed header 'MCAP Ratification Record'.
+    The first line is the fixed header 'SEAL Ratification Record'.
     Blank lines are preserved as '_blank_N' sentinel keys.
 
     Returns an OrderedDict preserving field order. Party blocks are
@@ -31,13 +32,13 @@ def parse_record(text: str) -> OrderedDict:
     """
     lines = text.split("\n")
     record: OrderedDict = OrderedDict()
-    record["_header"] = HEADER_LINE
+    record["_header"] = HEADER_LINE  # always output new format
 
     i = 0
     blank_count = 0
 
-    # Skip the header line
-    if lines[i].strip() == HEADER_LINE:
+    # Skip the header line (accept both legacy and new format)
+    if lines[i].strip() in (HEADER_LINE, HEADER_LINE_LEGACY):
         i += 1
 
     current_party = None
@@ -145,10 +146,10 @@ def serialize_record(record: OrderedDict) -> str:
 
 
 def find_preimage(record_path: str) -> str | None:
-    """Convention-based preimage lookup: record-NNN.mcap -> record-NNN-preimage.txt."""
+    """Convention-based preimage lookup: record-NNN.seal -> record-NNN-preimage.txt."""
     import os
     base = record_path
-    if base.endswith(".mcap"):
+    if base.endswith(".seal"):
         preimage = base[:-5] + "-preimage.txt"
         if os.path.exists(preimage):
             return preimage

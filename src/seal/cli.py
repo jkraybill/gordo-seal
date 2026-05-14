@@ -1,17 +1,17 @@
-"""MCAP CLI — command-line interface for the Mutual Consent Attestation Protocol."""
+"""SEAL CLI — command-line interface for the Signed Entity Attestation Layer."""
 
 import argparse
 import os
 import sys
 
-from mcap import __version__
-from mcap.canon import check_canonical
-from mcap.hasher import hash_content, hash_record, format_hash
-from mcap.record import find_preimage, fill_record_hash, fill_attestation
-from mcap.signer import sign_hash, verify_signature, extract_signed_content
-from mcap.stamper import stamp, check_completeness, check_ots_available
-from mcap.verifier import verify
-from mcap.errors import McapError
+from seal import __version__
+from seal.canon import check_canonical
+from seal.hasher import hash_content, hash_record, format_hash
+from seal.record import find_preimage, fill_record_hash, fill_attestation
+from seal.signer import sign_hash, verify_signature, extract_signed_content
+from seal.stamper import stamp, check_completeness, check_ots_available
+from seal.verifier import verify
+from seal.errors import SealError
 
 
 def cmd_hash_content(args):
@@ -71,7 +71,7 @@ def cmd_sign(args):
 
 
 def cmd_finalize(args):
-    """Produce final .mcap record from preimage and signature(s)."""
+    """Produce final .seal record from preimage and signature(s)."""
     with open(args.preimage) as f:
         text = f.read()
 
@@ -93,7 +93,7 @@ def cmd_finalize(args):
     # Write output
     output = args.output
     if not output:
-        output = args.preimage.replace("-preimage.txt", ".mcap")
+        output = args.preimage.replace("-preimage.txt", ".seal")
 
     with open(output, "w") as f:
         f.write(result)
@@ -104,7 +104,7 @@ def cmd_finalize(args):
 
 
 def cmd_verify(args):
-    """Verify an MCAP record."""
+    """Verify an SEAL record."""
     report = verify(
         args.record,
         content_paths=args.content,
@@ -181,10 +181,10 @@ def cmd_stamp(args):
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="mcap",
-        description=f"MCAP — Mutual Consent Attestation Protocol tooling v{__version__}",
+        prog="seal",
+        description=f"SEAL — Signed Entity Attestation Layer tooling v{__version__}",
     )
-    parser.add_argument("--version", action="version", version=f"mcap {__version__}")
+    parser.add_argument("--version", action="version", version=f"seal {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
     # hash-content
@@ -206,11 +206,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("preimage", help="Preimage file path")
     p.add_argument("-a", "--attestation", action="append", default=[],
                    help="Party attestation: Party-A='See path/to/sig.asc' (repeatable)")
-    p.add_argument("-o", "--output", help="Output .mcap file path")
+    p.add_argument("-o", "--output", help="Output .seal file path")
 
     # verify
-    p = sub.add_parser("verify", help="Verify an MCAP record")
-    p.add_argument("record", help="Record .mcap file path")
+    p = sub.add_parser("verify", help="Verify an SEAL record")
+    p.add_argument("record", help="Record .seal file path")
     p.add_argument("--content", nargs="+", help="Content file(s) for Content-Hash verification")
     p.add_argument("--preimage", help="Preimage file path (auto-detected if not specified)")
 
@@ -221,7 +221,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     # stamp
     p = sub.add_parser("stamp", help="OTS timestamp a finalized record")
-    p.add_argument("record", help="Record .mcap file path")
+    p.add_argument("record", help="Record .seal file path")
     p.add_argument("--force", action="store_true", help="Stamp even if record appears incomplete")
 
     return parser
@@ -243,7 +243,7 @@ def main(argv=None):
 
     try:
         return commands[args.command](args)
-    except McapError as e:
+    except SealError as e:
         print(f"ERROR: {e}", file=sys.stderr)
         return 3
     except FileNotFoundError as e:

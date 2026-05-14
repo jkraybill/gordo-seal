@@ -1,8 +1,8 @@
-"""Tests for mcap.canon — canonicalization engine."""
+"""Tests for seal.canon — canonicalization engine."""
 
 import unittest
 
-from mcap.canon import canonicalize, check_canonical
+from seal.canon import canonicalize, check_canonical
 
 
 class TestCanonicalize(unittest.TestCase):

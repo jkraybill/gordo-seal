@@ -1,4 +1,4 @@
-# End of Session: mcap-protocol
+# End of Session: gordo-seal
 
 **Gordo executes this checklist at the end of every session.**
 
@@ -24,7 +24,7 @@ Add one entry (256 char max, compressed signals):
 ```
 ## Session N: Brief title (YYYY-MM-DD)
 
-[compressed signals using domain key: MCAP, T, PS, L, RR, CR, OTS, BA, ADV]
+[compressed signals using domain key: SEAL, T, PS, L, RR, CR, OTS, BA, ADV]
 ```
 
 ### 4. MANDATORY Self-Improvement Scan
@@ -42,7 +42,7 @@ Add one entry (256 char max, compressed signals):
 
 ### 5. Update Protocol Status
 
-If tensions were resolved or MCAP spec was changed:
+If tensions were resolved or SEAL spec was changed:
 - Update `config.json` (tension status, protocol version)
 - Verify spec and code are in sync
 
@@ -75,4 +75,4 @@ When all steps complete:
 
 ---
 
-*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*
+*Part of gordo-seal. Built with Gordo Framework v1.2.0.*

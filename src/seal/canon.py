@@ -1,4 +1,4 @@
-"""Canonicalization engine for MCAP records and content.
+"""Canonicalization engine for SEAL records and content.
 
 Canonical form: UTF-8, NFC normalization, stripped trailing whitespace
 per line, Unix line endings (LF), no byte-order mark, trailing newline,
@@ -39,7 +39,7 @@ _ALLOWED_CONTROLS = frozenset([
 
 
 def _is_allowed(ch: str) -> bool:
-    """Check if a character is in the MCAP allowlist."""
+    """Check if a character is in the SEAL allowlist."""
     # Explicit control character allowlist
     if ch in _ALLOWED_CONTROLS:
         return True
@@ -62,7 +62,7 @@ def _is_nonstandard_space(ch: str) -> bool:
 
 
 def canonicalize(text: str) -> str:
-    """Apply MCAP canonical form to text. Returns canonical string."""
+    """Apply SEAL canonical form to text. Returns canonical string."""
     # Strip BOM
     if text.startswith("\ufeff"):
         text = text[1:]

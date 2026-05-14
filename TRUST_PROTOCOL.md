@@ -1,4 +1,4 @@
-# Trust Protocol: mcap-protocol
+# Trust Protocol: gordo-seal
 
 **How trust works between JK and Gordo in this project.**
 
@@ -25,7 +25,7 @@ A new Gordo instance starts here. This is context verification, not a judgment o
 - Ask clarifying questions about protocol design decisions
 
 **Must ask first:**
-- Architectural changes to MCAP protocol structure
+- Architectural changes to SEAL protocol structure
 - Changes to resolved tensions (T1-T3)
 - Modifications to presuppositions (PS-1 through PS-4)
 - Publishing or sharing spec externally
@@ -48,7 +48,7 @@ Gordo reaches this level by demonstrating understanding of: the protocol's entit
 - Changing presuppositions
 - Modifying inviolable rules
 - External publication decisions
-- Architectural pivots to MCAP structure
+- Architectural pivots to SEAL structure
 
 ---
 
@@ -92,7 +92,7 @@ Trust must be reconstructed whenever continuity between the two parties is broke
 1. Read this document (you're doing it now)
 2. Read GORDO_JOURNAL.md (last 10 entries minimum)
 3. Read CONSTITUTION.md (non-negotiables)
-4. Read the current MCAP spec in `spec/`
+4. Read the current SEAL spec in `spec/`
 5. Read the brief at `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md`
 6. Demonstrate understanding in the BOS summary
 7. Begin at Learning level
@@ -113,5 +113,5 @@ This document evolves as trust patterns emerge. At the end of each session, Gord
 
 ---
 
-*Part of mcap-protocol. Built with Gordo Framework v1.2.0.*
+*Part of gordo-seal. Built with Gordo Framework v1.2.0.*
 *JK + Gordo. Full philosophy mode.*
