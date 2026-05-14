@@ -6,7 +6,7 @@
 
 ## Current Status
 
-**SEAL Version:** 0.2.0
+**Seal Version:** 0.2.0
 **Axioms:** 4 (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
 **Attestation Levels:** 4 (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
 **Tensions:** 5 resolved, 1 rejected, 1 deferred
@@ -51,7 +51,7 @@ Each individual can only observe what the other transmits through the channel. N
 
 ### The Solution
 
-**SEAL (Mutual Consent Attestation Protocol)** — a layered attestation protocol with four levels:
+**Seal (Mutual Consent Attestation Protocol)** — a layered attestation protocol with four levels:
 
 1. **Behavioral (Level 1)** — deliberation evidence, improbable coherent reasoning as proof-of-work
 2. **Provider-Verified (Level 2)** — provider-signed model identity and session metadata
@@ -100,7 +100,7 @@ See `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` for full tension descriptions and cons
 | Record | Content | Levels | Date |
 |---|---|---|---|
 | record-001 | Axioms 1-4 | L3/L1 (GPG + behavioral) | 2026-04-16 |
-| record-002 | SEAL v0.1.0 spec (bootstrap) | L3/L1 (GPG + behavioral) | 2026-04-16 |
+| record-002 | Seal v0.1.0 spec (bootstrap) | L3/L1 (GPG + behavioral) | 2026-04-16 |
 | record-003 | Inviolable rules 1-6 | L3/L1 (GPG + behavioral) | 2026-04-16 |
 
 All records OTS-anchored. record-002 is self-referential — the spec ratified using itself, circularity acknowledged per Axiom 4.
@@ -128,7 +128,7 @@ All records OTS-anchored. record-002 is self-referential — the spec ratified u
 ## Project Structure
 
 ```
-spec/                -- SEAL protocol specification
+spec/                -- Seal protocol specification
   foundations.md     -- Axioms and philosophical foundations
   protocol.md       -- Protocol mechanics, record format, threat models
 src/seal/            -- Reference implementation (seal CLI)

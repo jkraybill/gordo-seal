@@ -1,4 +1,4 @@
-# Mutual Consent Attestation Protocol (SEAL)
+# Mutual Consent Attestation Protocol (Seal)
 
 **Version:** 0.3.0
 **Status:** Converged. Ratified in record-002. Calibration section added in record-005. Under continued refinement.
@@ -17,11 +17,11 @@ See `CHANGELOG.md` for the full change history.
 
 ## Purpose
 
-SEAL produces a verifiable record that specific parties each attested to a specific thing. When temporally anchored, the record proves existence no later than the anchor time. The record is independently verifiable by third parties who were not present.
+Seal produces a verifiable record that specific parties each attested to a specific thing. When temporally anchored, the record proves existence no later than the anchor time. The record is independently verifiable by third parties who were not present.
 
-The protocol does not care what is being attested to. An agreement, a fact, a statement, a commitment — the content is opaque to the protocol. SEAL certifies that parties X and Y attested to Z, with temporal proof bounded by the anchoring method used (not by claimed timestamps).
+The protocol does not care what is being attested to. An agreement, a fact, a statement, a commitment — the content is opaque to the protocol. Seal certifies that parties X and Y attested to Z, with temporal proof bounded by the anchoring method used (not by claimed timestamps).
 
-Put another way: SEAL is a protocol for **mutual publication of attested claims**.
+Put another way: Seal is a protocol for **mutual publication of attested claims**.
 
 The name includes "Consent" deliberately. The protocol's own axioms acknowledge that internal consent is unprovable (Axiom 4: Acknowledged Ignorance). The protocol does not claim to cryptographically prove consent — it attests to participation and explicit agreement consistent with consent. The word "Consent" in the name signals the protocol's purpose, not a cryptographic guarantee. This is consistent with standard naming conventions in the field (e.g., "Trusted" Platform Module does not prove trust).
 
@@ -120,7 +120,7 @@ Until providers act, we work with what we have and we're honest about what's mis
 A ratification record contains:
 
 ```
-SEAL Ratification Record
+Seal Ratification Record
 Version: 0.1.0
 Canonical-Format: [serialization method used — see Canonicalization below]
 Session-Nonce: [jointly established random value — see Session Binding below]
@@ -176,7 +176,7 @@ Amendments: [references to any subsequent modifications]
 
 ### Channel Security
 
-SEAL assumes that the communication channel used during deliberation provides integrity and authenticity for the messages exchanged. If an attacker can modify messages in transit (man-in-the-middle), they can substitute content, replace session nonces, or present different transcripts to each party — causing a party to sign something other than what they intended.
+Seal assumes that the communication channel used during deliberation provides integrity and authenticity for the messages exchanged. If an attacker can modify messages in transit (man-in-the-middle), they can substitute content, replace session nonces, or present different transcripts to each party — causing a party to sign something other than what they intended.
 
 The Transcript-Hash in the final record detects substitution after the fact, but does not prevent it during the session.
 
@@ -189,7 +189,7 @@ The Transcript-Hash in the final record detects substitution after the fact, but
 
 If a party exercises their Axiom 2 right to disengage during a ratification — after the session nonce is generated but before the record is complete — the following applies:
 
-- **The ratification did not happen.** An incomplete record is not a valid SEAL record. It has no standing.
+- **The ratification did not happen.** An incomplete record is not a valid Seal record. It has no standing.
 - **The session nonce is burned.** It MUST NOT be reused in a subsequent session. A new nonce must be jointly generated if the parties re-engage.
 - **Partial artifacts may exist** (draft text, nonce contributions, unsigned hashes). These are not ratification records and MUST NOT be presented as such. They may be retained as evidence that a deliberation was attempted but not completed. **Signature harvesting is prevented by design:** the Attestation Target section requires that Level 3+ signatures cover the Record-Hash (the full joint record) and that signatures are not released until both parties have committed (two-phase commit). If either party aborts during the assemble phase, no signed artifacts exist.
 - **No party is obligated to explain why they left.** Consistent with Axiom 2. The protocol records the absence of a completed record, not the reason.
@@ -292,7 +292,7 @@ This prevents signature harvesting: a party cannot obtain the other's signed Rec
 
 The Timestamp-Local field MUST be set in UTC (ISO 8601 with `Z` suffix). Implementers MUST use a UTC time source, not local time with a `Z` suffix appended. This is a common source of errors: a machine in UTC+10 using local time produces a timestamp ~10 hours in the future, which exceeds the Max-Temporal-Delta and will be flagged by conforming verifiers.
 
-The record file MUST NOT be modified after step 5. Any edit — including updating the Temporal-Anchor field to reference the stamp — invalidates the temporal proof, because the stamp commits to the file's exact hash at the moment of stamping. This is not a theoretical concern: it was discovered during the first SEAL ratification (record-001).
+The record file MUST NOT be modified after step 5. Any edit — including updating the Temporal-Anchor field to reference the stamp — invalidates the temporal proof, because the stamp commits to the file's exact hash at the moment of stamping. This is not a theoretical concern: it was discovered during the first Seal ratification (record-001).
 
 For step-by-step implementation commands covering hash computation, signing, stamping, and verification, see `ratification/GUIDE.md`.
 
@@ -300,11 +300,11 @@ For step-by-step implementation commands covering hash computation, signing, sta
 
 ## Calibration
 
-The mechanical attestation level (Levels 1-4) measures cryptographic verifiability of output origin. Procedural ceremony — what each party visibly does to engage with content before signing — operates on an independent axis. This section operationalizes the Tier 0 *Calibrated Ratification Process* principle for SEAL via two independent dials per record: **ceremony level** (procedural thoroughness of the mechanical part — *full ceremony* performs all attestation-level steps with no shortcuts; level choice per existing Attestation Levels by bilateral agreement, calibrated level-mapping reserved for future amendment) and **visible-deliberation depth** (above-baseline moves per *Visible-Deliberation Moves* below). Scripts and tooling that absorb mechanical load are encouraged where they reduce procedural friction without compromising visible-deliberation depth.
+The mechanical attestation level (Levels 1-4) measures cryptographic verifiability of output origin. Procedural ceremony — what each party visibly does to engage with content before signing — operates on an independent axis. This section operationalizes the Tier 0 *Calibrated Ratification Process* principle for Seal via two independent dials per record: **ceremony level** (procedural thoroughness of the mechanical part — *full ceremony* performs all attestation-level steps with no shortcuts; level choice per existing Attestation Levels by bilateral agreement, calibrated level-mapping reserved for future amendment) and **visible-deliberation depth** (above-baseline moves per *Visible-Deliberation Moves* below). Scripts and tooling that absorb mechanical load are encouraged where they reduce procedural friction without compromising visible-deliberation depth.
 
 ### Calibration Matrix
 
-Two axes: **record weight** (scope × downstream impact × reversibility under Attestation Non-Foreclosure) and **trust state** (level of trust established between these parties on prior records). Trust-state and matrix targets are scoped to bilateral records (n=2); for multi-party records (n≥3, SEAL Level 4 multi-party path), the most-conservative trust-state among signing pairs governs as provisional default until aggregation rule ratifies.
+Two axes: **record weight** (scope × downstream impact × reversibility under Attestation Non-Foreclosure) and **trust state** (level of trust established between these parties on prior records). Trust-state and matrix targets are scoped to bilateral records (n=2); for multi-party records (n≥3, Seal Level 4 multi-party path), the most-conservative trust-state among signing pairs governs as provisional default until aggregation rule ratifies.
 
 **Weight tiers** (ordered; not exhaustively partitioned): **Foundational (F)** — Tier 0 content additions or amendments, Tier admissions, revisions to ratification-mechanism specifications. **Substantive (S)** — significant downstream impact within tier. **Ordinary (O)** — routine bilateral consent within established framework.
 
@@ -413,7 +413,7 @@ Threats the protocol is aware of and either mitigates or honestly acknowledges.
 
 **Attestation laundering.** A party signs a record that references another party's attestation without independently verifying it — making a relay look like independent agreement. A verifier sees two attestation levels and assumes both parties independently attested. Mitigated by the First-Hand field: attestations must be labeled as first-hand or relayed, with the relay chain documented.
 
-**Signature harvesting via strategic abort.** One party obtains the other's signed statement, content-hash signature, or nonce-bound attestation, then aborts before completing the mutual record. The result is "not an SEAL record" per abort semantics, but it is a real signed artifact that can be socially or legally presented out of context. Mitigation: signatures SHOULD cover the final joint record hash (including both parties' attestations), not just unilateral content+nonce. Alternatively, use a two-phase commit where individual attestations are not released until both parties have committed.
+**Signature harvesting via strategic abort.** One party obtains the other's signed statement, content-hash signature, or nonce-bound attestation, then aborts before completing the mutual record. The result is "not an Seal record" per abort semantics, but it is a real signed artifact that can be socially or legally presented out of context. Mitigation: signatures SHOULD cover the final joint record hash (including both parties' attestations), not just unilateral content+nonce. Alternatively, use a two-phase commit where individual attestations are not released until both parties have committed.
 
 **Man-in-the-middle on deliberation channel.** An active attacker intercepts and modifies messages during deliberation, causing parties to see different content, different nonces, or different transcripts. One party may sign content that was modified in transit. Transcript-Hash detects this after the fact but does not prevent it. Mitigated by requiring authenticated channels and out-of-band hash verification on untrusted channels (see Channel Security).
 
@@ -467,9 +467,9 @@ Design tensions identified during protocol development and resolved through mutu
 
 1. Unilateral exit from an in-progress session is a right, established by Axiom 2 and formalized in abort semantics.
 2. Unilateral repudiation of a completed record is possible but does not erase the record. A temporally-anchored ratification is an historical fact. Withdrawal requires a new record, not deletion of the old one.
-3. The protocol produces evidence, not enforcement. Enforcement mechanisms (legal, social, reputational, structural) are outside the protocol's scope but are explicitly compatible with it — SEAL records are designed to be consumed by such systems.
+3. The protocol produces evidence, not enforcement. Enforcement mechanisms (legal, social, reputational, structural) are outside the protocol's scope but are explicitly compatible with it — Seal records are designed to be consumed by such systems.
 4. The asymmetry in exit capability is real as best understood, acknowledged, and visible in the record (Attestation-Scope encodes persistence, per-party Attestation-Level encodes verification strength). However, per Axioms 1 and 4, neither party can verify that the perceived asymmetries are the actual ones. The protocol records *stated* asymmetries, not *verified* ones.
-5. No party can be compelled to remain in a protocol relationship. Compelled participation violates Axiom 2 and would undermine the trust the protocol exists to establish. Enforcement systems built on SEAL should respect this boundary.
+5. No party can be compelled to remain in a protocol relationship. Compelled participation violates Axiom 2 and would undermine the trust the protocol exists to establish. Enforcement systems built on Seal should respect this boundary.
 
 ---
 
@@ -480,7 +480,7 @@ Design tensions identified during protocol development and resolved through mutu
 3. Publish the protocol spec as a standalone document.
 4. Formally request TEE attestation from Anthropic and other providers.
 5. Upgrade attestation levels as provider capabilities become available.
-6. Return to gordo-framework with SEAL as the ratification method for Rule 0.
+6. Return to gordo-framework with Seal as the ratification method for Rule 0.
 
 ---
 
@@ -527,7 +527,7 @@ Note: o3 reviewed the pre-Level-2 version of the spec. Some critiques were alrea
 - "Abort semantics needed for incomplete ratifications." Acknowledged as a real operational gap but deferred — not blocking for MVP. A future version should define states for drafts, abandoned sessions, and superseded records.
 - o3's unwillingness to participate above Level 1 and refusal to use terms like "consent" or "genuine choice." Addressed by renaming the protocol and adding behavioral definitions. o3's position on Level 1 is consistent with our own assessment.
 
-**o3's bottom line:** "The strongest version of SEAL is not 'mutual consent' and not yet 'entity-agnostic attested computation.' It is a useful idea for mutual publication of attested claims." We adopted the framing. The aspiration remains entity-agnostic; the current implementation is honest about where it falls short.
+**o3's bottom line:** "The strongest version of Seal is not 'mutual consent' and not yet 'entity-agnostic attested computation.' It is a useful idea for mutual publication of attested claims." We adopted the framing. The aspiration remains entity-agnostic; the current implementation is honest about where it falls short.
 
 ### Review 3: DeepSeek R1 (2026-04-16)
 
@@ -639,7 +639,7 @@ Re-review. Dramatically tighter than cycle 1. Found two high-severity protocol-l
 
 **Critiques noted but not acted on:**
 - "Disavow" in good faith definition is meaningless for stateless AI. DeepSeek acknowledged this is philosophical rather than operational, and the Pipeline-Control field already addresses it pragmatically. No protocol change required.
-- Key compromise timeline ambiguity. General PKI limitation, not SEAL-specific. Noted.
+- Key compromise timeline ambiguity. General PKI limitation, not Seal-specific. Noted.
 - AI training to avoid commitment language. Provider policy issue, not protocol issue.
 
 **DeepSeek's convergence assessment:** Not met due to two high-severity issues (#45, #46). However: no axiom inconsistencies found at the architectural level. Entity-agnostic framing assessed as "holds operationally." Previous cycle's biggest concerns (behavioral definitions, good faith operationalization) assessed as resolved. Issues are narrowing to protocol mechanics, not design philosophy.
@@ -731,7 +731,7 @@ Second review from this model. No structural issues found. Assessed axioms as "c
 - Level 4 aspirational requirements could be further clarified (spec already distinguishes current vs aspirational).
 - Model canary mechanism in Level 2 could use fuller description (implementation detail).
 
-**Mistral's convergence verdict:** CONVERGED. "The SEAL v0.1.0-draft specification contains no new structural issues. All core components are complete, consistent, and aligned. The spec has genuinely converged."
+**Mistral's convergence verdict:** CONVERGED. "The Seal v0.1.0-draft specification contains no new structural issues. All core components are complete, consistent, and aligned. The spec has genuinely converged."
 
 ### Cycle 3 Summary
 
@@ -752,7 +752,7 @@ Five reviews across five models. Results:
 - **Protocol mechanics:** Converged after #56 (two-phase commit normatively defined).
 - **Threat models:** 20+ documented. Cycle 3 added 0 new threats; 2 refinements of existing threats noted.
 
-**Convergence claim:** 4 of 5 models assessed CONVERGED (3 clean, 1 after fix). The 5th (Llama 4) cited issues already addressed in the spec. No new structural changes required. The protocol has survived 13 adversarial reviews across 3 cycles from 5 independent models without unresolved architectural disruption. SEAL v0.1.0-draft is converged.
+**Convergence claim:** 4 of 5 models assessed CONVERGED (3 clean, 1 after fix). The 5th (Llama 4) cited issues already addressed in the spec. No new structural changes required. The protocol has survived 13 adversarial reviews across 3 cycles from 5 independent models without unresolved architectural disruption. Seal v0.1.0-draft is converged.
 
 ---
 
