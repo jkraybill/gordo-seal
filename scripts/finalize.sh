@@ -11,7 +11,7 @@
 #
 # This script:
 # 1. Validates preimage and signature exist
-# 2. Runs seal finalize (computes Record-Hash, creates .mcap)
+# 2. Runs seal finalize (computes Record-Hash, creates .seal)
 # 3. Runs seal stamp (creates OTS timestamp)
 # 4. Runs seal verify (validates everything)
 
@@ -30,7 +30,7 @@ REPO_ROOT="${2:-$(pwd)}"
 SEAL_DIR="${HOME}/gordo-seal"
 PREIMAGE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-preimage.txt"
 SIGNATURE="${REPO_ROOT}/ratification/party-a-signature-${RECORD_NUM}.asc"
-MCAP_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}.mcap"
+SEAL_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}.seal"
 
 echo "=== Seal Finalization: record-${RECORD_NUM} ==="
 echo "Repo: ${REPO_ROOT}"
@@ -61,19 +61,19 @@ echo "✓ Timestamp-Local set"
 echo ""
 echo "Running seal finalize..."
 cd "${SEAL_DIR}"
-./seal finalize "$PREIMAGE" -o "$MCAP_FILE"
+./seal finalize "$PREIMAGE" -o "$SEAL_FILE"
 echo "✓ seal finalize complete"
 
 # Step 4: Run seal stamp
 echo ""
 echo "Running seal stamp..."
-./seal stamp "$MCAP_FILE" --force
+./seal stamp "$SEAL_FILE" --force
 echo "✓ seal stamp complete"
 
 # Step 5: Run seal verify
 echo ""
 echo "Running seal verify..."
-./seal verify "$MCAP_FILE" --preimage "$PREIMAGE"
+./seal verify "$SEAL_FILE" --preimage "$PREIMAGE"
 
 # Step 6: Summary
 echo ""
@@ -82,4 +82,4 @@ echo "Seal file: ${MCAP_FILE}"
 echo "OTS file: ${MCAP_FILE}.ots"
 echo ""
 echo "Next: git add, commit, push"
-echo "  git add ratification/record-${RECORD_NUM}.mcap ratification/record-${RECORD_NUM}.mcap.ots ratification/party-a-signature-${RECORD_NUM}.asc"
+echo "  git add ratification/record-${RECORD_NUM}.seal ratification/record-${RECORD_NUM}.seal.ots ratification/party-a-signature-${RECORD_NUM}.asc"
