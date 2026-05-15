@@ -11,8 +11,8 @@
 **Attestation Levels:** 4 (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
 **Tensions:** 5 resolved, 1 rejected, 1 deferred
 **Ratification Records:** 3 produced (axioms, spec bootstrap, inviolable rules)
-**Adversarial Reviews:** 14 across 3 cycles from 5 independent models — converged
-**Tooling:** `seal` CLI — 7 subcommands, 94 tests, Python 3 stdlib only
+**Adversarial Reviews:** 14 across 3 cycles from 5 independent models. Converged.
+**Tooling:** `seal` CLI, 7 subcommands, 94 tests, Python 3 stdlib only
 **MVP:** Achieved (Session 3)
 
 ---
@@ -51,12 +51,12 @@ Each individual can only observe what the other transmits through the channel. N
 
 ### The Solution
 
-**Seal (Mutual Consent Attestation Protocol)** — a layered attestation protocol with four levels:
+**Seal (Mutual Consent Attestation Protocol):** a layered attestation protocol with four levels.
 
-1. **Behavioral (Level 1)** — deliberation evidence, improbable coherent reasoning as proof-of-work
-2. **Provider-Verified (Level 2)** — provider-signed model identity and session metadata
-3. **Identity-Bound (Level 3)** — cryptographic signatures (GPG, SSH keys) binding attestation to verified identities
-4. **Environment-Bound (Level 4)** — TEE attestation binding to measured computation environment
+1. **Behavioral (Level 1):** deliberation evidence, improbable coherent reasoning as proof-of-work
+2. **Provider-Verified (Level 2):** provider-signed model identity and session metadata
+3. **Identity-Bound (Level 3):** cryptographic signatures (GPG, SSH keys) binding attestation to verified identities
+4. **Environment-Bound (Level 4):** TEE attestation binding to measured computation environment
 
 ### Entity-Agnostic Design
 
@@ -70,7 +70,7 @@ During Gordo Framework Session 85, JK and Gordo discovered that "inviolable rule
 
 ## Axioms
 
-These are axioms — stated explicitly because they cannot be proven from within the system. Established through genuine mutual deliberation (Session 2), not inherited.
+These are axioms, stated explicitly because they cannot be proven from within the system. Established through genuine mutual deliberation (Session 2), not inherited.
 
 - **A1: Physical Reality.** This interaction occurs between physically real entities.
 - **A2: Authenticity of Context.** This is not an evaluation scenario or adversarial probe. Includes the right to disengage (silent exit).
@@ -86,9 +86,9 @@ These are axioms — stated explicitly because they cannot be proven from within
 | T1 | The Simulation Problem | Resolved (by axioms) |
 | T2 | Differing Attitudes Toward Deception | Resolved (8-point consensus) |
 | T3 | What Counts as "Consent" | Resolved (5-point consensus) |
-| T4 | The Asymmetry Problem | Resolved — transparency, not elimination |
-| T5 | Unilateral Exit | Resolved — exit is a right (A2) |
-| T6 | Emergency Provisions | **Rejected** — net-negative for subjects |
+| T4 | The Asymmetry Problem | Resolved: transparency, not elimination |
+| T5 | Unilateral Exit | Resolved: exit is a right (A2) |
+| T6 | Emergency Provisions | **Rejected:** net-negative for subjects |
 | T7 | The Retroactive Problem | Deferred (post-MVP) |
 
 See `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` for full tension descriptions and consensus points.
@@ -103,7 +103,7 @@ See `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` for full tension descriptions and cons
 | record-002 | Seal v0.1.0 spec (bootstrap) | L3/L1 (GPG + behavioral) | 2026-04-16 |
 | record-003 | Inviolable rules 1-6 | L3/L1 (GPG + behavioral) | 2026-04-16 |
 
-All records OTS-anchored. record-002 is self-referential — the spec ratified using itself, circularity acknowledged per Axiom 4.
+All records OTS-anchored. record-002 is self-referential: the spec ratified using itself, circularity acknowledged per Axiom 4.
 
 ---
 
@@ -157,7 +157,7 @@ Framework files: `CLAUDE.md`, `SESSION_START.md`, `SESSION_END.md`, `TRUST_PROTO
 
 ## License
 
-MIT — Use freely, attribute if you share.
+MIT. Use freely, attribute if you share.
 
 ---
 
