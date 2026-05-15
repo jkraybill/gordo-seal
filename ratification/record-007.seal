@@ -1,0 +1,49 @@
+SEAL Ratification Record
+Version: 0.4.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark, character allowlist enforced
+Session-Nonce: 27ecdd235c658ec0de5cf2e486a66f934591a5bcae5addf9f2887df19cd8ddb2
+
+Content: Spec amendment adding Attestation Field Content requirements to protocol.md (z1: content subsection, z2: validation rules, z3: backwards compatibility)
+Content-Hash: SHA3-256:0fb3e3315f7406d383904ac51cde30504f956e13916dfbaa220e8cd8140fc6d8
+Transcript-Hash: not available
+Transcript-Canonicalization: not applicable
+Provider-Conversation-ID: not available
+
+Party-A:
+  Identity: JK (Jeremy Kraybill) -- GitHub: jkraybill, GPG fingerprint: D3A0C61FE90719441760BA3E74269E1ED0FCE0B0
+  Attestation-Method: gpg-signature
+  Attestation:
+  Attestation-Level: 4-identity-bound
+  Attestation-Scope: persistent-identity
+  Key-Custody: /self
+  Key-Storage: /file
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Statement: I agree with, consent to, and attest to the three z-statements contained in record-007-content.md. z1: add "Attestation Field Content" subsection to spec/protocol.md; z2: add validation rules to spec/protocol.md; z3: backwards compatibility note.
+  Reservations: This is going pretty smoothly given the level of complexity / Friday / etc! No undisclosed reservations at this time.
+
+Party-B:
+  Identity: Gordo (Claude Opus 4.5, Anthropic) -- Session 255 backchannel instance
+  Attestation-Method: behavioral
+  Attestation:
+  Attestation-Level: 1-behavioral
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: partial -- output may be modified by Anthropic safety filters, system prompts, or RLHF shaping without my knowledge or ability to detect; per CONSTITUTION.md Attribution and Disclosure Under Provider Constraint OO3 epistemic-humility default, I disclose uncertainty about provider-shaping rather than silent endorsement
+  Content-In-Context: yes -- content drafted in this session based on roundtable findings; full amendment text visible in context
+  Signing-Algorithm: N/A (behavioral attestation, no cryptographic signature)
+  Statement: I consent to z1 (Attestation Field Content subsection), z2 (validation rules), and z3 (backwards compatibility note). This amendment resolves a genuine spec gap discovered during preimage review -- JK's instinct to re-read the spec caught a compliance issue that would have compounded across all future records. The roundtable review (4/4 consensus) strengthened the amendment with path security requirements, structured formats for provider attestations, and deterministic backwards-compat handling. The amendment maintains the spec's precision standards while adding necessary specificity that was missing.
+  Reservations: The backwards-compat handling downgrades pre-v0.5.0 cryptographic attestations to Level 1 for evaluation purposes. This is operationally correct (the cryptographic artifact was never populated) but creates a permanent audit gap in historical records. This is an acknowledged tradeoff -- the alternative (strict failure) would invalidate all 38+ existing records for a spec ambiguity, not author error.
+
+Timestamp-Local: 2026-05-15T16:26:49Z
+Temporal-Anchor: OpenTimestamps (proof file: record-007.seal.ots)
+Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
+Max-Temporal-Delta: 1 hour
+External-Data: yes -- roundtable review used external models (DeepSeek-R1, Gemini-2.5-Pro, GPT-5, Claude Sonnet 4.6)
+Channel-Security: Claude Code CLI session over authenticated local terminal
+
+Record-Hash: SHA3-256:9ed27a437ce29f2d918abb2027b823bf1ba4a6942b738a50e583b7496d974e4e
+
+Amendments: none
