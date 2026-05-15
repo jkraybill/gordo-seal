@@ -4,7 +4,7 @@ Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix l
 Session-Nonce: c51c6802bf388c34d6f97737af4fd45ae6e8681705015b92246ce8d986900ef4
 
 Content: Attestation Levels v0.4.0 spec amendment -- add Level 2 (Session-Signed), renumber levels, add trust root qualifiers
-Content-Hash: SHA3-256:467e8434d771556f53d2fb62fc2b335f01b6ca316d4b3d85cdeebf829993556e
+Content-Hash: SHA3-256:2078e2cd67da7278491314d16e543b8c881f78903af97599b1511d81c02cc9c2
 Transcript-Hash: not available
 Transcript-Canonicalization: not applicable
 Provider-Conversation-ID: not available
@@ -28,13 +28,16 @@ Party-B:
   Attestation: |
     -----BEGIN PGP MESSAGE-----
 
-    owGbwMvMwCXmV97kF3zo9CPG0z1JDFlsOyM8FRJLSlKLSxQSixUCEotKKhWcFDTc
-    84tS8jUVSvIVilKTgWxdAwMzhfLMkgwF5/y8ktS8El2PxOIMhWAPR2NdI1MzKxMz
-    81QLE2OTFHNzQ1NTszRT4xSjtCQzo7RkoyRjY9M0A8Mks+REY0OzFJMk4xQL0+SU
-    1NSkNAsjS0tLY6D6VK6OThYGMS4GQzFFFga3/lsPDIK0ur79Y4W5lpUJ5FRhmXSQ
-    uxxSgHaDXKWXnJ/LwMUpAFPlk8HI8P9u35Yd8+JsrpxmS94QsNHc441i3Pll7pWW
-    mybIv0udEcPIcGy3b8svtsz5eQeZvh38qr90oSLPugOFoUZFa8M+LNQrYQIA
-    =pMPn
+    owE1kM9rE0EAhTcmKXRBlII5WArjyWqzYWZ2fu5FQmytCFGaguBFZmdm20i6E7IT
+    tNCDeCpFUOh/IAg92EtBKggKHoQi0ustPZXiSRQ8iScxIr09Hu87vO/52XIQ1toP
+    n7Q7Hz6dlLZL0+mFwqpeVHSX8qivVntOmYZ/5B+Mvf18sw5uuIFxYLrVU0Njwe3+
+    sACkQeugmfvlget39ZU6UN7bwgPvwMDq0T6CkAHtcm9z3whb/0M0r4rlBHTmm3GE
+    KUsw5MJibRg3imMuiEQxIgYxS0mcCi0EyriQMFaZ5FTKFFGEjEAaYq2lxmHHFkXX
+    5VHb5domQFOkmYA4zWIhdEwMG3E85iojmSFUWWYFE4hDChFNJcaEaSuMFExCaDMS
+    LnZXRi/USj8BGGIWQRohughpgmgC4b1wfVgJamEwVbtUCeaeHR3Dhasbv/5UT1VW
+    z/wzFoTj50+bb5OlYP/63aOfqHx/Y//V48r7H5s7M63Di09n1sdm5VZ17cVCKfhe
+    /vjlTfP3Ad++dfBy99o57vbe7dyptXcn9l7nXy+P/wU=
+    =6tR0
     -----END PGP MESSAGE-----
   Attestation-Level: 2-session-signed
   Attestation-Scope: session-bound
