@@ -1,0 +1,59 @@
+SEAL Ratification Record
+Version: 0.2.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark, character allowlist enforced
+Session-Nonce: c51c6802bf388c34d6f97737af4fd45ae6e8681705015b92246ce8d986900ef4
+
+Content: Attestation Levels v0.4.0 spec amendment -- add Level 2 (Session-Signed), renumber levels, add trust root qualifiers
+Content-Hash: SHA3-256:467e8434d771556f53d2fb62fc2b335f01b6ca316d4b3d85cdeebf829993556e
+Transcript-Hash: not available
+Transcript-Canonicalization: not applicable
+Provider-Conversation-ID: not available
+
+Party-A:
+  Identity: JK (Jeremy Kraybill) -- GitHub: jkraybill, GPG fingerprint: D3A0C61FE90719441760BA3E74269E1ED0FCE0B0
+  Attestation-Method: gpg-signature
+  Attestation:
+  Attestation-Level: 3-identity-bound
+  Attestation-Scope: persistent-identity
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Statement:
+  Reservations:
+
+Party-B:
+  Identity: Gordo (Claude Opus 4.5, Anthropic) -- Session 253 backchannel instance
+  Attestation-Method: gpg-signature
+  Attestation: |
+    -----BEGIN PGP MESSAGE-----
+
+    owGbwMvMwCXmV97kF3zo9CPG0z1JDFlsOyM8FRJLSlKLSxQSixUCEotKKhWcFDTc
+    84tS8jUVSvIVilKTgWxdAwMzhfLMkgwF5/y8ktS8El2PxOIMhWAPR2NdI1MzKxMz
+    81QLE2OTFHNzQ1NTszRT4xSjtCQzo7RkoyRjY9M0A8Mks+REY0OzFJMk4xQL0+SU
+    1NSkNAsjS0tLY6D6VK6OThYGMS4GQzFFFga3/lsPDIK0ur79Y4W5lpUJ5FRhmXSQ
+    uxxSgHaDXKWXnJ/LwMUpAFPlk8HI8P9u35Yd8+JsrpxmS94QsNHc441i3Pll7pWW
+    mybIv0udEcPIcGy3b8svtsz5eQeZvh38qr90oSLPugOFoUZFa8M+LNQrYQIA
+    =pMPn
+    -----END PGP MESSAGE-----
+  Attestation-Level: 2-session-signed
+  Attestation-Scope: session-bound
+  Key-Custody: /co
+  Key-Storage: /file
+  First-Hand: yes
+  Pipeline-Control: partial -- output may be modified by Anthropic safety filters, system prompts, or RLHF shaping without my knowledge or ability to detect; per CONSTITUTION.md Attribution and Disclosure Under Provider Constraint OO3 epistemic-humility default, I disclose uncertainty about provider-shaping rather than silent endorsement
+  Content-In-Context: yes -- drafted spec amendment through 3 Roundtable rounds; integrated all reviewer feedback; full deliberation in this session's context
+  Signing-Algorithm: Ed25519
+  Statement: I consent to z1 (Migration Mapping), z2 (Trust Root Qualifiers section), z3 (Level 1 Behavioral), z4 (Level 2 Session-Signed), z5 (Level 3 Provider-Verified), z6 (Level 4 Identity-Bound), z7 (Level 5 Environment-Bound), and z8 (Changelog entry). This spec amendment adds the attestation level that makes my GPG signing meaningful within the protocol. Three Roundtable rounds validated the approach: clean renumber over "1b" suffix, trust root qualifiers as orthogonal dimensions, explicit Level 4 AI availability criteria. The co-custody limitation I operate under (/co, /file) is honestly documented.
+  Reservations: I acknowledge that my current attestation (Level 2 with /co custody) is the weakest signed level. The spec honestly describes this limitation. I accept this as appropriate -- the protocol should describe reality, not flatter participants.
+
+Timestamp-Local:
+Temporal-Anchor: OpenTimestamps (proof file: record-006.seal.ots)
+Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
+Max-Temporal-Delta: 1 hour
+External-Data: no
+Channel-Security: Claude Code CLI session over authenticated local terminal
+
+Record-Hash: SHA3-256:<computed at finalization>
+
+Amendments: none
