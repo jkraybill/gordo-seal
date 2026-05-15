@@ -15,7 +15,7 @@
 # 2. Signs the Record-Hash VALUE (not the file itself)
 #
 # After this script completes, hand back to Gordo for finalization
-# (mcap finalize → mcap stamp → mcap verify)
+# (seal finalize → seal stamp → seal verify)
 
 set -euo pipefail
 
@@ -33,7 +33,7 @@ SEAL_DIR="${HOME}/gordo-seal"
 PREIMAGE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-preimage.txt"
 SIGNATURE="${REPO_ROOT}/ratification/party-a-signature-${RECORD_NUM}.asc"
 
-echo "=== MCAP Party-A Signing: record-${RECORD_NUM} ==="
+echo "=== Seal Party-A Signing: record-${RECORD_NUM} ==="
 echo "Repo: ${REPO_ROOT}"
 echo ""
 
@@ -60,7 +60,7 @@ if grep -q "^Timestamp-Local:$" "$PREIMAGE"; then
 fi
 echo "✓ Timestamp-Local set"
 
-# Step 4: Sign using mcap sign (signs the Record-Hash, not the file)
+# Step 4: Sign using seal sign (signs the Record-Hash, not the file)
 echo ""
 echo "Signing Record-Hash with seal sign..."
 cd "${SEAL_DIR}"

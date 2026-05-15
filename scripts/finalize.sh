@@ -32,7 +32,7 @@ PREIMAGE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-preimage.txt"
 SIGNATURE="${REPO_ROOT}/ratification/party-a-signature-${RECORD_NUM}.asc"
 MCAP_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}.mcap"
 
-echo "=== MCAP Finalization: record-${RECORD_NUM} ==="
+echo "=== Seal Finalization: record-${RECORD_NUM} ==="
 echo "Repo: ${REPO_ROOT}"
 echo ""
 
@@ -78,7 +78,7 @@ echo "Running seal verify..."
 # Step 6: Summary
 echo ""
 echo "=== Finalization complete ==="
-echo "MCAP file: ${MCAP_FILE}"
+echo "Seal file: ${MCAP_FILE}"
 echo "OTS file: ${MCAP_FILE}.ots"
 echo ""
 echo "Next: git add, commit, push"
