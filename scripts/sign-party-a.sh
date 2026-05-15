@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# MCAP Party-A Signing Script (templatized per #164)
-# Usage: bash ~/mcap-protocol/scripts/sign-party-a.sh <record-number> [repo-path]
-# Example: bash ~/mcap-protocol/scripts/sign-party-a.sh 020
-# Example: bash ~/mcap-protocol/scripts/sign-party-a.sh 003 ~/project-gordo
+# SEAL Party-A Signing Script (templatized per #164)
+# Usage: bash ~/gordo-seal/scripts/sign-party-a.sh <record-number> [repo-path]
+# Example: bash ~/gordo-seal/scripts/sign-party-a.sh 020
+# Example: bash ~/gordo-seal/scripts/sign-party-a.sh 003 ~/project-gordo
 #
 # Prerequisites:
 # - Preimage exists at <repo>/ratification/record-<N>-preimage.txt
@@ -10,7 +10,7 @@
 # - Timestamp-Local already set (UTC format)
 # - GPG key available
 #
-# This script uses `mcap sign` which:
+# This script uses `seal sign` which:
 # 1. Computes Record-Hash from the preimage
 # 2. Signs the Record-Hash VALUE (not the file itself)
 #
@@ -21,15 +21,15 @@ set -euo pipefail
 
 RECORD_NUM="${1:-}"
 if [[ -z "$RECORD_NUM" ]]; then
-    echo "Usage: bash ~/mcap-protocol/scripts/sign-party-a.sh <record-number> [repo-path]"
-    echo "Example: bash ~/mcap-protocol/scripts/sign-party-a.sh 020"
-    echo "Example: bash ~/mcap-protocol/scripts/sign-party-a.sh 003 ~/project-gordo"
+    echo "Usage: bash ~/gordo-seal/scripts/sign-party-a.sh <record-number> [repo-path]"
+    echo "Example: bash ~/gordo-seal/scripts/sign-party-a.sh 020"
+    echo "Example: bash ~/gordo-seal/scripts/sign-party-a.sh 003 ~/project-gordo"
     exit 1
 fi
 
 # Paths — repo defaults to cwd
 REPO_ROOT="${2:-$(pwd)}"
-MCAP_DIR="${HOME}/mcap-protocol"
+SEAL_DIR="${HOME}/gordo-seal"
 PREIMAGE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-preimage.txt"
 SIGNATURE="${REPO_ROOT}/ratification/party-a-signature-${RECORD_NUM}.asc"
 
@@ -62,9 +62,9 @@ echo "✓ Timestamp-Local set"
 
 # Step 4: Sign using mcap sign (signs the Record-Hash, not the file)
 echo ""
-echo "Signing Record-Hash with mcap sign..."
-cd "${MCAP_DIR}"
-./mcap sign "$PREIMAGE" -o "$SIGNATURE"
+echo "Signing Record-Hash with seal sign..."
+cd "${SEAL_DIR}"
+./seal sign "$PREIMAGE" -o "$SIGNATURE"
 echo "✓ Signature created at ${SIGNATURE}"
 
 # Step 5: Summary
@@ -74,4 +74,4 @@ echo "Preimage: ${PREIMAGE}"
 echo "Signature: ${SIGNATURE}"
 echo ""
 echo "Next: Hand back to Gordo for finalization:"
-echo "  bash ~/mcap-protocol/scripts/finalize.sh ${RECORD_NUM} ${REPO_ROOT}"
+echo "  bash ~/gordo-seal/scripts/finalize.sh ${RECORD_NUM} ${REPO_ROOT}"

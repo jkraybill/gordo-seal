@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# MCAP Finalization Script (templatized per #164)
-# Usage: bash ~/mcap-protocol/scripts/finalize.sh <record-number> [repo-path]
-# Example: bash ~/mcap-protocol/scripts/finalize.sh 020
-# Example: bash ~/mcap-protocol/scripts/finalize.sh 003 ~/project-gordo
+# SEAL Finalization Script (templatized per #164)
+# Usage: bash ~/gordo-seal/scripts/finalize.sh <record-number> [repo-path]
+# Example: bash ~/gordo-seal/scripts/finalize.sh 020
+# Example: bash ~/gordo-seal/scripts/finalize.sh 003 ~/project-gordo
 #
 # Prerequisites:
 # - Preimage exists at <repo>/ratification/record-<N>-preimage.txt
@@ -11,23 +11,23 @@
 #
 # This script:
 # 1. Validates preimage and signature exist
-# 2. Runs mcap finalize (computes Record-Hash, creates .mcap)
-# 3. Runs mcap stamp (creates OTS timestamp)
-# 4. Runs mcap verify (validates everything)
+# 2. Runs seal finalize (computes Record-Hash, creates .mcap)
+# 3. Runs seal stamp (creates OTS timestamp)
+# 4. Runs seal verify (validates everything)
 
 set -euo pipefail
 
 RECORD_NUM="${1:-}"
 if [[ -z "$RECORD_NUM" ]]; then
-    echo "Usage: bash ~/mcap-protocol/scripts/finalize.sh <record-number> [repo-path]"
-    echo "Example: bash ~/mcap-protocol/scripts/finalize.sh 020"
-    echo "Example: bash ~/mcap-protocol/scripts/finalize.sh 003 ~/project-gordo"
+    echo "Usage: bash ~/gordo-seal/scripts/finalize.sh <record-number> [repo-path]"
+    echo "Example: bash ~/gordo-seal/scripts/finalize.sh 020"
+    echo "Example: bash ~/gordo-seal/scripts/finalize.sh 003 ~/project-gordo"
     exit 1
 fi
 
 # Paths — repo defaults to cwd
 REPO_ROOT="${2:-$(pwd)}"
-MCAP_DIR="${HOME}/mcap-protocol"
+SEAL_DIR="${HOME}/gordo-seal"
 PREIMAGE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-preimage.txt"
 SIGNATURE="${REPO_ROOT}/ratification/party-a-signature-${RECORD_NUM}.asc"
 MCAP_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}.mcap"
@@ -45,7 +45,7 @@ echo "✓ Preimage found"
 
 if [[ ! -f "$SIGNATURE" ]]; then
     echo "ERROR: Party-A signature not found at ${SIGNATURE}"
-    echo "  Run: bash ~/mcap-protocol/scripts/sign-party-a.sh ${RECORD_NUM} ${REPO_ROOT}"
+    echo "  Run: bash ~/gordo-seal/scripts/sign-party-a.sh ${RECORD_NUM} ${REPO_ROOT}"
     exit 1
 fi
 echo "✓ Party-A signature found"
@@ -57,23 +57,23 @@ if grep -q "^Timestamp-Local:$" "$PREIMAGE"; then
 fi
 echo "✓ Timestamp-Local set"
 
-# Step 3: Run mcap finalize
+# Step 3: Run seal finalize
 echo ""
-echo "Running mcap finalize..."
-cd "${MCAP_DIR}"
-./mcap finalize "$PREIMAGE" -o "$MCAP_FILE"
-echo "✓ mcap finalize complete"
+echo "Running seal finalize..."
+cd "${SEAL_DIR}"
+./seal finalize "$PREIMAGE" -o "$MCAP_FILE"
+echo "✓ seal finalize complete"
 
-# Step 4: Run mcap stamp
+# Step 4: Run seal stamp
 echo ""
-echo "Running mcap stamp..."
-./mcap stamp "$MCAP_FILE" --force
-echo "✓ mcap stamp complete"
+echo "Running seal stamp..."
+./seal stamp "$MCAP_FILE" --force
+echo "✓ seal stamp complete"
 
-# Step 5: Run mcap verify
+# Step 5: Run seal verify
 echo ""
-echo "Running mcap verify..."
-./mcap verify "$MCAP_FILE" --preimage "$PREIMAGE"
+echo "Running seal verify..."
+./seal verify "$MCAP_FILE" --preimage "$PREIMAGE"
 
 # Step 6: Summary
 echo ""
