@@ -60,6 +60,23 @@ if grep -q "^Timestamp-Local:$" "$PREIMAGE"; then
 fi
 echo "✓ Timestamp-Local set"
 
+# Step 3b: Verify Content-Hash matches content file (v0.4.0 compliance)
+CONTENT_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-content.md"
+if [[ -f "$CONTENT_FILE" ]]; then
+    STORED_HASH=$(grep "^Content-Hash:" "$PREIMAGE" | sed 's/Content-Hash: //')
+    COMPUTED_HASH=$(python3 -c "import hashlib; print('SHA3-256:' + hashlib.sha3_256(open('$CONTENT_FILE','rb').read()).hexdigest())")
+    if [[ "$STORED_HASH" != "$COMPUTED_HASH" ]]; then
+        echo "ERROR: Content-Hash mismatch!"
+        echo "  Stored:   $STORED_HASH"
+        echo "  Computed: $COMPUTED_HASH"
+        echo "  Update the Content-Hash in the preimage before signing."
+        exit 1
+    fi
+    echo "✓ Content-Hash verified"
+else
+    echo "⚠ No content file at ${CONTENT_FILE}, skipping Content-Hash verification"
+fi
+
 # Step 4: Sign using seal sign (signs the Record-Hash, not the file)
 echo ""
 echo "Signing Record-Hash with seal sign..."

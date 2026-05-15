@@ -70,10 +70,16 @@ echo "Running seal stamp..."
 ./seal stamp "$SEAL_FILE" --force
 echo "✓ seal stamp complete"
 
-# Step 5: Run seal verify
+# Step 5: Run seal verify (with content file if it exists)
 echo ""
 echo "Running seal verify..."
-./seal verify "$SEAL_FILE" --preimage "$PREIMAGE"
+CONTENT_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-content.md"
+if [[ -f "$CONTENT_FILE" ]]; then
+    ./seal verify "$SEAL_FILE" --preimage "$PREIMAGE" --content "$CONTENT_FILE"
+else
+    echo "Note: No content file found at ${CONTENT_FILE}, skipping Content-Hash verification"
+    ./seal verify "$SEAL_FILE" --preimage "$PREIMAGE"
+fi
 
 # Step 6: Summary
 echo ""

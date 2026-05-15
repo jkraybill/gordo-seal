@@ -11,9 +11,16 @@ FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
 class TestMethodLevelValidation(unittest.TestCase):
 
     def test_all_valid_combinations(self):
-        self.assertEqual(VALID_METHOD_LEVELS["behavioral"], "1-behavioral")
-        self.assertEqual(VALID_METHOD_LEVELS["gpg-signature"], "3-identity-bound")
-        self.assertEqual(VALID_METHOD_LEVELS["tee-attested"], "4-environment-bound")
+        # v0.4.0: VALID_METHOD_LEVELS is now a dict of lists (multiple valid levels per method)
+        self.assertIn("1-behavioral", VALID_METHOD_LEVELS["behavioral"])
+        # gpg-signature can be Level 2 (session-signed), 3 (provider), or 4 (identity-bound)
+        self.assertIn("4-identity-bound", VALID_METHOD_LEVELS["gpg-signature"])
+        self.assertIn("2-session-signed", VALID_METHOD_LEVELS["gpg-signature"])
+        # TEE can be Level 5 (new) or Level 4 (backwards compat)
+        self.assertIn("5-environment-bound", VALID_METHOD_LEVELS["tee-attested"])
+        # Backwards compatibility: old level numbers still accepted
+        self.assertIn("3-identity-bound", VALID_METHOD_LEVELS["gpg-signature"])
+        self.assertIn("4-environment-bound", VALID_METHOD_LEVELS["tee-attested"])
 
 
 class TestVerifyRecord002(unittest.TestCase):

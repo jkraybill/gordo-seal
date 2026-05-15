@@ -30,14 +30,28 @@ class VerificationReport:
         self.checks.append(CheckResult(name, status, detail))
 
 
-# Valid attestation method -> level combinations per spec
+# Valid attestation method -> level combinations per spec v0.4.0
+# Note: gpg-signature can be Level 2 (session-signed), 3 (provider-verified with sig),
+# or 4 (identity-bound). The method alone doesn't determine level; trust root qualifiers
+# and custody model determine whether it's session-signed vs identity-bound.
+#
+# BACKWARDS COMPATIBILITY: Also accepts old level numbers from v0.1.0-v0.3.0:
+# - Old "2-provider-verified" -> now "3-provider-verified"
+# - Old "3-identity-bound" -> now "4-identity-bound"
+# - Old "4-environment-bound" -> now "5-environment-bound"
 VALID_METHOD_LEVELS = {
-    "behavioral": "1-behavioral",
-    "provider-signed": "2-provider-verified",
-    "model-canary": "2-provider-verified",
-    "conversation-verified": "2-provider-verified",
-    "gpg-signature": "3-identity-bound",
-    "tee-attested": "4-environment-bound",
+    # Level 1: No cryptographic binding
+    "behavioral": ["1-behavioral"],
+    # Level 2: Session-signed (new in v0.4.0) - GPG with co-custody or session-bound key
+    # Level 3: Provider-verified - provider signs/verifies (was Level 2 in v0.3.0)
+    "provider-signed": ["3-provider-verified", "2-provider-verified"],
+    "model-canary": ["3-provider-verified", "2-provider-verified"],
+    "conversation-verified": ["3-provider-verified", "2-provider-verified"],
+    # GPG can be Level 2 (session-signed), Level 3/4 (identity-bound)
+    # Also accepts old "3-identity-bound" from v0.3.0
+    "gpg-signature": ["2-session-signed", "3-provider-verified", "4-identity-bound", "3-identity-bound"],
+    # Level 5: Environment-bound (TEE) - was Level 4 in v0.3.0
+    "tee-attested": ["5-environment-bound", "4-environment-bound"],
 }
 
 # ISO 8601 UTC pattern
@@ -116,23 +130,62 @@ def verify(record_path: str, content_paths: list[str] | None = None,
         report.add("content-hash", "skip",
                    "No content files specified. Use --content to verify.")
 
-    # 4. Attestation Method/Level consistency
+    # 4. Attestation Method/Level consistency (updated for v0.4.0)
     for party_key in ("Party-A", "Party-B"):
         party = record.get(party_key)
         if not isinstance(party, dict):
             continue
         method = party.get("Attestation-Method", "")
         level = party.get("Attestation-Level", "")
-        expected = VALID_METHOD_LEVELS.get(method)
-        if expected is None:
+        valid_levels = VALID_METHOD_LEVELS.get(method)
+        if valid_levels is None:
             report.add(f"{party_key}-method-level", "warn",
                        f"Unknown attestation method: {method}")
-        elif expected == level:
+        elif level in valid_levels:
             report.add(f"{party_key}-method-level", "pass",
                        f"{party_key}: {method} -> {level} (valid)")
         else:
             report.add(f"{party_key}-method-level", "fail",
-                       f"{party_key}: {method} should be {expected}, got {level}")
+                       f"{party_key}: {method} should be one of {valid_levels}, got {level}")
+
+    # 4b. Trust Root Qualifiers check (v0.4.0 - mandatory for Level 2+)
+    SIGNED_LEVELS = ["2-session-signed", "3-provider-verified", "4-identity-bound", "5-environment-bound"]
+    VALID_CUSTODY = ["/self", "/co", "/third", "/threshold"]
+    VALID_STORAGE = ["/file", "/kms", "/hw", "/tee"]
+
+    for party_key in ("Party-A", "Party-B"):
+        party = record.get(party_key)
+        if not isinstance(party, dict):
+            continue
+        level = party.get("Attestation-Level", "")
+        if level in SIGNED_LEVELS:
+            custody = party.get("Key-Custody", "")
+            storage = party.get("Key-Storage", "")
+
+            if not custody:
+                report.add(f"{party_key}-trust-root", "warn",
+                           f"{party_key} at {level} missing Key-Custody (required for Level 2+)")
+            elif custody not in VALID_CUSTODY and not custody.startswith("/threshold"):
+                report.add(f"{party_key}-trust-root", "warn",
+                           f"{party_key} Key-Custody '{custody}' not in {VALID_CUSTODY}")
+            else:
+                # For Level 4, /co is not acceptable
+                if level == "4-identity-bound" and custody == "/co":
+                    report.add(f"{party_key}-trust-root", "fail",
+                               f"{party_key} at Level 4 cannot use /co custody (defeats identity independence)")
+                else:
+                    report.add(f"{party_key}-trust-root", "pass",
+                               f"{party_key} Key-Custody: {custody}")
+
+            if not storage:
+                report.add(f"{party_key}-key-storage", "warn",
+                           f"{party_key} at {level} missing Key-Storage (required for Level 2+)")
+            elif storage not in VALID_STORAGE:
+                report.add(f"{party_key}-key-storage", "warn",
+                           f"{party_key} Key-Storage '{storage}' not in {VALID_STORAGE}")
+            else:
+                report.add(f"{party_key}-key-storage", "pass",
+                           f"{party_key} Key-Storage: {storage}")
 
     # 5. Timestamp-Local check
     ts = record.get("Timestamp-Local", "")
