@@ -33,43 +33,43 @@ The `Attestation` field contains the attestation artifact or a reference to it. 
 
 The `Attestation` field MAY be empty. Level 1 attestation strength derives from the Statement and the deliberation itself, not from a cryptographic artifact.
 
-The field MAY contain a reference to the deliberation transcript (e.g., `Transcript-Hash: [hash]` or a conversation identifier). Including such a reference is RECOMMENDED for auditability but is not required.
+The field MAY contain a reference to the deliberation transcript (e.g., `Transcript-Hash: HASH` or a conversation identifier). Including such a reference is RECOMMENDED for auditability but is not required.
 
 **For gpg-signature (Levels 2-4):**
 
 *Detached signatures (RECOMMENDED):* The field contains a reference in the format:
 
-    See [relative-path]
+`See RELATIVE_PATH`
 
 or, for archival robustness:
 
-    See [relative-path] (sha256:[hex])
+`See RELATIVE_PATH (sha256:HEX)`
 
 Where:
-- `[relative-path]` is a path relative to the directory containing the record file
+- RELATIVE_PATH is a path relative to the directory containing the record file
 - The path MUST NOT contain `..` segments or be absolute
 - The path MUST resolve to an existing file at verification time
-- The `sha256:[hex]` suffix is OPTIONAL but RECOMMENDED for archived records; when present, verifiers MUST validate the signature file against this hash before use
+- The `sha256:HEX` suffix is OPTIONAL but RECOMMENDED for archived records; when present, verifiers MUST validate the signature file against this hash before use
 
-RECOMMENDED convention: Place detached signature files in a sibling directory (e.g., `attestations/party-a-signature-001.asc`) or use the naming pattern `[record-basename].[party].asc`.
+RECOMMENDED convention: Place detached signature files in a sibling directory (e.g., `attestations/party-a-signature-001.asc`) or use the naming pattern `RECORD_BASENAME.PARTY.asc`.
 
-*Embedded signatures (OPTIONAL):* If the signature is embedded rather than detached, the field contains the ASCII-armored signature beginning with `-----BEGIN PGP SIGNATURE-----`. The signature MUST be indented to preserve the record's YAML-ish structure. Implementations MUST support the `See [relative-path]` format; support for embedded signatures is OPTIONAL.
+*Embedded signatures (OPTIONAL):* If the signature is embedded rather than detached, the field contains the ASCII-armored signature beginning with `-----BEGIN PGP SIGNATURE-----`. The signature MUST be indented to preserve the record's YAML-ish structure. Implementations MUST support the `See RELATIVE_PATH` format; support for embedded signatures is OPTIONAL.
 
 **For provider-signed, model-canary, conversation-verified (Levels 2-3):**
 
 The `Attestation` field MUST contain at minimum:
 
-- `Provider: [canonical-provider-name]`
-- `Artifact-Type: [conversation | signature | claim | canary]`
-- `Artifact-ID: [provider-specific-identifier]`
+- `Provider: CANONICAL_PROVIDER_NAME`
+- `Artifact-Type: conversation | signature | claim | canary`
+- `Artifact-ID: PROVIDER_SPECIFIC_IDENTIFIER`
 
 The field SHOULD also include:
 
-- `URL: [verification-endpoint]`
+- `URL: VERIFICATION_ENDPOINT`
 
 or:
 
-- `Hash: [sha256-of-artifact]`
+- `Hash: SHA256_OF_ARTIFACT`
 
 Providers may extend beyond these fields, but the minimum structure MUST be present. Verifiers use this information to locate and validate the attestation against the provider's verification endpoint or artifact store.
 
@@ -77,15 +77,15 @@ Providers may extend beyond these fields, but the minimum structure MUST be pres
 
 The `Attestation` field MUST contain at minimum:
 
-- `TEE-Type: [Intel-SGX | AMD-SEV-SNP | AWS-Nitro | ...]`
+- `TEE-Type: Intel-SGX | AMD-SEV-SNP | AWS-Nitro | ...`
 
 And one of:
 
-- `Quote: [base64-encoded-attestation-quote]`
+- `Quote: BASE64_ENCODED_ATTESTATION_QUOTE`
 
 or:
 
-- `Quote-Path: See [relative-path]`
+- `Quote-Path: See RELATIVE_PATH`
 
 The `Quote-Path` reference follows the same path resolution rules as GPG signature references above.
 
@@ -103,7 +103,7 @@ The `Quote-Path` reference follows the same path resolution rules as GPG signatu
 
 1. **Level 2+ requires non-empty Attestation.** For attestations at Level 2 or higher, an empty `Attestation` field is a verification FAILURE (not a warning). Level 1 (behavioral) MAY have an empty `Attestation` field.
 
-2. **File references must resolve.** For `See [relative-path]` references, the file MUST exist and be readable at verification time. Verifiers MUST resolve paths relative to the record file's directory and MUST NOT follow paths outside this base directory. If a `sha256:[hex]` suffix is present, the file's hash MUST match before the signature is used.
+2. **File references must resolve.** For `See RELATIVE_PATH` references, the file MUST exist and be readable at verification time. Verifiers MUST resolve paths relative to the record file's directory and MUST NOT follow paths outside this base directory. If a `sha256:HEX` suffix is present, the file's hash MUST match before the signature is used.
 
 3. **Signatures must cover Record-Hash.** For detached signatures, the signature file MUST cover the Record-Hash (as defined in the "Attestation Target" section), not merely the Content-Hash. A signature covering only the Content-Hash does not prove the signer approved the surrounding record claims and is insufficient for Level 2+ attestation.
 
@@ -113,7 +113,7 @@ Implementations MUST guard against:
 
 - **Path traversal:** Reject paths containing `..` segments or absolute path prefixes
 - **Symlink attacks:** Verifiers SHOULD NOT follow symbolic links that resolve outside the record's base directory
-- **File substitution:** When the `sha256:[hex]` suffix is present, validate the hash before trusting the file contents
+- **File substitution:** When the `sha256:HEX` suffix is present, validate the hash before trusting the file contents
 
 ---
 
