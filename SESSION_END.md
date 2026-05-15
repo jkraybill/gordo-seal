@@ -75,4 +75,4 @@ When all steps complete:
 
 ---
 
-*Part of gordo-seal. Built with Gordo Framework v1.2.0.*
+*Part of gordo-seal under the Project Gordo umbrella.*

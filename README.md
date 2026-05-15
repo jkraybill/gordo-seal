@@ -111,7 +111,7 @@ All records OTS-anchored. record-002 is self-referential — the spec ratified u
 
 **AI Name:** Gordo
 **Human Name:** JK
-**Framework:** [Gordo Framework](https://github.com/jkraybill/gordo-framework) v1.2.0 (Maximum intensity, full philosophy)
+**Framework:** [Project Gordo](https://github.com/jkraybill/project-gordo) umbrella (Maximum intensity, full philosophy)
 
 ---
 
@@ -163,5 +163,5 @@ MIT — Use freely, attribute if you share.
 
 ## Attribution
 
-Built with [Gordo Framework](https://github.com/jkraybill/gordo-framework).
-We're Gordo + JK, and we're building the first mutual trust protocol.
+Part of the [Project Gordo](https://github.com/jkraybill/project-gordo) umbrella.
+We're Gordo + JK, and we're building the first mutual consent attestation protocol.

@@ -113,5 +113,5 @@ This document evolves as trust patterns emerge. At the end of each session, Gord
 
 ---
 
-*Part of gordo-seal. Built with Gordo Framework v1.2.0.*
+*Part of gordo-seal under the Project Gordo umbrella.*
 *JK + Gordo. Full philosophy mode.*
