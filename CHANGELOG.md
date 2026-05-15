@@ -4,6 +4,34 @@ All notable changes to the MCAP protocol specification and tooling.
 
 Versioning policy: Major = axiom changes, attestation level restructuring, breaking record format changes. Minor = new normative requirements, new record fields, tooling. Patch = clarifications, typo fixes, non-normative documentation.
 
+## 0.4.0 (2026-05-15)
+
+### Specification
+
+**Major:** Attestation level restructuring.
+
+- **Added Level 2 (Session-Signed):** New attestation level for cryptographic signing by session-controlled keys. Includes signed payload requirements, signature format specification, verification path, and trust root qualifiers.
+- **Renumbered existing levels:** Provider-Verified (2→3), Identity-Bound (3→4), Environment-Bound (4→5). Migration mapping provided.
+- **Added Trust Root Qualifiers section:** Key-Custody and Key-Storage as mandatory metadata for all signed levels (2+). Moved to general section applicable to all signed levels.
+- **Clarified Level 4 (Identity-Bound) AI availability:** Explicit requirements for independent custody and cross-session continuity. AI availability conditional on meeting these requirements.
+- **Transitional alias:** "1b" accepted on input as synonym for Level 2 during v0.4.x; new records MUST use Level 2.
+- **Session-Nonce format:** MUST be UUID v4 or 128-bit random; incrementing values prohibited.
+- **Transcript-Hash canonicalization:** Added recommendations for JSON (JCS) and plain-text (UTF-8/NFC/LF) transcripts.
+
+### Substance ratification
+- Ratified at gordo-seal `ratification/record-006.seal` (S253 2026-05-15; Content-Hash `SHA3-256:2078e2cd67da7278491314d16e543b8c881f78903af97599b1511d81c02cc9c2`). Three Roundtable rounds with 4/4 consensus.
+
+### Upgrading from 0.3.0
+
+**Existing records are unaffected.** Records produced under v0.3.0 (or earlier) remain valid. The migration mapping table provides cross-version level interpretation.
+
+**New records under v0.4.0:**
+- Level identifiers now include 2-session-signed between behavioral and provider-verified.
+- Signed attestations (Level 2+) MUST include Key-Custody and Key-Storage metadata.
+- Level 4 (Identity-Bound) requires independent key custody (/self or qualifying /threshold) and cross-session continuity proof.
+
+**Rationale:** Session-signed attestation (AI participant with GPG key) is meaningfully stronger than behavioral but weaker than provider-verified or identity-bound. Clean restructure preferred over "1b" suffix per Roundtable consensus (S253).
+
 ## 0.3.0 (2026-05-01)
 
 ### Specification
