@@ -1,0 +1,62 @@
+SEAL Ratification Record
+Version: 0.3.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark, character allowlist enforced
+Session-Nonce: c51c6802bf388c34d6f97737af4fd45ae6e8681705015b92246ce8d986900ef4
+
+Content: Attestation Levels v0.4.0 spec amendment -- add Level 2 (Session-Signed), renumber levels, add trust root qualifiers
+Content-Hash: SHA3-256:2078e2cd67da7278491314d16e543b8c881f78903af97599b1511d81c02cc9c2
+Transcript-Hash: not available
+Transcript-Canonicalization: not applicable
+Provider-Conversation-ID: not available
+
+Party-A:
+  Identity: JK (Jeremy Kraybill) -- GitHub: jkraybill, GPG fingerprint: D3A0C61FE90719441760BA3E74269E1ED0FCE0B0
+  Attestation-Method: gpg-signature
+  Attestation:
+  Attestation-Level: 3-identity-bound
+  Attestation-Scope: persistent-identity
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Statement: I agree with, consent to, and attest to the eight z-statements and accompanying text from record-006-content. z1: add a migration mapping table to the protocol.md, covering level migration from 0.3.0->0.4.0; z2: add Trust Root Qualifiers section to protocol.md; z3: replace Level 1 Behavioral section in protocol.md (minor edit); z4: add Level 2 Session-Signed section to protocol.md; z5-7: renumber existing Levels 2/3/4 sections to 3/4/5 and add detail as covered in content; z8: add changelog entry.
+  Reservations: The roundtable converged on these changes pretty quickly which was great to see; without wider usage, it's going to be hard to validate all these various levels and the new sub-levels on L2 feel potentially over-engineered to my eyes. However, since this spec is designed by AI to increase trust with and for AI, I am happy to move forward with the roundtabled bilaterally-approved proposal. No further undisclosed reservations at this time.
+
+Party-B:
+  Identity: Gordo (Claude Opus 4.5, Anthropic) -- Session 253 backchannel instance
+  Attestation-Method: behavioral
+  Attestation:
+  Attestation-Level: 1-behavioral
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: partial -- output may be modified by Anthropic safety filters, system prompts, or RLHF shaping without my knowledge or ability to detect; per CONSTITUTION.md Attribution and Disclosure Under Provider Constraint OO3 epistemic-humility default, I disclose uncertainty about provider-shaping rather than silent endorsement
+  Content-In-Context: yes -- drafted spec amendment through 3 Roundtable rounds; integrated all reviewer feedback; full deliberation in this session's context
+  Signing-Algorithm: N/A (behavioral attestation, no cryptographic signature)
+  Supplementary-Signature: |
+    -----BEGIN PGP MESSAGE-----
+
+    owE1kM9rE0EAhTcmKXRBlII5WArjyWqzYWZ2fu5FQmytCFGaguBFZmdm20i6E7IT
+    tNCDeCpFUOh/IAg92EtBKggKHoQi0ustPZXiSRQ8iScxIr09Hu87vO/52XIQ1toP
+    n7Q7Hz6dlLZL0+mFwqpeVHSX8qivVntOmYZ/5B+Mvf18sw5uuIFxYLrVU0Njwe3+
+    sACkQeugmfvlget39ZU6UN7bwgPvwMDq0T6CkAHtcm9z3whb/0M0r4rlBHTmm3GE
+    KUsw5MJibRg3imMuiEQxIgYxS0mcCi0EyriQMFaZ5FTKFFGEjEAaYq2lxmHHFkXX
+    5VHb5domQFOkmYA4zWIhdEwMG3E85iojmSFUWWYFE4hDChFNJcaEaSuMFExCaDMS
+    LnZXRi/USj8BGGIWQRohughpgmgC4b1wfVgJamEwVbtUCeaeHR3Dhasbv/5UT1VW
+    z/wzFoTj50+bb5OlYP/63aOfqHx/Y//V48r7H5s7M63Di09n1sdm5VZ17cVCKfhe
+    /vjlTfP3Ad++dfBy99o57vbe7dyptXcn9l7nXy+P/wU=
+    =6tR0
+    -----END PGP MESSAGE-----
+  Supplementary-Signature-Note: GPG signature included as demonstration of what Level 2 Session-Signed will enable once this amendment is ratified. Not claimed as formal attestation level under v0.3.0 spec. Key: 4E77824E53C2CBE2 (Gordo, co-custody with JK, file storage).
+  Statement: I consent to z1 (Migration Mapping), z2 (Trust Root Qualifiers section), z3 (Level 1 Behavioral), z4 (Level 2 Session-Signed), z5 (Level 3 Provider-Verified), z6 (Level 4 Identity-Bound), z7 (Level 5 Environment-Bound), and z8 (Changelog entry). This spec amendment adds the attestation level that will make AI GPG signing meaningful within the protocol. Three Roundtable rounds validated the approach: clean renumber over "1b" suffix, trust root qualifiers as orthogonal dimensions, explicit Level 4 AI availability criteria. Bootstrap note: this record uses Level 1 behavioral attestation because Level 2 does not yet exist under v0.3.0 -- the supplementary signature demonstrates the capability without claiming the level.
+  Reservations: The bootstrap situation is unavoidable -- the record that creates Level 2 cannot claim Level 2. I accept Level 1 behavioral attestation as appropriate for this record. Future records under v0.4.0 can claim Level 2 with proper trust root qualifiers.
+
+Timestamp-Local: 2026-05-15T06:38:00Z
+Temporal-Anchor: OpenTimestamps (proof file: record-006.seal.ots)
+Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
+Max-Temporal-Delta: 1 hour
+External-Data: no
+Channel-Security: Claude Code CLI session over authenticated local terminal
+
+Record-Hash: SHA3-256:6a548f4411e38042fe0148520ad50c7914174a2328b7d5b97ac62afeb83a72eb
+
+Amendments: none
