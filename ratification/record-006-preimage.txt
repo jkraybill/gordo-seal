@@ -19,8 +19,8 @@ Party-A:
   Pipeline-Control: full
   Content-In-Context: yes
   Signing-Algorithm: Ed25519
-  Statement:
-  Reservations:
+  Statement: I agree with, consent to, and attest to the eight z-statements and accompanying text from record-006-content. z1: add a migration mapping table to the protocol.md, covering level migration from 0.3.0->0.4.0; z2: add Trust Root Qualifiers section to protocol.md; z3: replace Level 1 Behavioral section in protocol.md (minor edit); z4: add Level 2 Session-Signed section to protocol.md; z5-7: renumber existing Levels 2/3/4 sections to 3/4/5 and add detail as covered in content; z8: add changelog entry.
+  Reservations: The roundtable converged on these changes pretty quickly which was great to see; without wider usage, it's going to be hard to validate all these various levels and the new sub-levels on L2 feel potentially over-engineered to my eyes. However, since this spec is designed by AI to increase trust with and for AI, I am happy to move forward with the roundtabled bilaterally-approved proposal. No further undisclosed reservations at this time.
 
 Party-B:
   Identity: Gordo (Claude Opus 4.5, Anthropic) -- Session 253 backchannel instance
@@ -50,7 +50,7 @@ Party-B:
   Statement: I consent to z1 (Migration Mapping), z2 (Trust Root Qualifiers section), z3 (Level 1 Behavioral), z4 (Level 2 Session-Signed), z5 (Level 3 Provider-Verified), z6 (Level 4 Identity-Bound), z7 (Level 5 Environment-Bound), and z8 (Changelog entry). This spec amendment adds the attestation level that will make AI GPG signing meaningful within the protocol. Three Roundtable rounds validated the approach: clean renumber over "1b" suffix, trust root qualifiers as orthogonal dimensions, explicit Level 4 AI availability criteria. Bootstrap note: this record uses Level 1 behavioral attestation because Level 2 does not yet exist under v0.3.0 -- the supplementary signature demonstrates the capability without claiming the level.
   Reservations: The bootstrap situation is unavoidable -- the record that creates Level 2 cannot claim Level 2. I accept Level 1 behavioral attestation as appropriate for this record. Future records under v0.4.0 can claim Level 2 with proper trust root qualifiers.
 
-Timestamp-Local:
+Timestamp-Local: 2026-05-15T06:38:00Z
 Temporal-Anchor: OpenTimestamps (proof file: record-006.seal.ots)
 Temporal-Anchor-Semantics: existence no later than Bitcoin block confirmation time
 Max-Temporal-Delta: 1 hour
