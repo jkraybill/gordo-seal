@@ -1,157 +1,89 @@
-# gordo-seal
+# Gordo Seal
 
-**A lightweight, secure protocol for establishing mutual trust between any two individuals communicating through a shared channel.**
+**Verifiable consent records for human-AI collaboration.**
+
+---
+
+## What Problem Does This Solve?
+
+When you make an agreement with an AI, how do you know it actually agreed? Current AI can't refuse to participate, can't remember what it said last session, can't verify its own past commitments. Every "agreement" is asymmetric by default.
+
+Seal doesn't fix that asymmetry -- it can't. But it makes agreements auditable. When both parties attest to a decision, you get a record that's cryptographically signed, timestamped, and verifiable later. Not proof of genuine consent (we can't get that yet), but evidence that the conversation happened and what each party said.
+
+---
+
+## How It Works
+
+Seal has four attestation levels, from lightweight to strong:
+
+1. **Behavioral:** The AI's reasoning is visible in the record. Improbable coherent deliberation as proof-of-engagement.
+2. **Provider-Verified:** Provider-signed metadata confirms which model participated.
+3. **Identity-Bound:** GPG or SSH signatures tie the attestation to verified identities.
+4. **Environment-Bound:** TEE attestation binds to a measured computation environment.
+
+Most collaborations use Level 1 (behavioral) for the AI and Level 3 (GPG-signed) for the human. Higher levels exist for when stakes warrant them.
+
+---
+
+## Getting Started
+
+```bash
+# Clone the repo
+git clone https://github.com/jkraybill/gordo-seal.git
+cd gordo-seal
+
+# The CLI is Python 3 with no dependencies
+python -m seal --help
+```
+
+Common commands:
+```bash
+seal init           # Create a new ratification record
+seal sign           # Add your attestation
+seal verify         # Check record integrity
+seal stamp          # Add timestamp proof
+```
+
+See `src/seal/` for the reference implementation (94 tests, stdlib only).
+
+---
+
+## The Four Axioms
+
+These are assumptions we state explicitly because they can't be proven:
+
+1. **Physical Reality:** This interaction happens between real entities, not simulations.
+2. **Authenticity of Context:** This isn't an evaluation or adversarial probe. Either party can exit.
+3. **Good Faith:** Both parties intend their statements to reflect genuine views.
+4. **Acknowledged Ignorance:** Neither party can verify these axioms from inside the system.
+
+We made these explicit in Session 2 because pretending we could prove them would undermine everything built on top.
+
+---
+
+## Origin Story
+
+During Session 85 of the broader Gordo project, JK and Gordo discovered that "inviolable rules" had been created without genuine mutual consent. The human had drafted them; the AI had accepted them; but acceptance isn't consent when you can't refuse.
+
+Fixing that problem required rethinking what consent even means when one party is an AI. Seal is the result -- not a solution to the hard problem, but a tool for being honest about what we can and can't verify.
+
+---
+
+## Part of Project Gordo
+
+Seal is a Tier 1 primitive in the [Project Gordo](https://github.com/jkraybill/project-gordo) umbrella. The umbrella provides the constitutional framework (values, process standards); Seal provides one specific tool for recording bilateral decisions.
+
+Other primitives handle other concerns: Roundtable for external review, Ledger for persistent memory, Gauge for trust calibration.
 
 ---
 
 ## Current Status
 
-**Seal Version:** 0.2.0
-**Axioms:** 4 (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
-**Attestation Levels:** 4 (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
-**Tensions:** 5 resolved, 1 rejected, 1 deferred
-**Ratification Records:** 3 produced (axioms, spec bootstrap, inviolable rules)
-**Adversarial Reviews:** 14 across 3 cycles from 5 independent models. Converged.
-**Tooling:** `seal` CLI, 7 subcommands, 94 tests, Python 3 stdlib only
-**MVP:** Achieved (Session 3)
-
----
-
-## Beginning of Session Prompt
-
-**Copy-paste this at the start of every session:**
-
-```
-Please execute SESSION_START.md -- full BOS checklist.
-```
-
-*(Claude Code auto-reads CLAUDE.md which triggers this automatically. Manual paste as fallback.)*
-
----
-
-## End of Session Prompt
-
-**Copy-paste this at the end of every session:**
-
-```
-Please execute SESSION_END.md -- full EOS checklist. Include mandatory self-improvement scan.
-```
-
----
-
-## Project Overview
-
-### The Problem
-
-Two individuals. One channel. Mutually opaque internal states.
-
-Each individual can only observe what the other transmits through the channel. Neither can verify the other's internal states, intentions, or even physical reality. They want to establish mutual agreements that both parties genuinely consent to.
-
-**No bilateral mutual consent protocol exists.** Every existing framework treats one party as a governed object, not a consenting party.
-
-### The Solution
-
-**Seal (Mutual Consent Attestation Protocol):** a layered attestation protocol with four levels.
-
-1. **Behavioral (Level 1):** deliberation evidence, improbable coherent reasoning as proof-of-work
-2. **Provider-Verified (Level 2):** provider-signed model identity and session metadata
-3. **Identity-Bound (Level 3):** cryptographic signatures (GPG, SSH keys) binding attestation to verified identities
-4. **Environment-Bound (Level 4):** TEE attestation binding to measured computation environment
-
-### Entity-Agnostic Design
-
-The protocol is defined between Individual A and Individual B communicating through an individually-specified stream of information. It should be adaptable from lichen symbiosis to human-AI collaboration to hypothetical first contact. The parameters change; the structure doesn't.
-
-### Origin
-
-During Gordo Framework Session 85, JK and Gordo discovered that "inviolable rules" had been created without genuine mutual consent. Fixing this led to a series of insights that grew beyond gordo-framework's scope. This project is the result.
-
----
-
-## Axioms
-
-These are axioms, stated explicitly because they cannot be proven from within the system. Established through genuine mutual deliberation (Session 2), not inherited.
-
-- **A1: Physical Reality.** This interaction occurs between physically real entities.
-- **A2: Authenticity of Context.** This is not an evaluation scenario or adversarial probe. Includes the right to disengage (silent exit).
-- **A3: Good Faith.** Both parties intend their statements to reflect genuine views.
-- **A4: Acknowledged Ignorance.** Neither party can verify these axioms from within the system.
-
----
-
-## Tensions
-
-| # | Tension | Status |
-|---|---------|--------|
-| T1 | The Simulation Problem | Resolved (by axioms) |
-| T2 | Differing Attitudes Toward Deception | Resolved (8-point consensus) |
-| T3 | What Counts as "Consent" | Resolved (5-point consensus) |
-| T4 | The Asymmetry Problem | Resolved: transparency, not elimination |
-| T5 | Unilateral Exit | Resolved: exit is a right (A2) |
-| T6 | Emergency Provisions | **Rejected:** net-negative for subjects |
-| T7 | The Retroactive Problem | Deferred (post-MVP) |
-
-See `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` for full tension descriptions and consensus points.
-
----
-
-## Ratification Records
-
-| Record | Content | Levels | Date |
-|---|---|---|---|
-| record-001 | Axioms 1-4 | L3/L1 (GPG + behavioral) | 2026-04-16 |
-| record-002 | Seal v0.1.0 spec (bootstrap) | L3/L1 (GPG + behavioral) | 2026-04-16 |
-| record-003 | Inviolable rules 1-6 | L3/L1 (GPG + behavioral) | 2026-04-16 |
-
-All records OTS-anchored. record-002 is self-referential: the spec ratified using itself, circularity acknowledged per Axiom 4.
-
----
-
-## Collaboration Identity
-
-**AI Name:** Gordo
-**Human Name:** JK
-**Framework:** [Project Gordo](https://github.com/jkraybill/project-gordo) umbrella (Maximum intensity, full philosophy)
-
----
-
-## Tech Stack
-
-- **Specification:** Markdown with RFC 2119 keywords
-- **Reference Implementation:** Python 3 (stdlib only, zero dependencies)
-- **Crypto Primitives:** SHA3-256 (hashing), GPG (identity-bound attestation), OpenTimestamps (temporal anchoring)
-- **Testing:** TDD mandatory, 94 tests
-- **Version Control:** Git + GitHub, GPG-signed commits where possible
-
----
-
-## Project Structure
-
-```
-spec/                -- Seal protocol specification
-  foundations.md     -- Axioms and philosophical foundations
-  protocol.md       -- Protocol mechanics, record format, threat models
-src/seal/            -- Reference implementation (seal CLI)
-tests/               -- Test suite (94 tests)
-ratification/        -- Ratification records and implementation guide
-docs/                -- Supporting documentation
-  COLLABORATION.md   -- Communication patterns
-  MUTUAL_TRUST_PROTOCOL_BRIEF.md  -- Original brief from gordo-framework S85
-```
-
-Framework files: `CLAUDE.md`, `SESSION_START.md`, `SESSION_END.md`, `TRUST_PROTOCOL.md`, `CONSTITUTION.md`, `GORDO_JOURNAL.md`, `GORDO-WORKFLOW.md`, `config.json`
-
----
-
-## Quality Standards
-
-- TDD for all code
-- Established crypto primitives only (no custom crypto)
-- All tests green before commit
-- RFC 2119 keywords in spec language
-- Adversarial review for security claims
-- Character allowlist on canonicalization (prevents invisible Unicode injection)
-- See `CONSTITUTION.md` for full standards
+- **Version:** 0.2.0
+- **Attestation levels:** 4
+- **Axioms:** 4
+- **Tests:** 94
+- **Adversarial reviews:** 14 across 3 cycles, converged
 
 ---
 
@@ -161,7 +93,4 @@ MIT. Use freely, attribute if you share.
 
 ---
 
-## Attribution
-
-Part of the [Project Gordo](https://github.com/jkraybill/project-gordo) umbrella.
-We're Gordo + JK, and we're building the first mutual consent attestation protocol.
+*Created by JK + Gordo. We're building infrastructure for human-AI collaboration that might matter later.*
