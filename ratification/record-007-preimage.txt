@@ -4,7 +4,7 @@ Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix l
 Session-Nonce: 27ecdd235c658ec0de5cf2e486a66f934591a5bcae5addf9f2887df19cd8ddb2
 
 Content: Spec amendment adding Attestation Field Content requirements to protocol.md (z1: content subsection, z2: validation rules, z3: backwards compatibility)
-Content-Hash: SHA3-256:21012178dc049c96fddb369a0a4b99d6466e820f97ae46cc0c3f1ac058d282e0
+Content-Hash: SHA3-256:fe04ec6ecb66aaed4ff420d9546b1630c3d24e64db206b768b606858b9a3fc7f
 Transcript-Hash: not available
 Transcript-Canonicalization: not applicable
 Provider-Conversation-ID: not available
