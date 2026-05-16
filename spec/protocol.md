@@ -1,7 +1,7 @@
 # Mutual Consent Attestation Protocol (Seal)
 
-**Version:** 0.5.0
-**Status:** Converged. Ratified in record-002. Calibration section added in record-005. Attestation levels restructured in record-006. Attestation field content requirements added in record-007. Under continued refinement.
+**Version:** 0.6.0
+**Status:** Converged. Ratified in record-002. Calibration section added in record-005. Attestation levels restructured in record-006. Attestation field content requirements added in record-007. Content field format mandated in record-008. Under continued refinement.
 **Foundation:** spec/foundations.md (Axioms 1-4)
 
 ### Versioning
@@ -413,6 +413,71 @@ Records created under spec versions prior to v0.5.0 may have empty `Attestation`
 - Verifiers MUST emit a warning noting the record predates this requirement
 - For effective-level calculations and quorum evaluation, verifiers SHOULD treat such attestations as Level 1 (behavioral) rather than their claimed cryptographic level
 - Implementations MAY offer a strict mode that fails verification for such records
+
+### Content Field Format
+
+The `Content` field MUST contain a reference to a content sidecar file in the format:
+
+```
+See [relative-path]
+```
+
+Where:
+- `[relative-path]` is a path relative to the directory containing the record file
+- The path MUST NOT contain `..` segments or be absolute
+- The path MUST resolve to an existing file at verification time; if the referenced file does not exist, verification MUST fail
+- RECOMMENDED naming convention: `record-NNN-content.md`
+
+The `See [relative-path]` format binds the hash to a discoverable, human-readable file rather than leaving content location implicit.
+
+**Portability note:** By mandating `See [relative-path]`, a `.seal` file is no longer self-contained — it requires its companion content file for interpretation. Verifiers receiving a standalone `.seal` file without the referenced content file cannot determine what was attested to, only that the attestation exists.
+
+#### Content-Hash Semantics
+
+When the `Content` field uses the `See [relative-path]` format, `Content-Hash` is computed over the exact bytes of the referenced content file (after path resolution), not over the path string itself.
+
+Verification workflow:
+1. Read the `Content` field to find the path to the content file
+2. Resolve the path relative to the record file's directory
+3. Read the bytes of the file at the resolved path
+4. Compute the hash of those bytes
+5. Compare the computed hash with the `Content-Hash` field; mismatch is FAIL
+
+For legacy records with freeform `Content` (see Backwards Compatibility below), `Content-Hash` is computed over the canonical bytes of the `Content` field value itself.
+
+#### Matryoshka Pattern for Binary Attestation
+
+When attesting to binary artifacts (JARs, Docker images, compiled binaries), the content file references the artifact:
+
+```markdown
+# record-NNN-content.md
+
+Attesting to: my-app-v2.1.0.jar
+Artifact-Hash: SHA3-256:[jar-hash]
+Artifact-Location: releases/my-app-v2.1.0.jar
+
+[Rationale, z-statements, provenance...]
+```
+
+This avoids inlining binary content while maintaining explicit reference chains. The `Content-Hash` is the hash of the content file (the manifest), not the referenced artifacts. Artifact integrity is verified separately by checking the listed hashes.
+
+#### Content Path Security
+
+Path resolution follows the same rules as Attestation field references:
+- Resolve relative to record file directory
+- Reject `..` segments and absolute paths (including Windows drive letters and UNC paths)
+- Guard against symlink attacks: if symlinks are followed, the resolved target MUST remain within the record file's directory tree
+- The resolved path MUST point to a regular file, not a directory, symlink to outside the tree, or device
+
+#### Content Field Backwards Compatibility
+
+Records created under spec versions prior to v0.6.0 may have freeform Content fields. For such records:
+
+- Version detection MUST use the `Version` field value, not the Content field format
+- If `Version` < 0.6.0 or is absent, and Content does not match `See [path]`: emit WARN, not FAIL
+- If `Version` >= 0.6.0 and Content does not match `See [path]`: emit FAIL
+- Existing records remain valid; this requirement applies to new records only
+- For legacy records, `Content-Hash` is validated against the canonical bytes of the freeform Content field value
 
 ### Channel Security
 

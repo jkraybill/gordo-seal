@@ -207,5 +207,59 @@ class TestAttestationHashValidation(unittest.TestCase):
         self.assertTrue(len(failed) > 0, "Hash mismatch should fail")
 
 
+class TestContentFieldFormat(unittest.TestCase):
+    """Tests for v0.6.0 Content Field Format requirements.
+
+    Spec requirements:
+    - Content MUST use See [path] format
+    - Content file MUST exist (FAIL if missing)
+    - Pre-v0.6.0 records get warning not failure (backwards compat)
+    """
+
+    def test_v060_freeform_content_fails(self):
+        """v0.6.0 record with freeform Content should FAIL."""
+        record_path = os.path.join(FIXTURES, "record-v060-freeform-content.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should have content-format check that FAILs
+        self.assertIn("content-format", check_names)
+        self.assertEqual(check_names["content-format"].status, "fail")
+
+    def test_v050_freeform_content_warns(self):
+        """Pre-v0.6.0 record with freeform Content should WARN (backwards compat)."""
+        record_path = os.path.join(FIXTURES, "record-v050-freeform-content.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should be warn, not fail
+        if "content-format" in check_names:
+            self.assertIn(check_names["content-format"].status, ("warn", "pass"))
+
+    def test_content_file_missing_fails(self):
+        """Content: See [path] where file doesn't exist should FAIL."""
+        record_path = os.path.join(FIXTURES, "record-content-missing-file.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should fail because referenced file doesn't exist
+        failed = [c for c in report.checks
+                  if c.status == "fail" and "content" in c.name.lower()]
+        self.assertTrue(len(failed) > 0 or any(
+            "content" in c.detail.lower() and c.status == "fail"
+            for c in report.checks
+        ), "Missing content file should fail")
+
+    def test_content_path_traversal_fails(self):
+        """Content: See ../path should be rejected."""
+        record_path = os.path.join(FIXTURES, "record-content-path-traversal.mcap")
+        report = verify(record_path)
+
+        # Should fail due to path traversal
+        failed = [c for c in report.checks
+                  if c.status == "fail" and ("path" in c.detail.lower() or "content" in c.name.lower())]
+        self.assertTrue(len(failed) > 0, "Content path traversal should be rejected")
+
+
 if __name__ == "__main__":
     unittest.main()

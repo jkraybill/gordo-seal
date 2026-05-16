@@ -223,6 +223,39 @@ def verify(record_path: str, content_paths: list[str] | None = None,
                     report.add(f"{party_key}-attestation-required", "pass",
                                f"{party_key} Attestation field populated")
 
+    # 4d. Content Field Format check (v0.6.0)
+    # Content MUST use See [path] format; freeform content is deprecated
+    content = record.get("Content", "")
+    is_pre_v060 = record_version and record_version < "0.6.0"
+
+    if content.startswith("See "):
+        # Valid See [path] format — check path security and file existence
+        content_ref = content[4:].strip()
+        if ".." in content_ref:
+            report.add("content-path", "fail",
+                       f"Content path contains '..': {content_ref}")
+        elif content_ref.startswith("/"):
+            report.add("content-path", "fail",
+                       f"Content path is absolute: {content_ref}")
+        else:
+            # Check if file exists
+            record_dir = os.path.dirname(record_path)
+            content_file = os.path.join(record_dir, content_ref)
+            if os.path.exists(content_file):
+                report.add("content-format", "pass",
+                           f"Content file exists: {content_ref}")
+            else:
+                report.add("content-file-exists", "fail",
+                           f"Content file not found: {content_ref}")
+    else:
+        # Freeform content — check version for backwards compat
+        if is_pre_v060:
+            report.add("content-format", "warn",
+                       f"Pre-v0.6.0 record with freeform Content (legacy format)")
+        else:
+            report.add("content-format", "fail",
+                       f"Content field must use 'See [relative-path]' format (v0.6.0+)")
+
     # 5. Timestamp-Local check
     ts = record.get("Timestamp-Local", "")
     if not ts:

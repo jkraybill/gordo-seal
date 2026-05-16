@@ -4,6 +4,31 @@ All notable changes to the MCAP protocol specification and tooling.
 
 Versioning policy: Major = axiom changes, attestation level restructuring, breaking record format changes. Minor = new normative requirements, new record fields, tooling. Patch = clarifications, typo fixes, non-normative documentation.
 
+## 0.6.0 (2026-05-16)
+
+### Specification
+
+**Minor:** Content field reference format.
+
+- **Added "Content Field Format" section:** Mandates `Content: See [relative-path]` format for explicit binding to content sidecar file.
+- **Content-Hash semantics clarified:** When using `See [path]` format, Content-Hash is computed over the referenced file's bytes, not the path string.
+- **Matryoshka pattern for binary attestation:** Content file serves as manifest, can reference external artifacts with their own hashes.
+- **Path security:** Same rules as Attestation field (no `..`, no absolute, symlink restrictions).
+- **Portability note:** Acknowledges that `.seal` files now require companion content file for interpretation.
+- **Backwards compatibility:** Pre-v0.6.0 records with freeform Content get WARN not FAIL; version detection uses Version field, not Content format inference.
+
+### Substance ratification
+- Ratified at gordo-seal `ratification/record-008.seal` (S259 2026-05-16; Content-Hash in record-008-content.md). One Roundtable round with 4/4 consensus, structural clarifications applied per Claude Sonnet 4.6 paramount finding (Content-Hash semantics).
+
+### Upgrading from 0.5.0
+
+**Existing records are unaffected.** Records produced under v0.5.0 (or earlier) remain valid per backwards compatibility rules.
+
+**New records under v0.6.0:**
+- `Content` field MUST use `See [relative-path]` format
+- Content sidecar file MUST exist at verification time
+- Verifiers compute Content-Hash from referenced file bytes
+
 ## 0.5.0 (2026-05-16)
 
 ### Specification
