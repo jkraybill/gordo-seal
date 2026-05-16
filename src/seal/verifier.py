@@ -187,6 +187,42 @@ def verify(record_path: str, content_paths: list[str] | None = None,
                 report.add(f"{party_key}-key-storage", "pass",
                            f"{party_key} Key-Storage: {storage}")
 
+    # 4c. Attestation Field Content check (v0.5.0)
+    # Level 2+ requires non-empty Attestation field
+    # Pre-v0.5.0 records get warning, not failure (backwards compat)
+    record_version = record.get("Version", "")
+    is_pre_v050 = record_version and record_version < "0.5.0"
+
+    for party_key in ("Party-A", "Party-B"):
+        party = record.get(party_key)
+        if not isinstance(party, dict):
+            continue
+        level = party.get("Attestation-Level", "")
+        attestation = party.get("Attestation", "").strip()
+
+        if level in SIGNED_LEVELS:
+            if not attestation:
+                if is_pre_v050:
+                    report.add(f"{party_key}-attestation-required", "warn",
+                               f"{party_key} at {level} has empty Attestation field "
+                               f"(pre-v0.5.0 record; treated as effective Level 1)")
+                else:
+                    report.add(f"{party_key}-attestation-required", "fail",
+                               f"{party_key} at {level} has empty Attestation field "
+                               f"(required for Level 2+)")
+            elif attestation.startswith("See "):
+                # Validate path security
+                sig_ref = attestation[4:].split()[0]  # Handle optional hash suffix
+                if ".." in sig_ref:
+                    report.add(f"{party_key}-attestation-path", "fail",
+                               f"{party_key} Attestation path contains '..': {sig_ref}")
+                elif sig_ref.startswith("/"):
+                    report.add(f"{party_key}-attestation-path", "fail",
+                               f"{party_key} Attestation path is absolute: {sig_ref}")
+                else:
+                    report.add(f"{party_key}-attestation-required", "pass",
+                               f"{party_key} Attestation field populated")
+
     # 5. Timestamp-Local check
     ts = record.get("Timestamp-Local", "")
     if not ts:

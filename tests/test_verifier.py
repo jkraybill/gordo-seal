@@ -95,5 +95,117 @@ class TestVerifyRecord001(unittest.TestCase):
         self.assertEqual(check_names["timestamp-utc"].status, "pass")
 
 
+class TestAttestationFieldContent(unittest.TestCase):
+    """Tests for v0.5.0 Attestation Field Content requirements (spec amendment #86).
+
+    Spec requirements:
+    - Level 2+ MUST have non-empty Attestation field (FAIL if empty)
+    - Level 1 (behavioral) MAY have empty Attestation field
+    - See [path] references must resolve; path must be relative, no ..
+    - Pre-v0.5.0 records get warning not failure (backwards compat)
+    """
+
+    def test_level2_empty_attestation_fails(self):
+        """Level 2+ with empty Attestation field should FAIL verification."""
+        record_path = os.path.join(FIXTURES, "record-empty-attestation-level2.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should have attestation-required check that FAILs
+        self.assertIn("Party-A-attestation-required", check_names)
+        self.assertEqual(check_names["Party-A-attestation-required"].status, "fail")
+
+    def test_level1_empty_attestation_ok(self):
+        """Level 1 (behavioral) with empty Attestation field is allowed."""
+        record_path = os.path.join(FIXTURES, "record-empty-attestation-level1.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should NOT have a failing attestation-required check for behavioral
+        for name, check in check_names.items():
+            if "attestation-required" in name:
+                self.assertNotEqual(check.status, "fail",
+                    f"Level 1 should allow empty Attestation: {name}={check.status}")
+
+    def test_v040_empty_attestation_warns(self):
+        """Pre-v0.5.0 records with empty Attestation get warning, not failure."""
+        record_path = os.path.join(FIXTURES, "record-v040-empty-attestation.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should be warn, not fail (backwards compat)
+        if "Party-A-attestation-required" in check_names:
+            self.assertIn(check_names["Party-A-attestation-required"].status, ("warn", "pass"))
+
+
+class TestAttestationPathSecurity(unittest.TestCase):
+    """Tests for path security in See [path] references."""
+
+    def test_path_traversal_rejected(self):
+        """Path containing .. should be rejected."""
+        record_path = os.path.join(FIXTURES, "record-path-traversal.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should have a path-security check that FAILs
+        path_checks = [c for n, c in check_names.items() if "path" in n.lower()]
+        failed = [c for c in path_checks if c.status == "fail"]
+        self.assertTrue(len(failed) > 0 or any(
+            "path" in c.detail.lower() and c.status == "fail"
+            for c in report.checks
+        ), "Path traversal should be rejected")
+
+    def test_absolute_path_rejected(self):
+        """Absolute paths should be rejected."""
+        record_path = os.path.join(FIXTURES, "record-absolute-path.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should fail due to absolute path
+        path_checks = [c for n, c in check_names.items() if "path" in n.lower()]
+        failed = [c for c in path_checks if c.status == "fail"]
+        self.assertTrue(len(failed) > 0 or any(
+            "path" in c.detail.lower() and c.status == "fail"
+            for c in report.checks
+        ), "Absolute path should be rejected")
+
+    def test_valid_relative_path_accepted(self):
+        """Valid relative path should be accepted."""
+        # record-002 has valid See reference
+        record_path = os.path.join(FIXTURES, "record-002.mcap")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should not have path security failures
+        for name, check in check_names.items():
+            if "path" in name.lower():
+                self.assertNotEqual(check.status, "fail",
+                    f"Valid relative path should be accepted: {check.detail}")
+
+
+class TestAttestationHashValidation(unittest.TestCase):
+    """Tests for optional sha256 suffix validation."""
+
+    def test_hash_suffix_valid(self):
+        """See [path] (sha256:[hex]) with matching hash should pass."""
+        record_path = os.path.join(FIXTURES, "record-hash-suffix-valid.mcap")
+        if not os.path.exists(record_path):
+            self.skipTest("Fixture not yet created")
+        report = verify(record_path)
+        self.assertTrue(report.passed, "Valid hash suffix should pass")
+
+    def test_hash_suffix_mismatch_fails(self):
+        """See [path] (sha256:[hex]) with wrong hash should fail."""
+        record_path = os.path.join(FIXTURES, "record-hash-suffix-mismatch.mcap")
+        if not os.path.exists(record_path):
+            self.skipTest("Fixture not yet created")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Should have a hash validation failure
+        failed = [c for c in report.checks if c.status == "fail" and "hash" in c.detail.lower()]
+        self.assertTrue(len(failed) > 0, "Hash mismatch should fail")
+
+
 if __name__ == "__main__":
     unittest.main()

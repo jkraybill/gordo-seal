@@ -1,0 +1,46 @@
+MCAP Ratification Record
+Version: 0.5.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF)
+Session-Nonce: ab8383e911bb9c2b4f39f6edd9acd5bcf0aba7685e9676d1dc4338a562a0e410
+
+Content: Test record for attestation field validation
+Content-Hash: SHA3-256:0000000000000000000000000000000000000000000000000000000000000000
+
+Party-A:
+  Identity: Test Party A
+  Attestation-Method: gpg-signature
+  Attestation:
+  Attestation-Level: 2-session-signed
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Key-Custody: /co
+  Key-Storage: /file
+  Statement: Test statement
+  Reservations: none stated
+
+Party-B:
+  Identity: Test Party B
+  Attestation-Method: behavioral
+  Attestation:
+  Attestation-Level: 1-behavioral
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: partial
+  Content-In-Context: yes
+  Signing-Algorithm: N/A
+  Statement: Test statement
+  Reservations: none stated
+
+Timestamp-Local: 2026-05-16T00:00:00Z
+Temporal-Anchor: none
+Max-Temporal-Delta: 1 hour
+
+External-Data: no
+Channel-Security: Test
+
+Record-Hash: SHA3-256:0000000000000000000000000000000000000000000000000000000000000000
+
+Amendments: none

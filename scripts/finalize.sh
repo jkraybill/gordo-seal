@@ -57,20 +57,40 @@ if grep -q "^Timestamp-Local:$" "$PREIMAGE"; then
 fi
 echo "✓ Timestamp-Local set"
 
-# Step 3: Run seal finalize
+# Step 3: Build attestation flags based on existing signature files
+ATTESTATION_FLAGS=""
+
+# Party-A attestation (always required for signed records)
+PARTY_A_SIG="${REPO_ROOT}/ratification/party-a-signature-${RECORD_NUM}.asc"
+if [[ -f "$PARTY_A_SIG" ]]; then
+    ATTESTATION_FLAGS="--attestation Party-A='See party-a-signature-${RECORD_NUM}.asc'"
+fi
+
+# Party-B attestation (optional — only for Level 2+ Party-B)
+PARTY_B_SIG="${REPO_ROOT}/ratification/party-b-signature-${RECORD_NUM}.asc"
+if [[ -f "$PARTY_B_SIG" ]]; then
+    ATTESTATION_FLAGS="${ATTESTATION_FLAGS} --attestation Party-B='See party-b-signature-${RECORD_NUM}.asc'"
+fi
+
+# Step 4: Run seal finalize
 echo ""
 echo "Running seal finalize..."
 cd "${SEAL_DIR}"
-./seal finalize "$PREIMAGE" -o "$SEAL_FILE"
+if [[ -n "$ATTESTATION_FLAGS" ]]; then
+    echo "  Attestation flags: ${ATTESTATION_FLAGS}"
+    eval ./seal finalize "$PREIMAGE" $ATTESTATION_FLAGS -o "$SEAL_FILE"
+else
+    ./seal finalize "$PREIMAGE" -o "$SEAL_FILE"
+fi
 echo "✓ seal finalize complete"
 
-# Step 4: Run seal stamp
+# Step 5: Run seal stamp
 echo ""
 echo "Running seal stamp..."
 ./seal stamp "$SEAL_FILE" --force
 echo "✓ seal stamp complete"
 
-# Step 5: Run seal verify (with content file if it exists)
+# Step 6: Run seal verify (with content file if it exists)
 echo ""
 echo "Running seal verify..."
 CONTENT_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-content.md"
@@ -81,7 +101,7 @@ else
     ./seal verify "$SEAL_FILE" --preimage "$PREIMAGE"
 fi
 
-# Step 6: Summary
+# Step 7: Summary
 echo ""
 echo "=== Finalization complete ==="
 echo "Seal file: ${SEAL_FILE}"
