@@ -60,7 +60,23 @@ if grep -q "^Timestamp-Local:$" "$PREIMAGE"; then
 fi
 echo "✓ Timestamp-Local set"
 
-# Step 3b: Verify Content-Hash matches content file (v0.4.0 compliance)
+# Step 3b: Check Content field format (v0.6.0 compliance)
+CONTENT_FIELD=$(grep "^Content:" "$PREIMAGE" | sed 's/Content: //')
+if [[ ! "$CONTENT_FIELD" =~ ^See\ .* ]]; then
+    VERSION=$(grep "^Version:" "$PREIMAGE" | sed 's/Version: //')
+    if [[ "$VERSION" == "0.6.0" ]] || [[ "$VERSION" > "0.6.0" ]]; then
+        echo "ERROR: Content field must use 'See [path]' format for v0.6.0+"
+        echo "  Current: Content: $CONTENT_FIELD"
+        echo "  Expected: Content: See record-${RECORD_NUM}-content.md"
+        exit 1
+    else
+        echo "⚠ Content field uses legacy freeform format (allowed for v$VERSION)"
+    fi
+else
+    echo "✓ Content field format valid"
+fi
+
+# Step 3c: Verify Content-Hash matches content file
 CONTENT_FILE="${REPO_ROOT}/ratification/record-${RECORD_NUM}-content.md"
 if [[ -f "$CONTENT_FILE" ]]; then
     STORED_HASH=$(grep "^Content-Hash:" "$PREIMAGE" | sed 's/Content-Hash: //')
