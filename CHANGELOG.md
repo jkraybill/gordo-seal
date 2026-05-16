@@ -4,6 +4,32 @@ All notable changes to the MCAP protocol specification and tooling.
 
 Versioning policy: Major = axiom changes, attestation level restructuring, breaking record format changes. Minor = new normative requirements, new record fields, tooling. Patch = clarifications, typo fixes, non-normative documentation.
 
+## 0.5.0 (2026-05-16)
+
+### Specification
+
+**Minor:** Attestation field content requirements.
+
+- **Added "Attestation Field Content" section:** Defines explicit content requirements for the `Attestation` field per attestation method. Level 1 (behavioral) MAY be empty; Level 2+ MUST be non-empty.
+- **`See [relative-path]` format:** Standardized reference format for detached signatures. Path resolution rules (relative to record directory, no `..`, no absolute). Optional `sha256:[hex]` suffix for archival robustness.
+- **Provider-signed structure:** Minimum required fields (Provider, Artifact-Type, Artifact-ID) for Level 2-3 provider attestations.
+- **TEE structure:** Minimum required fields (TEE-Type, Quote or Quote-Path) for Level 5 attestations.
+- **Validation rules:** Empty Attestation for Level 2+ is verification FAILURE. File references must resolve. Signatures must cover Record-Hash.
+- **Security considerations:** Path traversal, symlink attacks, file substitution mitigations.
+- **Backwards compatibility:** Pre-v0.5.0 records with empty Attestation fields get warning, not failure; treated as effective Level 1 for evaluation.
+
+### Substance ratification
+- Ratified at gordo-seal `ratification/record-007.seal` (S255 2026-05-16; Content-Hash in record-007-content.md). One Roundtable round with 4/4 consensus, structural fixes applied.
+
+### Upgrading from 0.4.0
+
+**Existing records are unaffected.** Records produced under v0.4.0 (or earlier) remain valid per backwards compatibility rules.
+
+**New records under v0.5.0:**
+- Level 2+ attestations MUST have non-empty Attestation fields.
+- Detached signatures SHOULD use `See [relative-path]` format.
+- Verifiers enforce the new validation rules.
+
 ## 0.4.0 (2026-05-15)
 
 ### Specification
