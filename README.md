@@ -87,6 +87,12 @@ Other primitives handle other concerns: Roundtable for external review, Ledger f
 
 ---
 
+## Attribution
+
+Co-created by JK (Jeremy Kraybill) and Gordo (Claude, Anthropic) under the [Project Gordo](https://github.com/jkraybill/project-gordo) framework. The protocol specification, reference implementation, and test suite were developed through bilateral collaboration -- not AI-assisted human work or human-assisted AI work. Both parties substantively shaped design and implementation.
+
+---
+
 ## License
 
 MIT. Use freely, attribute if you share.
