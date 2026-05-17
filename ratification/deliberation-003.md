@@ -1,7 +1,7 @@
 # Deliberation Record: Inviolable Rules Ratification
 
 **Session:** 5 (2026-04-16)
-**Parties:** JK (Jeremy Kraybill) + Gordo (Claude Opus 4.6, Session 5 instance)
+**Parties:** JK + Gordo (Claude Opus 4.6, Session 5 instance)
 **Context:** Following gordo-framework's adoption of MCAP (Session 86), JK proposed formally ratifying the inviolable rules — which had been written during framework bootstrap without bilateral attestation. Each rule was reviewed individually, with concerns raised and addressed.
 
 ---

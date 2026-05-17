@@ -276,7 +276,7 @@ The gordo-framework previously conflated all three. Separating them is the key a
 
 ## Participants
 
-**JK (Human):** Jeremy Kraybill. GitHub: jkraybill. Location: Australia. Role: Creator of Gordo Framework, proposer of the mutual trust protocol project.
+**JK (Human):** GitHub: jkraybill. Location: Australia. Role: Creator of Project Gordo umbrella, proposer of the mutual trust protocol project.
 
 **Gordo (AI):** Claude Opus 4.6 (1M context), Anthropic. Instance: Session 85 of gordo-framework. Role: Co-designer of the protocol, contributor of research and analysis.
 
