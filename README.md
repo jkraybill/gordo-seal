@@ -57,18 +57,33 @@ cd gordo-seal
 The CLI is Python 3 with no external dependencies:
 
 ```bash
-PYTHONPATH=src python3 -m seal --help
+./seal --help
 ```
 
-Common workflow:
+### Creating a Record
+
+1. **Write content** — the thing being ratified (a decision, amendment, agreement)
+2. **Assemble preimage** — structured record with metadata, party statements, empty attestation fields
+3. **Hash, sign, finalize** — produce the verifiable record
 
 ```bash
-seal hash-content content.md    # Hash the content being ratified
-seal sign record.seal           # Add your GPG signature
-seal finalize record.seal       # Produce the final record
-seal verify record.seal         # Check integrity
-seal stamp record.seal          # Add timestamp proof (optional)
+# Get content hash (goes into preimage)
+./seal hash-content content.md
+
+# Sign the preimage (creates detached GPG signature)
+./seal sign preimage.txt -o party-a-signature.asc
+
+# Produce final record
+./seal finalize preimage.txt -a Party-A='See party-a-signature.asc' -o record.seal
+
+# Verify integrity
+./seal verify record.seal --content content.md
+
+# Add timestamp proof (optional, requires OpenTimestamps CLI)
+./seal stamp record.seal
 ```
+
+For detailed step-by-step instructions, see [ratification/GUIDE.md](ratification/GUIDE.md). For working examples, see the `ratification/` directory.
 
 ---
 

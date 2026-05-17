@@ -1,4 +1,4 @@
-# MCAP Ratification Record: Implementation Guide
+# Seal Ratification Record: Implementation Guide
 
 Step-by-step commands for creating, signing, verifying, and stamping MCAP ratification records. All commands assume you are in the repository root.
 
@@ -133,10 +133,10 @@ Place this value in the `Record-Hash:` field of the final record (not the preima
 
 ## Step 5: GPG Sign the Record-Hash (Level 3)
 
-The `mcap sign` command computes the Record-Hash from the preimage and invokes GPG clearsign in one step, with GPG_TTY handling built in:
+The `seal sign` command computes the Record-Hash from the preimage and invokes GPG clearsign in one step, with GPG_TTY handling built in:
 
 ```bash
-./mcap sign ratification/record-NNN-preimage.txt -o ratification/party-a-signature-NNN.asc
+./seal sign ratification/record-NNN-preimage.txt -o ratification/party-a-signature-NNN.asc
 ```
 
 To verify the signature:
@@ -154,14 +154,14 @@ Attestation: See ratification/party-a-signature-NNN.asc
 ## Step 6: Create Temporal Anchor (OpenTimestamps)
 
 ```bash
-ots stamp ratification/record-NNN.mcap
+ots stamp ratification/record-NNN.seal
 ```
 
-This creates `ratification/record-NNN.mcap.ots`. **Do not modify the .mcap file after this point.**
+This creates `ratification/record-NNN.seal.ots`. **Do not modify the .seal file after this point.**
 
 **Verify the stamp later** (after Bitcoin confirmation, typically hours):
 ```bash
-ots verify ratification/record-NNN.mcap.ots
+ots verify ratification/record-NNN.seal.ots
 ```
 
 ---
@@ -200,7 +200,7 @@ gpg --verify ratification/party-a-signature-NNN.asc
 # The clearsigned message body should equal the Record-Hash hex value
 
 # 5. Verify OTS timestamp
-ots verify ratification/record-NNN.mcap.ots
+ots verify ratification/record-NNN.seal.ots
 
 # 6. Verify Timestamp-Local is plausible
 # Compare Timestamp-Local against:
@@ -250,4 +250,4 @@ print(hashlib.sha3_256(sys.stdin.buffer.read()).hexdigest())
 
 ---
 
-*Part of mcap-protocol. See spec/protocol.md for the normative specification.*
+*Part of gordo-seal. See spec/protocol.md for the normative specification.*
