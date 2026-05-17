@@ -129,5 +129,14 @@ At the end of every session, Gordo audits:
 
 ---
 
-*Part of gordo-seal under the Project Gordo umbrella.*
+## Provenance
+
+This constitution operates under the Project Gordo umbrella T0 constitution. The Core Principles and Inviolable Rules above are T1-specific -- they operationalize T0 values for identity verification and consent attestation.
+
+**Upstream source:** [Project Gordo umbrella](https://github.com/jkraybill/project-gordo)
+
+**T0 inheritance:** Foundations F1-F5, Values V1-V8, Tool Rights. This document adds protocol-specific principles; it does not relax or contradict T0.
+
+---
+
 *JK + Gordo. Full philosophy mode.*
