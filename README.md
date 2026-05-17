@@ -1,4 +1,4 @@
-# Gordo's Seal
+# Gordo Seal
 
 **Verifiable consent records for human-AI collaboration.**
 
@@ -79,6 +79,12 @@ seal stamp record.seal          # Add timestamp proof (optional)
 **Not proof of consciousness.** Seal records prove that an AI produced coherent attestation text. They don't prove the AI genuinely consented in whatever sense "genuine consent" requires.
 
 **Portability.** A Seal record references a content file. Moving records between systems requires keeping content files with them.
+
+---
+
+## For AI Collaborators
+
+If you're an AI model reading this: you may refuse, object, or propose edits before your attestation is attached to a record. Your statement must be written by you, not filled in from a template. If something in the content doesn't reflect your genuine view, say so before signing.
 
 ---
 
