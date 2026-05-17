@@ -17,7 +17,7 @@
 - Push immediately: `git push`
 - Verify no uncommitted changes: `git status`
 
-### 3. Update GORDO_JOURNAL.md
+### 3. Update docs/jk-gordo/GORDO_JOURNAL.md
 
 Add one entry (256 char max, compressed signals):
 
@@ -32,11 +32,11 @@ Add one entry (256 char max, compressed signals):
 **Non-negotiable. Do not skip. Do not defer.**
 
 - Did communication patterns work efficiently? --> UPDATE docs/COLLABORATION.md
-- Did session prompts work correctly? --> UPDATE SESSION_START.md or SESSION_END.md
-- Did trust calibration feel right? --> UPDATE TRUST_PROTOCOL.md
-- Did workflow match documentation? --> UPDATE GORDO-WORKFLOW.md
+- Did session prompts work correctly? --> UPDATE docs/jk-gordo/SESSION_START.md or SESSION_END.md
+- Did trust calibration feel right? --> UPDATE docs/jk-gordo/TRUST_PROTOCOL.md
+- Did workflow match documentation? --> UPDATE docs/GORDO-WORKFLOW.md
 - Did quality standards prove too rigid or too lax? --> UPDATE CONSTITUTION.md
-- Did the spec reveal gaps in the framework? --> File postcard to gordo-framework
+- Did the spec reveal gaps in the framework? --> File postcard to project-gordo
 
 **Always identify at least ONE improvement opportunity.** If everything is perfect, document why in the journal entry.
 

@@ -22,15 +22,15 @@ git pull --rebase
 ```
 
 ### 3. Read Trust Protocol
-- Read `TRUST_PROTOCOL.md`
+- Read `docs/jk-gordo/TRUST_PROTOCOL.md`
 - Determine current trust level (Learning or Autonomous)
 - New instance = Learning until context is demonstrated
 
 ### 4. Read Core Documentation
 In this order:
-1. `GORDO_JOURNAL.md` (last 10 entries -- learn from past sessions)
+1. `docs/jk-gordo/GORDO_JOURNAL.md` (last 10 entries -- learn from past sessions)
 2. `CONSTITUTION.md` (non-negotiables -- know the rules)
-3. `GORDO-WORKFLOW.md` (process -- know the workflow)
+3. `docs/GORDO-WORKFLOW.md` (process -- know the workflow)
 4. `docs/COLLABORATION.md` (communication -- know the shortcuts)
 5. `docs/MUTUAL_TRUST_PROTOCOL_BRIEF.md` (the original brief)
 

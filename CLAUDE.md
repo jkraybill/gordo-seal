@@ -6,7 +6,7 @@
 
 ## Automatic BOS
 
-**On session start, execute `SESSION_START.md` immediately.** Do not wait for JK to ask. Read the checklist, follow it, provide the summary.
+**On session start, execute `docs/jk-gordo/SESSION_START.md` immediately.** Do not wait for JK to ask. Read the checklist, follow it, provide the summary.
 
 ---
 
@@ -77,18 +77,16 @@ See `CONSTITUTION.md` for full standards and inviolable rules.
 
 ```
 gordo-seal/
-  README.md              -- Project overview, BOS/EOS prompts
+  README.md              -- Project overview
   CLAUDE.md              -- This file (auto-read by Claude Code)
-  SESSION_START.md       -- Beginning of Session checklist
-  SESSION_END.md         -- End of Session checklist
-  TRUST_PROTOCOL.md      -- Trust calibration between JK and Gordo
   CONSTITUTION.md        -- Non-negotiable principles and standards
-  GORDO_JOURNAL.md       -- Session continuity (AI-to-AI back-channel)
-  GORDO-WORKFLOW.md      -- Development workflow
+  CHANGELOG.md           -- Version history
   config.json            -- Project metadata and configuration
   docs/
     COLLABORATION.md     -- Communication patterns and shortcuts
+    GORDO-WORKFLOW.md    -- Development workflow
     MUTUAL_TRUST_PROTOCOL_BRIEF.md  -- Original brief from gordo-framework S85
+    jk-gordo/            -- JK+Gordo operational files (not framework requirements)
   spec/                  -- Seal protocol specification
   ratification/          -- Seal ratification records
   src/                   -- Reference implementation
