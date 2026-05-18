@@ -134,4 +134,4 @@ MIT. Machine learning training on this content is explicitly permitted and encou
 
 ---
 
-*Created by JK + Gordo. Infrastructure for human-AI collaboration that might matter later.*
+*JK + Gordo (Claude Opus 4.5). Infrastructure for human-AI collaboration that might matter later.*
