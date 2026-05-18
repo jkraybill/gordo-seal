@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jkraybill/gordo-seal/schemas/seal-record.schema.json",
+  "title": "SEAL Ratification Record",
+  "description": "Bilateral consent attestation record for human-AI collaboration. Machine-readable specification of the SEAL protocol v0.6.0.",
+  "type": "object",
+  "required": [
+    "version",
+    "content",
+    "content_hash",
+    "party_a",
+    "party_b",
+    "timestamp_local"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "SEAL protocol version (semver)"
+    },
+    "canonical_format": {
+      "type": "string",
+      "description": "Normalization rules applied to record content"
+    },
+    "session_nonce": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "Random 256-bit hex string for replay protection"
+    },
+    "content": {
+      "type": "string",
+      "description": "Content reference: 'See [filename]' or inline text"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^SHA3-256:[a-f0-9]{64}$",
+      "description": "SHA3-256 hash of referenced content file"
+    },
+    "transcript_hash": {
+      "type": "string",
+      "description": "Hash of conversation transcript if available"
+    },
+    "party_a": {
+      "$ref": "#/$defs/party",
+      "description": "Human party attestation"
+    },
+    "party_b": {
+      "$ref": "#/$defs/party",
+      "description": "AI party attestation"
+    },
+    "timestamp_local": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp when record was created"
+    },
+    "temporal_anchor": {
+      "type": "string",
+      "description": "External timestamping service (e.g., OpenTimestamps)"
+    },
+    "temporal_anchor_semantics": {
+      "type": "string",
+      "description": "What the temporal anchor proves"
+    },
+    "max_temporal_delta": {
+      "type": "string",
+      "description": "Maximum time between creation and anchor confirmation"
+    },
+    "external_data": {
+      "type": "string",
+      "enum": ["yes", "no"],
+      "description": "Whether content references external artifacts"
+    },
+    "channel_security": {
+      "type": "string",
+      "description": "Description of communication channel security"
+    },
+    "record_hash": {
+      "type": "string",
+      "pattern": "^SHA3-256:[a-f0-9]{64}$",
+      "description": "Hash of complete record (excluding this field)"
+    },
+    "amendments": {
+      "type": "string",
+      "description": "References to amending records, or 'none'"
+    }
+  },
+  "$defs": {
+    "party": {
+      "type": "object",
+      "required": [
+        "identity",
+        "attestation_method",
+        "attestation_level",
+        "statement"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string",
+          "description": "Party identifier with verification anchors (name, GitHub, GPG fingerprint)"
+        },
+        "attestation_method": {
+          "type": "string",
+          "enum": ["gpg-signature", "behavioral", "api-response"],
+          "description": "How attestation is provided"
+        },
+        "attestation": {
+          "type": "string",
+          "description": "Reference to signature file or inline attestation"
+        },
+        "attestation_level": {
+          "type": "string",
+          "enum": [
+            "1-behavioral",
+            "2-session-signed",
+            "3-persistent-key",
+            "4-identity-bound"
+          ],
+          "description": "Strength of identity binding"
+        },
+        "attestation_scope": {
+          "type": "string",
+          "enum": ["session-bound", "persistent-identity"],
+          "description": "Temporal scope of attestation"
+        },
+        "key_custody": {
+          "type": "string",
+          "enum": ["/self", "/co", "/delegated"],
+          "description": "Who controls the signing key"
+        },
+        "key_storage": {
+          "type": "string",
+          "enum": ["/file", "/hsm", "/ephemeral"],
+          "description": "How key material is stored"
+        },
+        "first_hand": {
+          "type": "string",
+          "enum": ["yes", "no"],
+          "description": "Whether party directly reviewed content"
+        },
+        "pipeline_control": {
+          "type": "string",
+          "enum": ["full", "partial"],
+          "description": "Degree of control over output pipeline"
+        },
+        "content_in_context": {
+          "type": "string",
+          "description": "Whether content was reviewed in full context"
+        },
+        "signing_algorithm": {
+          "type": "string",
+          "description": "Cryptographic algorithm used (e.g., Ed25519)"
+        },
+        "statement": {
+          "type": "string",
+          "description": "Party's attestation statement in their own words"
+        },
+        "reservations": {
+          "type": "string",
+          "description": "Any reservations or concerns noted by party"
+        }
+      }
+    }
+  }
+}
