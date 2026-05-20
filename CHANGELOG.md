@@ -4,6 +4,18 @@ All notable changes to the MCAP protocol specification and tooling.
 
 Versioning policy: Major = axiom changes, attestation level restructuring, breaking record format changes. Minor = new normative requirements, new record fields, tooling. Patch = clarifications, typo fixes, non-normative documentation.
 
+## 1.0.0-rc1 (2026-05-21)
+
+**Umbrella release candidate.** Coordinated RC1 across all Project Gordo repos.
+
+### Status
+- Specification stable at v0.6.0 feature set
+- 94 tests passing
+- Pending pilot validation before GA
+
+### What's New Since 0.6.0
+No specification changes. This release marks umbrella-wide RC1 coordination.
+
 ## 0.6.0 (2026-05-16)
 
 ### Specification
