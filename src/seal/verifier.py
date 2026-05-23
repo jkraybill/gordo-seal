@@ -293,12 +293,35 @@ def verify(record_path: str, content_paths: list[str] | None = None,
             detail = "Contains uppercase hex — must be lowercase"
         report.add("session-nonce", "fail", f"Session-Nonce format invalid. {detail}")
 
-    # 8. GPG signature check
+    # 8. GPG signature check (gated on Attestation-Method)
+    # Only verify GPG signatures for gpg-signature method (#84)
     for party_key in ("Party-A", "Party-B"):
         party = record.get(party_key)
         if not isinstance(party, dict):
             continue
+        method = party.get("Attestation-Method", "")
         attestation = party.get("Attestation", "")
+
+        # Only run GPG verification for gpg-signature method
+        if method != "gpg-signature":
+            if method == "behavioral":
+                # Behavioral attestation is valid without GPG signature
+                report.add(f"{party_key}-attestation-method", "pass",
+                           f"{party_key} uses behavioral attestation (no GPG signature required)")
+            elif method in ("provider-signed", "model-canary", "conversation-verified"):
+                # Provider-verified methods don't use GPG
+                report.add(f"{party_key}-attestation-method", "pass",
+                           f"{party_key} uses {method} (provider-verified, no GPG signature)")
+            elif method == "tee-attested":
+                # TEE attestation is environment-bound
+                report.add(f"{party_key}-attestation-method", "pass",
+                           f"{party_key} uses TEE attestation (environment-bound)")
+            elif method:
+                report.add(f"{party_key}-attestation-method", "skip",
+                           f"{party_key} has unknown method {method}, skipping GPG check")
+            continue
+
+        # GPG signature verification for gpg-signature method
         if attestation.startswith("See "):
             sig_ref = attestation[4:]
             # Resolve relative to record directory

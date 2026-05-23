@@ -1,0 +1,46 @@
+SEAL Ratification Record
+Version: 0.6.0
+Canonical-Format: UTF-8, NFC normalization, stripped trailing whitespace, Unix line endings (LF), no byte-order mark, character allowlist enforced
+Session-Nonce: ab8383e911bb9c2b4f39f6edd9acd5bcf0aba7685e9676d1dc4338a562a0e410
+
+Content: See record-asymmetric-attestation-content.md
+Content-Hash: SHA3-256:0000000000000000000000000000000000000000000000000000000000000000
+
+Party-A:
+  Identity: Test Human (GPG-signed)
+  Attestation-Method: gpg-signature
+  Attestation: See party-a-signature-test.asc
+  Attestation-Level: 4-identity-bound
+  Attestation-Scope: persistent-identity
+  Key-Custody: /self
+  Key-Storage: /file
+  First-Hand: yes
+  Pipeline-Control: full
+  Content-In-Context: yes
+  Signing-Algorithm: Ed25519
+  Statement: Test statement from Party-A
+  Reservations: none stated
+
+Party-B:
+  Identity: Test AI (behavioral attestation)
+  Attestation-Method: behavioral
+  Attestation:
+  Attestation-Level: 1-behavioral
+  Attestation-Scope: session-bound
+  First-Hand: yes
+  Pipeline-Control: partial
+  Content-In-Context: yes
+  Signing-Algorithm: N/A
+  Statement: Test statement from Party-B
+  Reservations: none stated
+
+Timestamp-Local: 2026-05-23T00:00:00Z
+Temporal-Anchor: none
+Max-Temporal-Delta: 1 hour
+
+External-Data: no
+Channel-Security: Test
+
+Record-Hash: SHA3-256:0000000000000000000000000000000000000000000000000000000000000000
+
+Amendments: none

@@ -137,6 +137,30 @@ class TestAttestationFieldContent(unittest.TestCase):
         if "Party-A-attestation-required" in check_names:
             self.assertIn(check_names["Party-A-attestation-required"].status, ("warn", "pass"))
 
+    def test_asymmetric_attestation_no_gpg_fail_for_behavioral(self):
+        """Asymmetric attestation (Party-A gpg, Party-B behavioral) should not fail GPG check on Party-B (#84)."""
+        record_path = os.path.join(FIXTURES, "record-asymmetric-attestation.seal")
+        report = verify(record_path)
+        check_names = {c.name: c for c in report.checks}
+
+        # Party-B should NOT have a GPG check fail (behavioral method doesn't use GPG)
+        party_b_gpg = check_names.get("Party-B-gpg")
+        self.assertIsNone(party_b_gpg,
+            f"Party-B with behavioral method should not have GPG check: {party_b_gpg}")
+
+        # Party-B should have attestation-method pass indicating behavioral is valid
+        party_b_method = check_names.get("Party-B-attestation-method")
+        self.assertIsNotNone(party_b_method,
+            "Party-B should have attestation-method check")
+        self.assertEqual(party_b_method.status, "pass",
+            f"Party-B behavioral attestation should pass: {party_b_method.detail}")
+
+        # Overall verification should not have any FAILs except for missing signature files
+        # (which is expected since we don't create actual GPG sigs for fixtures)
+        for check in report.checks:
+            if "Party-B" in check.name and check.status == "fail":
+                self.fail(f"Party-B should not have fails: {check.name}={check.status}: {check.detail}")
+
 
 class TestAttestationPathSecurity(unittest.TestCase):
     """Tests for path security in See [path] references."""
