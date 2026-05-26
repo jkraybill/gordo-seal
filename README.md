@@ -2,7 +2,7 @@
 
 **Agreements you can verify later.**
 
-![Version: 1.0.0-rc3](https://img.shields.io/badge/version-1.0.0--rc3-blue) ![Levels: 5](https://img.shields.io/badge/levels-5-green) ![Axioms: 4](https://img.shields.io/badge/axioms-4-orange)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20393385.svg)](https://doi.org/10.5281/zenodo.20393385) ![Version: 1.0.0-rc3](https://img.shields.io/badge/version-1.0.0--rc3-blue) ![Levels: 5](https://img.shields.io/badge/levels-5-green) ![Axioms: 4](https://img.shields.io/badge/axioms-4-orange)
 
 ---
 
