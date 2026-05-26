@@ -1,4 +1,4 @@
-# Collaboration: seal-protocol
+# Collaboration: gordo-seal
 
 **Communication patterns between JK and Gordo.**
 
