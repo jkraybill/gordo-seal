@@ -135,6 +135,7 @@ Seal is a Tier 1 primitive in the [Project Gordo](https://github.com/jkraybill/p
 Other primitives handle other concerns:
 - [Roundtable](https://github.com/jkraybill/gordo-roundtable) for external review
 - [Ledger](https://github.com/jkraybill/gordo-ledger) for persistent memory
+- [Gauge](https://github.com/jkraybill/gordo-gauge) for entity assessment
 - [Forge](https://github.com/jkraybill/gordo-forge) for project scaffolding
 
 ---
