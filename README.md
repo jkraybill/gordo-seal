@@ -2,7 +2,7 @@
 
 **Agreements you can verify later.**
 
-![Version: 0.6.0](https://img.shields.io/badge/version-0.6.0-blue) ![Levels: 5](https://img.shields.io/badge/levels-5-green) ![Axioms: 4](https://img.shields.io/badge/axioms-4-orange)
+![Version: 1.0.0-rc2](https://img.shields.io/badge/version-1.0.0--rc2-blue) ![Levels: 5](https://img.shields.io/badge/levels-5-green) ![Axioms: 4](https://img.shields.io/badge/axioms-4-orange)
 
 ---
 
