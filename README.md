@@ -1,8 +1,8 @@
 # Gordo Seal
 
-**Verifiable consent records for human-AI collaboration.**
+**Agreements you can verify later.**
 
-For the full specification, see [spec/protocol.md](spec/protocol.md).
+![Version: 0.6.0](https://img.shields.io/badge/version-0.6.0-blue) ![Levels: 5](https://img.shields.io/badge/levels-5-green) ![Axioms: 4](https://img.shields.io/badge/axioms-4-orange)
 
 ---
 
@@ -16,9 +16,34 @@ Seal doesn't fix that asymmetry -- it can't. But it makes agreements auditable. 
 
 ---
 
+## Who Is This For?
+
+Two entry questions:
+
+1. *"How do I know my AI actually agreed to this?"*
+
+2. *"I want a record of what we decided that neither of us can deny later."*
+
+If either resonates, Seal is for you.
+
+---
+
 ## How It Works
 
 A Seal record captures a bilateral decision. Each party attests to the content, and their attestations go into the same record. Later, anyone can verify the record wasn't tampered with.
+
+```mermaid
+flowchart LR
+    A[Content] --> B[Hash]
+    B --> C[Preimage]
+    C --> D[Sign]
+    D --> E[Finalize]
+    E --> F[Verify]
+    F --> G[Stamp]
+    
+    style A fill:#f9f9f9,stroke:#333
+    style G fill:#e8f5e9,stroke:#2e7d32
+```
 
 **Five attestation levels**, from lightweight to strong:
 
@@ -62,9 +87,9 @@ The CLI is Python 3 with no external dependencies:
 
 ### Creating a Record
 
-1. **Write content** — the thing being ratified (a decision, amendment, agreement)
-2. **Assemble preimage** — structured record with metadata, party statements, empty attestation fields
-3. **Hash, sign, finalize** — produce the verifiable record
+1. **Write content** -- the thing being ratified (a decision, amendment, agreement)
+2. **Assemble preimage** -- structured record with metadata, party statements, empty attestation fields
+3. **Hash, sign, finalize** -- produce the verifiable record
 
 ```bash
 # Get content hash (goes into preimage)
@@ -114,11 +139,9 @@ Other primitives handle other concerns:
 
 ---
 
-## Current Status
+## Full Specification
 
-- **Version:** 0.6.0
-- **Attestation levels:** 5
-- **Axioms:** 4
+For the complete protocol specification, see [spec/protocol.md](spec/protocol.md).
 
 ---
 
