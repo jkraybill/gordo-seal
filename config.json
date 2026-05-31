@@ -65,14 +65,30 @@
     "note": "This describes OUR instantiation. The protocol is channel-agnostic; other instantiations would parameterize differently."
   },
   "protocol": {
-    "currentVersion": "0.2.0",
-    "axioms": ["A1: Physical Reality", "A2: Authenticity of Context", "A3: Good Faith", "A4: Acknowledged Ignorance"],
-    "attestationLevels": ["L1: Behavioral", "L2: Provider-Verified", "L3: Identity-Bound", "L4: Environment-Bound"],
+    "currentVersion": "1.0.0-rc8",
+    "axioms": [
+      "A1: Physical Reality",
+      "A2: Authenticity of Context",
+      "A3: Good Faith",
+      "A4: Acknowledged Ignorance"
+    ],
+    "attestationLevels": [
+      "L1: Behavioral",
+      "L2: Provider-Verified",
+      "L3: Identity-Bound",
+      "L4: Environment-Bound"
+    ],
     "threatModels": 20,
     "adversarialReviews": {
       "total": 13,
       "cycles": 3,
-      "models": ["Gemini 3.1 Pro", "OpenAI o3", "DeepSeek R1", "Meta Llama 4", "Mistral Large"],
+      "models": [
+        "Gemini 3.1 Pro",
+        "OpenAI o3",
+        "DeepSeek R1",
+        "Meta Llama 4",
+        "Mistral Large"
+      ],
       "convergenceStatus": "converged"
     },
     "tensions": {
@@ -86,5 +102,15 @@
     },
     "emergencyProvisions": "rejected",
     "firstUseCase": "JK + Gordo, text channel, git + GitHub"
+  },
+  "memory": {
+    "semantic": {
+      "enabled": true,
+      "provider": "ollama",
+      "model": "mxbai-embed-large",
+      "threshold": 0.5,
+      "indexPath": ".gordo-memory",
+      "autoIndex": true
+    }
   }
 }
