@@ -65,7 +65,7 @@
     "note": "This describes OUR instantiation. The protocol is channel-agnostic; other instantiations would parameterize differently."
   },
   "protocol": {
-    "currentVersion": "1.0.0-rc8",
+    "currentVersion": "1.0.0-rc10",
     "axioms": [
       "A1: Physical Reality",
       "A2: Authenticity of Context",

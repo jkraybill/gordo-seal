@@ -97,7 +97,7 @@ gordo-seal/
 
 ## Protocol Status
 
-**Seal Version:** 1.0.0-rc8
+**Seal Version:** 1.0.0-rc10
 **Axioms:** 4 established through mutual deliberation (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
 **Attestation Levels:** 4 defined (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
 **Threat Models:** 20+ documented
