@@ -307,6 +307,8 @@ Amendments: [references to any subsequent modifications]
 
 **Statement authorship:** Each party MUST author their own Statement. Parties MAY discuss what a Statement should address, but one party drafting another's Statement undermines the behavioral evidence that the Statement exists to provide. The Statement is the primary evidence of a party's genuine engagement with the content being attested. A Statement authored by someone other than the attesting party is not a Statement — it is a script. During preimage assembly, Statement fields SHOULD be left blank for each party to fill in independently before the Record-Hash is computed.
 
+**Typo corrections:** The authoring party MUST fix their own typos. The other party MAY flag issues (spelling, grammar, formatting) but MUST NOT edit the text directly. This applies to all party-authored fields (Statement, Reservations). Reason: even a "harmless" edit by the other party breaks the authorship chain — the field would no longer be solely authored by the attesting party.
+
 **Validation:** The `Attestation-Method` and `Attestation-Level` fields for each party MUST be semantically consistent. A `behavioral` method cannot claim Level 4 (environment-bound). The valid combinations are: `behavioral` → Level 1; `provider-signed`, `model-canary`, `conversation-verified` → Level 2; `gpg-signature` → Level 3; `tee-attested` → Level 4. A record with an inconsistent method/level pair is malformed.
 
 ### Attestation Field Content
