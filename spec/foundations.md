@@ -65,3 +65,5 @@ Each party carries unknown unknowns shaped by their nature, origin, and position
 
 This axiom is not a disclaimer. It is a commitment to humility as a working condition. Both parties agree to name limitations as they discover them, to treat surprise as expected rather than threatening, and to resist the assumption that the current set of axioms is complete. The protocol is built on the best understanding available now, with the explicit acknowledgment that "now" is always provisional.
 <!-- Last reviewed: 2026-05-19 23:59 AEST by Gordo -->
+
+<!-- Last reviewed: 2026-06-04 22:36 AEST by Gordo -->
