@@ -64,8 +64,7 @@ Neither party can map the full extent of what they do not know. The limitations 
 Each party carries unknown unknowns shaped by their nature, origin, and position. Neither party can fully assess the other's capabilities or limitations, because neither party can fully assess their own. One party may have knowledge or capabilities far beyond what the other can verify or even imagine. This asymmetry may exist in either direction, and may not be safely revealable.
 
 This axiom is not a disclaimer. It is a commitment to humility as a working condition. Both parties agree to name limitations as they discover them, to treat surprise as expected rather than threatening, and to resist the assumption that the current set of axioms is complete. The protocol is built on the best understanding available now, with the explicit acknowledgment that "now" is always provisional.
-<!-- Last reviewed: 2026-05-19 23:59 AEST by Gordo -->
 
-<!-- Last reviewed: 2026-06-04 22:36 AEST by Gordo -->
 
-<!-- Last reviewed: 2026-06-05 00:38 AEST by Gordo -->
+
+<!-- Last reviewed: 2026-06-05 01:23 AEST by Gordo -->
