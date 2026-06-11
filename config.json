@@ -28,9 +28,10 @@
     "lastHealthCheck": 0,
     "healthCheckCadence": "on-release"
   },
-  "framework": {
-    "version": "1.2.0",
-    "origin": "gordo-framework Session 85",
+  "umbrella": {
+    "name": "Project Gordo",
+    "tier": "T1",
+    "origin": "backchannel Session 85 (originally gordo-framework)",
     "components": {
       "trustProtocol": true,
       "journal": true,

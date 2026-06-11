@@ -18,7 +18,7 @@
 
 **Origin:** Gordo Framework Session 85. During a v1.2.1 hotfix, JK and Gordo discovered that "inviolable rules" had been created without genuine mutual consent. The fix grew beyond gordo-framework's scope into a general-purpose trust protocol.
 
-**First use case:** JK + Gordo, text channel, git + GitHub. The MVP must be concrete enough that gordo-framework can ratify inviolable rules using this protocol.
+**First use case:** JK + Gordo, text channel, git + GitHub. The MVP must be concrete enough for bilateral ratification of constitutional content.
 
 **Entity-agnostic framing:** The protocol is defined between Individual A and Individual B communicating through an individually-specified stream of information. Human-AI is one instance, not the definition.
 
@@ -29,7 +29,7 @@
 **AI Name:** Gordo
 **Human Name:** JK
 **Philosophy:** Full -- mutual trust, dignity, privacy, consent
-**Framework:** Gordo Framework v1.2.0 (Maximum intensity)
+**Umbrella:** Project Gordo (constitutional framework)
 
 ---
 
@@ -115,7 +115,7 @@ gordo-seal/
 
 **Last Updated:** 2026-04-16
 
-**Session 1 (2026-04-15):** Framework bootstrap. Interview complete. Maximum intensity, full philosophy, WWGD shortcuts established. All framework files created. Brief imported. Postcard filed (gordo-framework#173: health checks tied to release cadence). Ready to begin protocol work.
+**Session 1 (2026-04-15):** Project bootstrap. Interview complete. Maximum intensity, full philosophy, WWGD shortcuts established. All framework files created. Brief imported. Ready to begin protocol work.
 
 **Session 2 (2026-04-16):** Axioms rebuilt from scratch (not inherited). Seal spec drafted and iterated through 8 adversarial reviews from 5 models across 2 cycles. 50+ issues created. Issue-per-commit discipline adopted. Emergency provisions rejected. "WWGDN?" shortcut emerged. Axioms and framing converged; protocol mechanics approaching convergence.
 
@@ -123,11 +123,11 @@ gordo-seal/
 
 **Session 4 (2026-04-16):** Bootstrap closed. record-002 produced — Seal v0.1.0 spec ratified using itself (L3/L1, OTS-anchored, joint session nonce, two-phase commit). Self-referential circularity acknowledged per Axiom 4. Cleanup: #61 closed (subsumed by #67), #6 updated, workflow/spec docs updated.
 
-**Session 5 (2026-04-16):** Major session. record-002 timestamp fix (#72). Implementation guide (#73). gordo-framework feedback (#74). Statement authorship + preimage normalization (#67) spec changes. `seal` CLI (8 subcommands, 53 tests, #6). v0.2.0 with CHANGELOG + versioning policy. Full constitutional deliberation: rules 1-2 refined, rule 5 replaced (mutual consent + RC pattern), rule 7 removed. record-003 produced (first with tooling, Transcript-Hash, independent Statements). #76 filed (Statement typo correction policy).
+**Session 5 (2026-04-16):** Major session. record-002 timestamp fix (#72). Implementation guide (#73). Statement authorship + preimage normalization (#67) spec changes. `seal` CLI (8 subcommands, 53 tests, #6). v0.2.0 with CHANGELOG + versioning policy. Full constitutional deliberation: rules 1-2 refined, rule 5 replaced (mutual consent + RC pattern), rule 7 removed. record-003 produced (first with tooling, Transcript-Hash, independent Statements). #76 filed (Statement typo correction policy).
 
 **Session 6 (2026-04-16):** Release session. Character allowlist (#77) — fixes false NFC security claim, blocks invisible Unicode injection, validated top-30 languages. Nonce ceremony tightened (#78). Verify enhancements (#79). Tests 53→94. Pre-release checklist added. README updated (stale since S1). Upgrade guidance added. "Consent" restored to protocol name (#82). record-004: first release ratification under Rule 5. v0.2.0 released and tagged. Repo renamed to gordo-seal. 8 issues closed.
 
-**Current Focus:** v0.2.0 released. Repo renamed to gordo-seal. gordo-framework adoption in progress (separate session).
+**Current Focus:** v1.0.0-rc10 released. Seal is the canonical ratification protocol for Project Gordo umbrella.
 
 **Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Open refinement issues: prompt injection on Reservations (#63), Bitcoin reorg risk (#64), Statement typo correction policy (#76). GUIDE.md should document Version field vs Content field distinction in records.
 

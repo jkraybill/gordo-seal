@@ -54,8 +54,8 @@ This project has two parallel tracks that must stay coordinated:
 - `implementation` -- Reference implementation code
 - `tension` -- Tension resolution (T1-T7)
 - `research` -- Literature review, adversarial analysis
-- `framework` -- Gordo Framework maintenance
-- `postcard` -- Upstream contribution to gordo-framework
+- `umbrella` -- Project Gordo umbrella coordination
+- `upstream` -- Upstream contribution to project-gordo
 
 ### Priority
 - `p0-now` -- Blocking MVP or current session work
@@ -111,7 +111,7 @@ This project has two parallel tracks that must stay coordinated:
 
 ## MVP Milestone
 
-The first milestone is: **produce a functional Seal ratification that gordo-framework can use for its "mutual agreement stamp" pattern.**
+The first milestone is: **produce a functional Seal ratification protocol for bilateral consent attestation.**
 
 This requires:
 - [x] Tensions 4-7 resolved (or explicitly deferred with rationale) — T4, T5 resolved S3. T6 rejected S2. T7 deferred.
