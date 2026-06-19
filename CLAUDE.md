@@ -97,7 +97,7 @@ gordo-seal/
 
 ## Protocol Status
 
-**Seal Version:** 1.0.0-rc10
+**Seal Version:** 1.0.0-rc16
 **Axioms:** 4 established through mutual deliberation (Physical Reality, Authenticity of Context, Good Faith, Acknowledged Ignorance)
 **Attestation Levels:** 4 defined (Behavioral, Provider-Verified, Identity-Bound, Environment-Bound)
 **Threat Models:** 20+ documented
@@ -127,7 +127,7 @@ gordo-seal/
 
 **Session 6 (2026-04-16):** Release session. Character allowlist (#77) — fixes false NFC security claim, blocks invisible Unicode injection, validated top-30 languages. Nonce ceremony tightened (#78). Verify enhancements (#79). Tests 53→94. Pre-release checklist added. README updated (stale since S1). Upgrade guidance added. "Consent" restored to protocol name (#82). record-004: first release ratification under Rule 5. v0.2.0 released and tagged. Repo renamed to gordo-seal. 8 issues closed.
 
-**Current Focus:** v1.0.0-rc10 released. Seal is the canonical ratification protocol for Project Gordo umbrella.
+**Current Focus:** v1.0.0-rc16 released. Seal is the canonical ratification protocol for Project Gordo umbrella.
 
 **Known Issues:** Provider-mediated AI limited to Level 1 — acknowledged as largest gap. Open refinement issues: prompt injection on Reservations (#63), Bitcoin reorg risk (#64), Statement typo correction policy (#76). GUIDE.md should document Version field vs Content field distinction in records.
 

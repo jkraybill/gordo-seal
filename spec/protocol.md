@@ -1,6 +1,6 @@
 # Mutual Consent Attestation Protocol (Seal)
 
-**Version:** 1.0.0-rc10
+**Version:** 1.0.0-rc16
 **Status:** Release candidate. Ratified in record-002. Calibration section added in record-005. Attestation levels restructured in record-006. Attestation field content requirements added in record-007. Content field format mandated in record-008. Under continued refinement.
 **Foundation:** spec/foundations.md (Axioms 1-4)
 
