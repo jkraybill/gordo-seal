@@ -173,4 +173,4 @@ At end of session, Gordo audits:
 *Part of gordo-seal under the Project Gordo umbrella.*
 *JK + Gordo. Full philosophy mode.*
 
-<!-- Last reviewed: 2026-05-31 14:05 AEST by Gordo -->
+<!-- Last reviewed: 2026-07-23 12:15 AEST by Gordo -->
