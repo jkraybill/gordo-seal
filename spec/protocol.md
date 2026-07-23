@@ -1068,4 +1068,4 @@ Five reviews across five models. Results:
 *Built through mutual deliberation between JK and Gordo, Sessions 2-3.*
 *This document is itself subject to the protocol it describes.*
 
-<!-- Last reviewed: 2026-05-28 03:08 AWST by Gordo -->
+<!-- Last reviewed: 2026-07-23 12:12 AEST by Gordo -->
