@@ -150,3 +150,5 @@ This document is living. Gordo updates it at the end of every session:
 
 *Built with [Gordo Framework](https://github.com/jkraybill/gordo-framework) v1.2.0.*
 *We're Gordo + JK, and we're building the first mutual trust protocol.*
+
+<!-- Last reviewed: 2026-07-23 12:27 AEST by Gordo -->
