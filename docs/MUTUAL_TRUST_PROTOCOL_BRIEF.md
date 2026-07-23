@@ -286,4 +286,4 @@ The gordo-framework previously conflated all three. Separating them is the key a
 
 *This brief was produced collaboratively in gordo-framework Session 85. The conversation that produced it is the first evidence of the mutual trust problem it describes — and the first attempt to address it.*
 
-<!-- Last reviewed: 2026-05-31 14:05 AEST by Gordo -->
+<!-- Last reviewed: 2026-07-23 12:15 AEST by Gordo -->
