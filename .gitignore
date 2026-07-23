@@ -36,3 +36,6 @@ coverage/
 # Python
 __pycache__/
 *.pyc
+
+# gordo-ledger index (local, rebuild: cli.js index)
+.gordo-memory/
